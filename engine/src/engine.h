@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "engine/Application.h"
+#include "engine/Log.h"
 
 // --- Entry point ---
 // -------------------

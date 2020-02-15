@@ -5,4 +5,5 @@ build/
 
 *.cmake
 Makefile
+CMakeLists.txt.bak
 

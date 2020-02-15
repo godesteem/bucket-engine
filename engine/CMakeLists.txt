@@ -26,6 +26,10 @@ set_target_properties(engine PROPERTIES SOVERSION 1)
 
 target_include_directories(engine PRIVATE engine/include)
 target_include_directories(engine PRIVATE engine/src)
+include_directories(
+  "${CMAKE_SOURCE_DIR}/engine/vendor/spdlog/include/spdlog"	
+)
+
 
 include(GNUInstallDirs)
 
