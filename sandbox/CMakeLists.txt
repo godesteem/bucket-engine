@@ -1,26 +1,17 @@
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-
 cmake_minimum_required(VERSION 3.16)
-project(bucket-rpg)
+project(sandbox)
 
 set(CMAKE_CXX_STANDARD 14)
 
 file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.c ${CMAKE_SOURCE_DIR}/sandbox/src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.h ${CMAKE_SOURCE_DIR}/sandbox/src/*.hpp)
 
-
-include_directories(${CMAKE_SOURCE_DIR}/engine/src)
-
-add_subdirectory(./engine)
-
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
-include_directories(${CMAKE_BINARY_DIR}/sandbox/src)
+#include_directories(${CMAKE_BINARY_DIR}/src)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
-add_executable(bucket-rpg ${HEADER_FILES} ${SOURCE_FILES})
-
-target_link_libraries(bucket-rpg PRIVATE engine)
+add_executable(sandbox ${HEADER_FILES} ${SOURCE_FILES})
 
 # find & configure openGL
 # set(OpenGL_GL_PREFERENCE "GLVND")
@@ -35,4 +26,14 @@ target_link_libraries(bucket-rpg PRIVATE engine)
 
 # add_library(STB_IMAGE "lib/stb_image.h")
 # add_library(GLAD "lib/src/glad.c")
+
+set(LIBS "../../engine/build/libengine.so")
+
+include_directories(
+	"${CMAKE_SOURCE_DIR}/src"	
+	"${CMAKE_SOURCE_DIR}/include"
+)
+
+target_link_libraries(sandbox ${LIBS})
+
 

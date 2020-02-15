@@ -2,7 +2,7 @@
 # File              : build.sh
 # Author            : Philipp Zettl <philipp.zettl@godesteem.de>
 # Date              : 28.09.2019
-# Last Modified Date: 28.09.2019
+# Last Modified Date: 15.02.2020
 # Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
 # build.sh
 # Copyright (c) 2019 Philipp Zettl <philipp.zettl@godesteem.de>
@@ -23,25 +23,23 @@ set -e
 
 echo "Cleaning up..."
 rm -rf build/
+#rm -rf engine/build/
 mkdir -p build/
+#mkdir -p engine/build/
 
 cd build
 
 cmake -Wdev -Wall -Wextra --debug-output ..
+#cmake --build .
 make
 
-if [ ! $CI ]; then
-  echo "build done, execute test?"
-  read input
+./bucket-rpg
+#cd ../../sandbox/build
 
-  if [[ $input == "y" || $input == "Y" ]]; then
-    ./bucket-engine-test
-  else
-    ./bucket-engine
-  fi
-else
-  ./bucket-engine
-fi
+#cmake -Wdev -Wall -Wextra --debug-output ..
+#make
 
-cd ..
+#./sandbox
+
+#cd ..
 
