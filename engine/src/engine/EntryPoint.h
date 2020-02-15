@@ -14,6 +14,8 @@ extern Engine::Application* Engine::CreateApplication();
 
 int main(int argc, char **argv){
   Engine::Log::Init();
+  BE_CORE_WARN("Initialized Log.");
+  BE_WARN("Initialized Log.");
   std::cout << "Engine starting...\n";
   auto app = Engine::CreateApplication();
   app->Run();

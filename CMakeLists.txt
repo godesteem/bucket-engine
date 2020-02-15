@@ -1,5 +1,6 @@
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
+
 cmake_minimum_required(VERSION 3.16)
 project(bucket-rpg)
 
@@ -7,6 +8,28 @@ set(CMAKE_CXX_STANDARD 14)
 
 file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.c ${CMAKE_SOURCE_DIR}/sandbox/src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.h ${CMAKE_SOURCE_DIR}/sandbox/src/*.hpp)
+
+
+if(CMAKE_BUILD_TYPE EQUAL "Debug")
+  add_compile_definitions(BE_DEBUG)
+  message("Build type Debug")
+elseif(CMAKE_BUILD_TYPE EQUAL "Release")
+  add_compile_definitions(BE_RELEASE)
+  message("Build type Release")
+  set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+  set(CMAKE_CXX_FLAGS_DEBUG "-g")
+  set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+elseif(CMAKE_BUILD_TYPE EQUAL "Dist")
+  add_compile_definitions(BE_DIST)
+  message("Build type Dist")
+  set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+  set(CMAKE_CXX_FLAGS_DEBUG "-g")
+  set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+else(CMAKE_BUILD_TYPE EQUAL "Debug")
+  add_compile_definitions(BE_DEBUG)
+  message("Build type Debug")
+endif(CMAKE_BUILD_TYPE EQUAL "Debug")
+
 
 
 include_directories(${CMAKE_SOURCE_DIR}/engine/src)

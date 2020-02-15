@@ -29,7 +29,7 @@ mkdir -p build/
 
 cd build
 
-cmake -Wdev -Wall -Wextra --debug-output ..
+cmake -Wdev -Wall -Wextra --debug-output -DCMAKE_BUILD_TYPE=Debug ..
 #cmake --build .
 make
 

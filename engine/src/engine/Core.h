@@ -12,3 +12,5 @@
 #else
   #define BE_API
 #endif
+
+#define BIT(x)(1 << x)

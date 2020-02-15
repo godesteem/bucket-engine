@@ -16,7 +16,7 @@ namespace Engine {
     std::cout << "Hello World!\n";
   }
   
-  class Application
+  class BE_API Application
   {
     public:
       Application();

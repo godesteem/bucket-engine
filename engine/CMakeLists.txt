@@ -4,14 +4,18 @@ project(engine VERSION 0.0.1 DESCRIPTION "This is the bucket engine.")
 add_definitions(-DEXPORT_MOLECULE_DLL)
 
 file(GLOB_RECURSE ENGINE_SOURCE_FILES
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/events/*.c 
   ${CMAKE_SOURCE_DIR}/engine/src/engine/*.c 
-  ${CMAKE_SOURCE_DIR}/engine/src/*.c 
+  ${CMAKE_SOURCE_DIR}/engine/src/*.c
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/events/*.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/*.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/*.cpp
 )
 file(GLOB_RECURSE ENGINE_HEADER_FILES
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/events/*.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/*.h
   ${CMAKE_SOURCE_DIR}/engine/src/*.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/events/*.hpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/*.hpp
   ${CMAKE_SOURCE_DIR}/engine/src/*.hpp
 )
