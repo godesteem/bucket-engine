@@ -2,7 +2,7 @@
 # File              : build.sh
 # Author            : Philipp Zettl <philipp.zettl@godesteem.de>
 # Date              : 28.09.2019
-# Last Modified Date: 15.02.2020
+# Last Modified Date: 16.02.2020
 # Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
 # build.sh
 # Copyright (c) 2019 Philipp Zettl <philipp.zettl@godesteem.de>
@@ -22,7 +22,7 @@
 set -e
 
 echo "Cleaning up..."
-rm -rf build/
+#rm -rf build/
 #rm -rf engine/build/
 mkdir -p build/
 #mkdir -p engine/build/
@@ -31,7 +31,7 @@ cd build
 
 cmake -Wdev -Wall -Wextra --debug-output -DCMAKE_BUILD_TYPE=Debug ..
 #cmake --build .
-make
+make VERBOSE=3
 
 ./bucket-rpg
 #cd ../../sandbox/build

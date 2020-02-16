@@ -58,3 +58,11 @@ namespace Engine {
   
 
 #endif
+#ifndef BE_ENABLE_ASSERTS
+#define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
+#define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
+#else
+#define BE_ASSERT(x, ... )
+#define BE_CORE_ASSERT(x, ... )
+#endif
+

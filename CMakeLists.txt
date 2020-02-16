@@ -12,6 +12,7 @@ file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.h ${CMAKE_SOURC
 
 if(CMAKE_BUILD_TYPE EQUAL "Debug")
   add_compile_definitions(BE_DEBUG)
+  add_compile_definitions(BE_ENABLE_ASSERTS)
   message("Build type Debug")
 elseif(CMAKE_BUILD_TYPE EQUAL "Release")
   add_compile_definitions(BE_RELEASE)

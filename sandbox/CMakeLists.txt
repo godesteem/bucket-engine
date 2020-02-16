@@ -14,20 +14,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 add_executable(sandbox ${HEADER_FILES} ${SOURCE_FILES})
 
 # find & configure openGL
-# set(OpenGL_GL_PREFERENCE "GLVND")
-# find_package(OpenGL REQUIRED)
-# find_package(GLUT REQUIRED)
 
-# find_package(glm REQUIRED)
-# message(STATUS "GLM included at ${GLM_INCLUDE_DIR}")
-
-# find_package(glfw3 REQUIRED)
-# message(STATUS "GLFW3 included at ${GLFW3_INCLUDE_DIR}")
-
-# add_library(STB_IMAGE "lib/stb_image.h")
-# add_library(GLAD "lib/src/glad.c")
-
-set(LIBS "../../engine/build/libengine.so")
+set(LIBS ${CMAKE_SOURCE_PATH}/build/engine/libengine.so)
 
 include_directories(
 	"${CMAKE_SOURCE_DIR}/src"	
