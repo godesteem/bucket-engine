@@ -27,6 +27,10 @@ add_library(engine SHARED
 )
 
 set_target_properties(engine PROPERTIES SOVERSION 1)
+target_precompile_headers(engine 
+  PRIVATE "${CMAKE_SOURCE_DIR}/engine/src/bepch.h")
+#set_target_properties(engine PROPERTIES COMPILE_FLAGS "${CMAKE_SOURCE_DIR}/engine/src/bepch.h")
+#set_source_files_properties(std.cpp PROPERTIES COMPILE_FLAGS "${CMAKE_SOURCE_DIR}/engine/src/bepch.h")
 
 target_include_directories(engine PRIVATE engine/include)
 target_include_directories(engine PRIVATE engine/src)
