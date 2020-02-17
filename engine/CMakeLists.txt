@@ -6,6 +6,8 @@ add_definitions(-DEXPORT_MOLECULE_DLL)
 set(ENGINE_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Application.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Log.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/Layer.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/LayerStack.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
 )
 set(ENGINE_HEADER_FILES
@@ -14,6 +16,8 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Core.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/EntryPoint.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Log.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/Layer.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/LayerStack.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Window.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/ApplicationEvent.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/Event.h

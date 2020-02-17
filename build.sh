@@ -31,7 +31,7 @@ cd build
 
 cmake -Wdev -Wall -Wextra -Winvalid-pch --debug-output -DCMAKE_BUILD_TYPE=Debug ..
 #cmake --build .
-make VERBOSE=3
+make -j4
 
 ./bucket-rpg
 #cd ../../sandbox/build

@@ -12,6 +12,8 @@
 #include "events/ApplicationEvent.h"
 #include "Window.h"
 
+#include "LayerStack.h"
+
 namespace Engine {
 
   class BE_API Application
@@ -23,10 +25,14 @@ namespace Engine {
       void Run();
 
       void OnEvent(Event& e);
+
+      void PushLayer(Layer* layer);
+      void PushOverlay(Layer* overlay);
     private:
       bool OnWindowClose(WindowCloseEvent&);
       std::unique_ptr<Window> m_Window;
       bool m_Running = true;
+      LayerStack m_LayerStack;
   };
   
   // TODO: by client
