@@ -2,7 +2,7 @@
  * File              : MouseEvent.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 16.02.2020
+ * Last Modified Date: 17.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -30,7 +30,7 @@ namespace Engine {
       EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
     protected:
       float m_MouseX, m_MouseY;
-  }
+  };
 
   class BE_API MouseScrollEvent: public Event
   {
@@ -51,7 +51,7 @@ namespace Engine {
       EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
     private:
       float m_XOffset, m_YOffset;
-  }
+  };
 
   class BE_API MouseButtonEvent: public Event
   {
@@ -64,7 +64,7 @@ namespace Engine {
         : m_Button(button) {}
 
       int m_Button;
-  }
+  };
 
   class BE_API MouseButtonPressedEvent: public MouseButtonEvent
   {
@@ -79,7 +79,7 @@ namespace Engine {
       }
 
       EVENT_CLASS_TYPE(MouseButtonPressed)
-  }
+  };
   class BE_API MouseButtonReleasedEvent: public MouseButtonEvent
   {
     public:
@@ -93,7 +93,7 @@ namespace Engine {
       }
 
       EVENT_CLASS_TYPE(MouseButtonPressed)
-  }
+  };
 
 
 }

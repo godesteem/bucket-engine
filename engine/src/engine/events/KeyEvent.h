@@ -2,7 +2,7 @@
  * File              : KeyEvent.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 16.02.2020
+ * Last Modified Date: 17.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -23,7 +23,7 @@ namespace Engine {
           : m_KeyCode(keycode) {}
 
         int m_KeyCode;
-  }
+  };
 
   class BE_API KeyPressedEvent: public KeyEvent
   {
@@ -41,7 +41,7 @@ namespace Engine {
       EVENT_CLASS_TYPE(KeyPressed)
   private:
       int m_RepeatCount;
-  }
+  };
 
   class BE_API KeyReleasedEvent: public KeyEvent
   {
@@ -55,7 +55,5 @@ namespace Engine {
         return ss.str();  
       }
       EVENT_CLASS_TYPE(KeyReleased)
-  }
-
-
+  };
 }
