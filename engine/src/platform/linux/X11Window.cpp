@@ -1,13 +1,13 @@
 /**
- * File              : X11Windows.cpp
+ * File              : X11Window.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 16.02.2020
- * Last Modified Date: 16.02.2020
+ * Last Modified Date: 17.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
 #include "bepch.h"
-#include "platform/linux/X11Windows.h"
+#include "X11Window.h"
 
 namespace Engine {
 

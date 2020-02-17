@@ -1,5 +1,5 @@
 /**
- * File              : X11Windows.h
+ * File              : X11Window.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 16.02.2020
  * Last Modified Date: 16.02.2020

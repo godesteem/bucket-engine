@@ -9,19 +9,19 @@ set(ENGINE_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
 )
 set(ENGINE_HEADER_FILES
-  src/engine/events/Event.h
-  src/engine/events/ApplicationEvent.h
-  src/engine/events/KeyEvent.h
-  src/engine/events/MouseEvent.h
-
-  src/engine/Application.h
-  src/engine/Core.h
-  src/engine/EntryPoint.h
-  src/engine/Log.h
-  src/engine/Window.h
-  
-  src/platform/linux/X11Window.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/Application.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/Core.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/EntryPoint.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/Log.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/Window.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/events/ApplicationEvent.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/events/Event.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/events/KeyEvent.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/events/MouseEvent.h
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.h
 )
+
 
 add_library(engine SHARED 
   ${ENGINE_SOURCE_FILES}
@@ -29,38 +29,17 @@ add_library(engine SHARED
 )
 
 set_target_properties(engine PROPERTIES SOVERSION 1)
-target_precompile_headers(engine 
-  PUBLIC src/bepch.h)
-#set_target_properties(engine PROPERTIES COMPILE_FLAGS "${CMAKE_SOURCE_DIR}/engine/src/bepch.h")
-#set_source_files_properties(std.cpp PROPERTIES COMPILE_FLAGS "${CMAKE_SOURCE_DIR}/engine/src/bepch.h")
 
-target_include_directories(engine PRIVATE engine/include)
 target_include_directories(engine PRIVATE engine/src)
-
-
-
 include_directories(
-  vendor/spdlog/include/spdlog
-  vendor/glfw-3.3.2/include/GLFW
+  "${CMAKE_SOURCE_DIR}/engine/vendor/spdlog/include/spdlog"
 )
-set(OpenGL_GL_PREFERENCE "GLVND")
+target_precompile_headers(engine PRIVATE ${CMAKE_SOURCE_DIR}/engine/src/bepch.h)
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/glfw-3.3.2)
+target_link_libraries(engine glfw)
 find_package(OpenGL REQUIRED)
-find_package(GLUT REQUIRED)
-
-find_package(glm REQUIRED)
-message(STATUS "GLM included at ${GLM_INCLUDE_DIR}")
-
-find_package(glfw3 REQUIRED)
-message(STATUS "GLFW3 included at ${GLFW3_INCLUDE_DIR}")
-
-# add_library(STB_IMAGE "lib/stb_image.h")
-# add_library(GLAD "lib/src/glad.c")
-
-set(LIBS ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${GLM_LIBRARY})
-
-# add_library(GLAD "lib/src/glad.c")
-target_link_libraries(engine ${LIBS})
-
+target_link_libraries(engine OpenGL::GL)
 
 include(GNUInstallDirs)
 

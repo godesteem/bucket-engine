@@ -2,15 +2,15 @@
  * File              : Window.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 16.02.2020
- * Last Modified Date: 16.02.2020
+ * Last Modified Date: 17.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
 
 #include "bepch.h"
 
-#include "engine/Core.h"
-#include "engine/events/Event.h"
+#include "Core.h"
+#include "events/Event.h"
 
 namespace Engine {
   
@@ -31,7 +31,7 @@ namespace Engine {
     public:
       using EventCallbackFn = std::function<void(Event&)>;
 
-      virtual ~Window();
+      virtual ~Window(){};
       virtual void OnUpdate() const = 0;
 
       virtual inline unsigned int GetWidth() const = 0;

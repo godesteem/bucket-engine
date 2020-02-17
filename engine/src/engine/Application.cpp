@@ -2,16 +2,16 @@
  * File              : Application.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 16.02.2020
+ * Last Modified Date: 17.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
 #include "Application.h"
-#include "GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
 
 
-#include "engine/events/ApplicationEvent.h"
-#include "engine/Log.h"
+#include "events/ApplicationEvent.h"
+#include "Log.h"
 
 namespace Engine {
   
