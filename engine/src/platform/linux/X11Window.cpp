@@ -7,11 +7,13 @@
  */
 
 #include "bepch.h"
+#include <glad/glad.h>
 #include "X11Window.h"
 
 #include "engine/events/ApplicationEvent.h"
 #include "engine/events/KeyEvent.h"
 #include "engine/events/MouseEvent.h"
+
 
 namespace Engine {
 
@@ -49,6 +51,8 @@ namespace Engine {
 
     m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(m_Window);
+    int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+    BE_CORE_ASSERT(status, "Failed to initialize GLAD!");
     glfwSetWindowUserPointer(m_Window, &m_Data);
     SetVSync(true);
 
