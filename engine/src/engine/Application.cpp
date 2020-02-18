@@ -12,6 +12,7 @@
 
 
 #include "Log.h"
+#include "Input.h"
 
 namespace Engine {
 

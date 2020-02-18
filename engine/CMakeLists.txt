@@ -13,9 +13,11 @@ set(ENGINE_SOURCE_FILES
   
   #GUI
   ${CMAKE_SOURCE_DIR}/engine/src/engine/imgui/ImGuiLayer.cpp
+
   #platform
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/imGUIOpenGLRenderer.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/LinuxInput.cpp
 
   #3rd party
   ${imgui_root}/imgui.cpp
@@ -42,10 +44,14 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/Event.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/KeyEvent.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/MouseEvent.h
-  
+
+  # input
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/Input.h
+
   #platform
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.h
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/imGUIOpenGLRenderer.h
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/LinuxInput.h
 
   #3rd party
   ${imgui_root}/imconfig.h
