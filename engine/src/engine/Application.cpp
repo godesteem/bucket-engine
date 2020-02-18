@@ -2,7 +2,7 @@
  * File              : Application.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 17.02.2020
+ * Last Modified Date: 18.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
@@ -16,7 +16,12 @@
 namespace Engine {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+  
+  Application* Application::s_Instance = nullptr;
+  
   Application::Application(){
+    BE_ASSERT(!s_Instance, "Application already exists.");
+
     m_Window = std::unique_ptr<Window>(Window::Create());
     m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
   }
@@ -46,9 +51,11 @@ namespace Engine {
 
   void Application::PushLayer(Layer* layer){
     m_LayerStack.PushLayer(layer);
+    layer->OnAttach();
   }
   void Application::PushOverlay(Layer* overlay){
     m_LayerStack.PushOverlay(overlay);
+    overlay->OnAttach();
   }
 
   void Application::Run(){

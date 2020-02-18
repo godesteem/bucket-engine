@@ -2,7 +2,7 @@
  * File              : Application.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 17.02.2020
+ * Last Modified Date: 18.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -28,11 +28,16 @@ namespace Engine {
 
       void PushLayer(Layer* layer);
       void PushOverlay(Layer* overlay);
+      
+      inline static Application& Get() { return *s_Instance; };
+      inline Window& GetWindow() { return *m_Window; };
     private:
       bool OnWindowClose(WindowCloseEvent&);
       std::unique_ptr<Window> m_Window;
       bool m_Running = true;
       LayerStack m_LayerStack;
+
+      static Application* s_Instance;
   };
   
   // TODO: by client

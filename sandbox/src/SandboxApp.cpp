@@ -2,7 +2,7 @@
  * File              : SandboxApp.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 17.02.2020
+ * Last Modified Date: 18.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -30,6 +30,7 @@ class Sandbox: public Engine::Application
     Sandbox()
     {
       PushLayer(new ExampleLayer());
+      PushOverlay(new Engine::ImGUILayer());
     }
 
     ~Sandbox()
