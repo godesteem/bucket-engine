@@ -28,7 +28,8 @@ namespace Engine {
 
       void PushLayer(Layer* layer);
       void PushOverlay(Layer* overlay);
-      
+     
+      bool IsRunning() const { return m_Running; } 
       inline static Application& Get() { return *s_Instance; };
       inline Window& GetWindow() { return *m_Window; };
     private:

@@ -2,7 +2,7 @@
 # File              : build.sh
 # Author            : Philipp Zettl <philipp.zettl@godesteem.de>
 # Date              : 28.09.2019
-# Last Modified Date: 17.02.2020
+# Last Modified Date: 18.02.2020
 # Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
 # build.sh
 # Copyright (c) 2019 Philipp Zettl <philipp.zettl@godesteem.de>

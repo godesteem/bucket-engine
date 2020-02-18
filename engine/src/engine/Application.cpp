@@ -20,8 +20,9 @@ namespace Engine {
   Application* Application::s_Instance = nullptr;
   
   Application::Application(){
+    BE_INFO("Creating application");
     BE_ASSERT(!s_Instance, "Application already exists.");
-
+    s_Instance = this;
     m_Window = std::unique_ptr<Window>(Window::Create());
     m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
   }
@@ -67,6 +68,9 @@ namespace Engine {
       }
       m_Window->OnUpdate();
     }
+  }
+  inline std::ostream& operator << (std::ostream& os, const Application& app){
+    return os  << "Running: " << (app.IsRunning() ? "True" : "False");
   }
 
 

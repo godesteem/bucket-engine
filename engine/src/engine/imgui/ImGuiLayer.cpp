@@ -11,6 +11,7 @@
 #include "platform/opengl/imGUIOpenGLRenderer.h"
 
 #include "GLFW/glfw3.h"
+#include "glad/glad.h"
 
 #include "engine/Application.h"
 
@@ -57,7 +58,9 @@ namespace Engine {
     io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
     io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
-    ImGui_ImplOpenGL3_Init("#version 410");
+    ImGui_ImplOpenGL3_Init("#version 130");
+
+    BE_TRACE("ImGUI attached.");
   }
   void ImGUILayer::OnDetach(){
 
@@ -74,18 +77,16 @@ namespace Engine {
     
     ImGui_ImplOpenGL3_NewFrame();
     ImGui::NewFrame();
-
+    
 
     static bool show = true;
 
     ImGui::ShowDemoWindow(&show);
-
-
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   }
 
   void ImGUILayer::OnEvent(Event& e){
-
+    BE_TRACE("ImGUILayer::OnEvent: {0}", e);
   }
 }

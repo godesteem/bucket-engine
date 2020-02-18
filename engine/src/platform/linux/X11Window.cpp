@@ -2,7 +2,7 @@
  * File              : X11Window.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 16.02.2020
- * Last Modified Date: 17.02.2020
+ * Last Modified Date: 18.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -22,6 +22,11 @@ namespace Engine {
   static void GLFWErrorCallback(int err, const char* description){
     BE_CORE_ERROR("GLFW Error: ({0}) {1}", err, description);
   };
+  
+  Window* Window::Create(const WindowProps& props){
+    return new X11Window(props);
+  }
+
   X11Window::X11Window(const WindowProps& props){
     Init(props);
   }
@@ -30,17 +35,13 @@ namespace Engine {
   {
   }
 
-  Window* Window::Create(const WindowProps& props){
-    return new X11Window(props);
-  }
-
 
   void X11Window::Init(const WindowProps& props){
     m_Data.Title = props.Title;
     m_Data.Height = props.Height;
     m_Data.Width = props.Width;
 
-    BE_CORE_INFO("Creating window {0} ({1} {2})", props.Title, props.Width, props.Height);
+    BE_CORE_INFO("Creating window {0} ({1}x{2})", props.Title, props.Width, props.Height);
 
     if(!s_GLFWInitialized){
       int success = glfwInit();
@@ -55,6 +56,8 @@ namespace Engine {
     BE_CORE_ASSERT(status, "Failed to initialize GLAD!");
     glfwSetWindowUserPointer(m_Window, &m_Data);
     SetVSync(true);
+
+    BE_CORE_INFO("Setting callbacks");
 
     // GLFW Callbacks
     glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
@@ -118,6 +121,8 @@ namespace Engine {
       MouseMovedEvent event(xPos, yPos);
       data.EventCallback(event);
     });
+
+    BE_CORE_INFO("Callbacks set.");
   }
   void X11Window::ShutDown()
   {
