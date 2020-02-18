@@ -1,8 +1,8 @@
+cmake_minimum_required(VERSION 3.16)
+project(bucket-rpg)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 
-cmake_minimum_required(VERSION 3.16)
-project(bucket-rpg)
 
 set(CMAKE_CXX_STANDARD 14)
 
