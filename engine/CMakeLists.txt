@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-
+set (CMAKE_CXX_STANDARD 17)
 project(engine VERSION 0.0.1 DESCRIPTION "This is the bucket engine.")
 add_definitions(-DEXPORT_MOLECULE_DLL)
 set(imgui_root ${CMAKE_SOURCE_DIR}/engine/vendor/imgui)
@@ -35,7 +35,9 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Layer.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/LayerStack.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Window.h
-  
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/KeyCodes.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/MouseButtonCodes.h
+
   #GUI
   ${CMAKE_SOURCE_DIR}/engine/src/engine/imgui/ImGuiLayer.h
   

@@ -17,10 +17,18 @@ class ExampleLayer: public Engine::Layer
     {}
     
     void OnUpdate() override {
-      BE_INFO("ExampleLayer::OnUpdate");
+      //BE_INFO("ExampleLayer::OnUpdate");
+
+      if(Engine::Input::IsKeyPressed(BE_KEY_TAB)){
+        BE_INFO("Tab key is pressed.");
+      }
     }
     void OnEvent(Engine::Event& event) override {
-      BE_INFO("{0}", event);
+      //BE_INFO("{0}", event);
+      if(event.GetEventType() == Engine::EventType::KeyPressed){
+        Engine::KeyPressedEvent& e = (Engine::KeyPressedEvent&)event;
+        BE_TRACE("{0}", (char) e.GetKeyCode());
+      }
     }
 };
 

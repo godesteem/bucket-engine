@@ -33,7 +33,7 @@ namespace Engine {
   }
 
   void Application::OnEvent(Event& e){
-    BE_CORE_TRACE("{0}", e);
+    // BE_CORE_TRACE("{0}", e);
 
     EventDispatcher dispatcher(e);
     dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));

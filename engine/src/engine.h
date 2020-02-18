@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 /**
  * File              : engine.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
@@ -12,6 +12,14 @@
 #include "engine/Layer.h"
 
 #include "engine/imgui/ImGuiLayer.h"
+
+// --- Input ---
+// -------------
+// -------------
+
+#include "engine/Input.h"
+#include "engine/MouseButtonCodes.h"
+#include "engine/KeyCodes.h"
 
 // --- Entry point ---
 // -------------------

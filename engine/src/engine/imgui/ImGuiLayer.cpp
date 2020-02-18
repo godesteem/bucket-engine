@@ -80,8 +80,6 @@ namespace Engine {
     void ImGUILayer::OnUpdate()
     {
       ImGuiIO& io = ImGui::GetIO();
-      BE_TRACE("Update: {0}", (void*)&io);
-      BE_TRACE("ImGUILayer::OnUpdate: io.MouseDown[0] = {0}", io.MouseDown[0]);
       Application& app = Application::Get();
       io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
@@ -119,7 +117,6 @@ namespace Engine {
     bool ImGUILayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
     {
       ImGuiIO& io = ImGui::GetIO();
-      BE_TRACE("Event: {0}", (void*)&io);
       io.MouseDown[e.GetMouseButton()] = true;
 
       return false;
