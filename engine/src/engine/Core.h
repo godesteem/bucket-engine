@@ -2,7 +2,7 @@
  * File              : Core.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 16.02.2020
+ * Last Modified Date: 18.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -15,3 +15,4 @@
 
 #define BIT(x)(1 << x)
 
+#define BE_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)

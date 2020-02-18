@@ -59,7 +59,6 @@ namespace Engine {
     io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
     ImGui_ImplOpenGL3_Init("#version 130");
-
     BE_TRACE("ImGUI attached.");
   }
   void ImGUILayer::OnDetach(){
@@ -88,5 +87,48 @@ namespace Engine {
 
   void ImGUILayer::OnEvent(Event& e){
     BE_TRACE("ImGUILayer::OnEvent: {0}", e);
+    EventDispatcher dispatcher(e);
+    dispatcher.Dispatch<MouseButtonPressedEvent>(BE_BIND_EVENT_FN(ImGUILayer::OnMouseButtonPressedEvent));
+    dispatcher.Dispatch<MouseButtonReleasedEvent>(BE_BIND_EVENT_FN(ImGUILayer::OnMouseButtonReleasedEvent));
+    dispatcher.Dispatch<MouseMovedEvent>(BE_BIND_EVENT_FN(ImGUILayer::OnMouseMovedEvent));
+    dispatcher.Dispatch<MouseScrollEvent>(BE_BIND_EVENT_FN(ImGUILayer::OnMouseScrolledEvent));
+    dispatcher.Dispatch<KeyPressedEvent>(BE_BIND_EVENT_FN(ImGUILayer::OnKeyPressedEvent));
+    dispatcher.Dispatch<KeyReleasedEvent>(BE_BIND_EVENT_FN(ImGUILayer::OnKeyReleasedEvent));
+    //dispatcher.Dispatch<KeyTypedEvent>(BE_BIND_EVENT_FN(ImGUILayer::OnKeyTypedEvent));
+    dispatcher.Dispatch<WindowResizeEvent>(BE_BIND_EVENT_FN(ImGUILayer::OnWindowResizeEvent));
   }
+  bool ImGUILayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e){
+    ImGuiIO& io = ImGui::GetIO();
+    io.MouseDown[e.GetMouseButton()] = true;
+    return false;
+  }
+  bool ImGUILayer::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e){
+    ImGuiIO& io = ImGui::GetIO();
+    io.MouseDown[e.GetMouseButton()] = false;
+    return false;
+  
+  }
+  bool ImGUILayer::OnMouseMovedEvent(MouseMovedEvent& e){
+    ImGuiIO& io = ImGui::GetIO();
+    io.MousePos = ImVec2(e.GetX(), e.GetY());
+    return false;
+  
+  }
+  bool ImGUILayer::OnMouseScrolledEvent(MouseScrollEvent& e){
+    ImGuiIO& io = ImGui::GetIO();
+    io.MouseWheelH += e.GetYOffset();
+    io.MouseWheel += e.GetXOffset();
+    return false; 
+  }
+  bool ImGUILayer::OnKeyPressedEvent(KeyPressedEvent& e){
+    return false;
+  }
+  bool ImGUILayer::OnKeyReleasedEvent(KeyReleasedEvent& e){
+    return false;
+  }
+  //bool ImGUILayer::OnKeyTypedEvent(KeyTypedEvent& e);
+  bool ImGUILayer::OnWindowResizeEvent(WindowResizeEvent& e){
+    return false;
+  }
+  
 }
