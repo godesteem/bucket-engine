@@ -4,19 +4,25 @@ project(engine VERSION 0.0.1 DESCRIPTION "This is the bucket engine.")
 add_definitions(-DEXPORT_MOLECULE_DLL)
 set(imgui_root ${CMAKE_SOURCE_DIR}/engine/vendor/imgui)
 
+if(BE_PLATFORM_WINDOWS)
+  add_compile_definitions(IMGUI_API=__declspec(dllexport))
+elseif(BE_PLATFORM_LINUX)
+  add_compile_definitions(IMGUI_API)
+endif(BE_PLATFORM_WINDOWS)
+
 set(ENGINE_SOURCE_FILES
   # sources
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Application.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Log.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Layer.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/LayerStack.cpp
-  
+
   #GUI
   ${CMAKE_SOURCE_DIR}/engine/src/engine/imgui/ImGuiLayer.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/imgui/ImGUIBuild.cpp
 
   #platform
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/imGUIOpenGLRenderer.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/LinuxInput.cpp
 
   #3rd party
@@ -24,7 +30,7 @@ set(ENGINE_SOURCE_FILES
   ${imgui_root}/imgui_demo.cpp
   ${imgui_root}/imgui_draw.cpp
   ${imgui_root}/imgui_widgets.cpp
-)
+  )
 set(ENGINE_HEADER_FILES
   # sources
   ${CMAKE_SOURCE_DIR}/engine/src/engine.h
@@ -40,7 +46,7 @@ set(ENGINE_HEADER_FILES
 
   #GUI
   ${CMAKE_SOURCE_DIR}/engine/src/engine/imgui/ImGuiLayer.h
-  
+
   # events
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/ApplicationEvent.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/Event.h
@@ -52,7 +58,6 @@ set(ENGINE_HEADER_FILES
 
   #platform
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.h
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/imGUIOpenGLRenderer.h
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/LinuxInput.h
 
   #3rd party
@@ -62,13 +67,14 @@ set(ENGINE_HEADER_FILES
   ${imgui_root}/imstb_rectpack.h
   ${imgui_root}/imstb_textedit.h
   ${imgui_root}/imstb_truetype.h
-)
+  )
 
 set(GLAD_DIR "${CMAKE_SOURCE_DIR}/engine/vendor/glad")
 
-add_library(engine SHARED 
+add_library(engine STATIC
   ${ENGINE_SOURCE_FILES}
   ${ENGINE_HEADER_FILES}
+#  ${CMAKE_SOURCE_DIR}/engine/src/engine.def
 )
 
 set_target_properties(engine PROPERTIES SOVERSION 1)
@@ -84,7 +90,7 @@ target_precompile_headers(engine PRIVATE ${CMAKE_SOURCE_DIR}/engine/src/bepch.h)
 add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/glfw-3.3.2)
 add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/glm/glm)
 #add_library(glm SHARED ${CMAKE_SOURCE_DIR}/engine/vendor/glm/glm)
-add_library(glad SHARED ${GLAD_DIR}/src/glad.c)
+add_library(glad STATIC ${GLAD_DIR}/src/glad.c)
 #add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/imgui)
 # target_include_directories(engine PUBLIC "${GLAD_DIR}/include")
 

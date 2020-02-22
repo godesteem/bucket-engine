@@ -2,13 +2,29 @@ cmake_minimum_required(VERSION 3.16)
 project(bucket-rpg)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-
-
 set(CMAKE_CXX_STANDARD 14)
+
+if (WIN32 OR MSVC)
+  add_compile_definitions(BE_PLATFORM_WINDOWS)
+else()
+  add_compile_definitions(BE_PLATFORM_LINUX)
+endif (WIN32 OR MSVC)
+
+if(BE_PLATFORM_WINDOWS)
+  add_compile_definitions(IMGUI_API=__declspec(dllimport))
+elseif(BE_PLATFORM_LINUX)
+  add_compile_definitions(IMGUI_API)
+endif(BE_PLATFORM_WINDOWS)
 
 file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.c ${CMAKE_SOURCE_DIR}/sandbox/src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.h ${CMAKE_SOURCE_DIR}/sandbox/src/*.hpp)
 
+
+if(BE_PLATFORM_WINDOWS)
+  add_compile_definitions(IMGUI_API=__declspec(dllimport))
+elseif(BE_PLATFORM_LINUX)
+  add_compile_definitions(IMGUI_API)
+endif(BE_PLATFORM_WINDOWS)
 
 if(CMAKE_BUILD_TYPE EQUAL "Debug")
   add_compile_definitions(BE_DEBUG)
@@ -35,6 +51,7 @@ endif(CMAKE_BUILD_TYPE EQUAL "Debug")
 
 
 include_directories(${CMAKE_SOURCE_DIR}/engine/src)
+include_directories(${CMAKE_SOURCE_DIR}/engine/vendor)
 
 add_subdirectory(./engine)
 

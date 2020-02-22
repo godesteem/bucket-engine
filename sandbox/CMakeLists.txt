@@ -13,14 +13,13 @@ link_directories(${CMAKE_SOURCE_DIR}/lib)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 add_executable(sandbox ${HEADER_FILES} ${SOURCE_FILES})
 
-# find & configure openGL
-
 set(LIBS ${CMAKE_SOURCE_PATH}/build/engine/libengine.so)
 
 include_directories(
 	"${CMAKE_SOURCE_DIR}/src"	
 	"${CMAKE_SOURCE_DIR}/include"
 )
+include_directories(${CMAKE_SOURCE_DIR}/engine/vendor)
 
 target_link_libraries(sandbox ${LIBS})
 

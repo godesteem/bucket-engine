@@ -7,6 +7,7 @@
  */
 
 #include <engine.h>
+#include <imgui/imgui.h>
 
 
 class ExampleLayer: public Engine::Layer
@@ -15,6 +16,12 @@ class ExampleLayer: public Engine::Layer
     ExampleLayer()
       :Layer("Example")
     {}
+
+    virtual void OnImGuiRender() override {
+      ImGui::Begin("Test");
+      ImGui::Text("Hello World!");
+      ImGui::End();
+    }
     
     void OnUpdate() override {
       //BE_INFO("ExampleLayer::OnUpdate");
@@ -38,7 +45,6 @@ class Sandbox: public Engine::Application
     Sandbox()
     {
       PushLayer(new ExampleLayer());
-      PushOverlay(new Engine::ImGUILayer());
     }
 
     ~Sandbox()
