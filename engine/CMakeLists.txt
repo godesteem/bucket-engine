@@ -21,6 +21,9 @@ set(ENGINE_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/imgui/ImGuiLayer.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/imgui/ImGUIBuild.cpp
 
+  # renderer
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Shader.cpp
+
   #platform
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/LinuxInput.cpp
@@ -60,6 +63,7 @@ set(ENGINE_HEADER_FILES
 
   # renderer
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/GraphicsContext.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Shader.h
 
   ## Platform
   # windows

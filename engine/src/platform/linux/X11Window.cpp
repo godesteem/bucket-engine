@@ -2,7 +2,7 @@
  * File              : X11Window.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 16.02.2020
- * Last Modified Date: 18.02.2020
+ * Last Modified Date: 22.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -138,7 +138,6 @@ namespace Engine {
   void X11Window::OnUpdate() const {
     glfwPollEvents();
     m_Context->SwapBuffers();
-    glfwSwapBuffers(m_Window);
   }
 
   void X11Window::SetVSync(bool enabled){
