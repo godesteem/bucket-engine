@@ -62,7 +62,13 @@ namespace Engine {
 
       // Setup Platform/Renderer bindings
       ImGui_ImplGlfw_InitForOpenGL(window, true);
+#ifdef BE_PLATFORM_LINUX
       ImGui_ImplOpenGL3_Init("#version 130");
+#endif
+#ifdef BE_PLATFORM_WINDOWS
+      // TODO: figure out windows version.
+      ImGui_ImplOpenGL3_Init("#version 130");
+#endif
 
     }
 
@@ -82,7 +88,7 @@ namespace Engine {
     void ImGUILayer::End() {
       ImGuiIO& io = ImGui::GetIO();
       Application& app = Application::Get();
-      io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+      io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(),(float) app.GetWindow().GetHeight());
 
       // Rendering
       ImGui::Render();

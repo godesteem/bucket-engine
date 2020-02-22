@@ -8,7 +8,7 @@
 #pragma once
 
 #include "engine/Window.h"
-#include <GLFW/glfw3.h>
+#include "engine/renderer/GraphicsContext.h"
 
 namespace Engine {
   
@@ -34,6 +34,7 @@ namespace Engine {
       virtual void ShutDown();
 
       GLFWwindow* m_Window;
+      GraphicsContext* m_Context;
 
       struct WindowData {
         std::string Title;

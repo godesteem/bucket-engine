@@ -7,12 +7,13 @@
  */
 
 #include "bepch.h"
-#include <glad/glad.h>
+#include "platform/opengl/OpenGLContext.h"
 #include "X11Window.h"
 
 #include "engine/events/ApplicationEvent.h"
 #include "engine/events/KeyEvent.h"
 #include "engine/events/MouseEvent.h"
+
 
 
 namespace Engine {
@@ -43,6 +44,7 @@ namespace Engine {
 
     BE_CORE_INFO("Creating window {0} ({1}x{2})", props.Title, props.Width, props.Height);
 
+
     if(!s_GLFWInitialized){
       int success = glfwInit();
       BE_CORE_ASSERT(success, "Could not initialize GLFW!");
@@ -51,9 +53,8 @@ namespace Engine {
     }
 
     m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
-    glfwMakeContextCurrent(m_Window);
-    int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    BE_CORE_ASSERT(status, "Failed to initialize GLAD!");
+    m_Context = new OpenGLContext(m_Window);
+    m_Context->Init();
     glfwSetWindowUserPointer(m_Window, &m_Data);
     SetVSync(true);
 
@@ -136,6 +137,7 @@ namespace Engine {
 
   void X11Window::OnUpdate() const {
     glfwPollEvents();
+    m_Context->SwapBuffers();
     glfwSwapBuffers(m_Window);
   }
 

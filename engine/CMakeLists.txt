@@ -24,6 +24,8 @@ set(ENGINE_SOURCE_FILES
   #platform
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/LinuxInput.cpp
+  # renderer
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLContext.cpp
 
   #3rd party
   ${imgui_root}/imgui.cpp
@@ -56,9 +58,16 @@ set(ENGINE_HEADER_FILES
   # input
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Input.h
 
-  #platform
+  # renderer
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/GraphicsContext.h
+
+  ## Platform
+  # windows
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.h
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/LinuxInput.h
+
+  # renderer
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLContext.h
 
   #3rd party
   ${imgui_root}/imconfig.h

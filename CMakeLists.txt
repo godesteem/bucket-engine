@@ -25,6 +25,7 @@ if(BE_PLATFORM_WINDOWS)
 elseif(BE_PLATFORM_LINUX)
   add_compile_definitions(IMGUI_API)
 endif(BE_PLATFORM_WINDOWS)
+add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 
 if(CMAKE_BUILD_TYPE EQUAL "Debug")
   add_compile_definitions(BE_DEBUG)
