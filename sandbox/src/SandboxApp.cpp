@@ -33,7 +33,7 @@ class ExampleLayer: public Engine::Layer
     void OnEvent(Engine::Event& event) override {
       //BE_INFO("{0}", event);
       if(event.GetEventType() == Engine::EventType::KeyPressed){
-        Engine::KeyPressedEvent& e = (Engine::KeyPressedEvent&)event;
+        auto& e = (Engine::KeyPressedEvent&)event;
         BE_TRACE("{0}", (char) e.GetKeyCode());
       }
     }

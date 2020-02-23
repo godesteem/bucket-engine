@@ -2,7 +2,7 @@
  * File              : Application.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 18.02.2020
+ * Last Modified Date: 22.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -13,6 +13,8 @@
 #include "Window.h"
 
 #include "engine/renderer/Shader.h"
+#include "engine/renderer/Buffer.h"
+
 
 #include "imgui/ImGuiLayer.h"
 #include "LayerStack.h"
@@ -42,9 +44,10 @@ namespace Engine {
       bool m_Running = true;
       LayerStack m_LayerStack;
 
-      unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+      unsigned int m_VertexArray;
       std::unique_ptr<Shader> m_Shader;
-
+      std::unique_ptr<VertexBuffer> m_VertexBuffer;
+      std::unique_ptr<IndexBuffer> m_IndexBuffer;
       static Application* s_Instance;
   };
   

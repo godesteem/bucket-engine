@@ -36,8 +36,8 @@ namespace Engine {
     glGenVertexArrays(1, &m_VertexArray);
     glBindVertexArray(m_VertexArray);
 
-    glGenBuffers(1, &m_VertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
+    //glGenBuffers(1, &m_VertexBuffer);
+    //glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
 
     float vertices [4 * 3] = {
         -0.5f, -0.5f,  0.0f,
@@ -45,17 +45,22 @@ namespace Engine {
          0.5f,  0.5f,  0.0f,
         -0.5f,  0.5f,  0.0f,
     };
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    BE_CORE_TRACE("Setting VertexBuffer");
+    m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+    m_VertexBuffer->Bind();
+    BE_CORE_TRACE("VertexBuffer set.");
+    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-    glGenBuffers(1, &m_IndexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
+    //glGenBuffers(1, &m_IndexBuffer);
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
 
-    unsigned int indices[6] = {0, 1, 2, 2, 3, 0};
-
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW);
+    BE_CORE_TRACE("Setting IndexBuffer");
+    uint32_t indices[6] = {0, 1, 2, 2, 3, 0};
+    m_IndexBuffer.reset(IndexBuffer::Create(indices, 6));
+    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW);
 
     std::string vertexSrc = R"(
       #version 130
@@ -77,6 +82,7 @@ namespace Engine {
       }
     )";
 
+    BE_CORE_TRACE("Setting Shader");
     m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
 
   }
@@ -120,7 +126,7 @@ namespace Engine {
       
       m_Shader->Bind();
       glBindVertexArray(m_VertexArray);
-      glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+      glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 
       for(Layer* layer : m_LayerStack){
         layer->OnUpdate();

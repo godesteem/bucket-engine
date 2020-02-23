@@ -23,12 +23,16 @@ set(ENGINE_SOURCE_FILES
 
   # renderer
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Shader.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Buffer.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Renderer.cpp
 
   #platform
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/LinuxInput.cpp
+
   # renderer
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLContext.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLBuffer.cpp
 
   #3rd party
   ${imgui_root}/imgui.cpp
@@ -63,7 +67,9 @@ set(ENGINE_HEADER_FILES
 
   # renderer
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/GraphicsContext.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Buffer.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Shader.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Renderer.h
 
   ## Platform
   # windows
@@ -72,6 +78,7 @@ set(ENGINE_HEADER_FILES
 
   # renderer
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLContext.h
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLBuffer.h
 
   #3rd party
   ${imgui_root}/imconfig.h
