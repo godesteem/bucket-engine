@@ -27,6 +27,7 @@ let g:syntastic_cpp_compiler_options = ' -std=c++17'
 let g:syntastic_cpp_compiler = 'clang++'
 
 nnoremap <F5> :!./build.sh<CR>
+nnoremap <C-t> :tabedit %<CR>
 
 
 map <F4> :AddGNULicense<CR>

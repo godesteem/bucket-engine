@@ -25,6 +25,7 @@ set(ENGINE_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Shader.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Buffer.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Renderer.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/VertexArray.cpp
 
   #platform
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
@@ -33,6 +34,7 @@ set(ENGINE_SOURCE_FILES
   # renderer
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLContext.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLBuffer.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLVertexArray.cpp
 
   #3rd party
   ${imgui_root}/imgui.cpp
@@ -70,6 +72,7 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Buffer.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Shader.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Renderer.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/VertexArray.h
 
   ## Platform
   # windows
@@ -79,6 +82,7 @@ set(ENGINE_HEADER_FILES
   # renderer
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLContext.h
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLBuffer.h
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLVertexArray.h
 
   #3rd party
   ${imgui_root}/imconfig.h

@@ -6,6 +6,7 @@
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
+#include "bepch.h"
 
 namespace Engine {
   enum class ShaderDataType: uint8_t {
@@ -17,6 +18,7 @@ namespace Engine {
 
   static uint32_t ShaderDataTypeSize(ShaderDataType type){
     switch(type){
+      case ShaderDataType::None: return 0;
       case ShaderDataType::Float: return 4;
       case ShaderDataType::Float2: return 2*4;
       case ShaderDataType::Float3: return 3*4;

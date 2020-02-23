@@ -2,10 +2,9 @@
  * File              : Buffer.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 22.02.2020
- * Last Modified Date: 22.02.2020
+ * Last Modified Date: 23.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
-#include "bepch.h"
 #include "Buffer.h"
 #include "Renderer.h"
 #include "platform/opengl/OpenGLBuffer.h"

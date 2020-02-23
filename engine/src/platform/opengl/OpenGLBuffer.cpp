@@ -18,6 +18,7 @@ namespace Engine {
   OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
   {
     BE_CORE_TRACE("Creating OpenGLVertexBuffer");
+    // TODO: This might be Platform dependent
     glGenBuffers(1, &m_RendererID);
     BE_CORE_TRACE("Binding OpenGLVertexBuffer.");
     glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
@@ -49,6 +50,7 @@ namespace Engine {
   OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count)
       : m_Count(count)
   {
+    // TODO: This might be Platform dependent
     glGenBuffers(1, &m_RendererID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
