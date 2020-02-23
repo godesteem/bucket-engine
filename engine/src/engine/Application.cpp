@@ -2,7 +2,7 @@
  * File              : Application.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 22.02.2020
+ * Last Modified Date: 23.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
@@ -20,6 +20,24 @@ namespace Engine {
   
   Application* Application::s_Instance = nullptr;
   
+  static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type){
+    switch(type){
+      case Engine::ShaderDataType::Float: return GL_FLOAT;
+      case Engine::ShaderDataType::Float2: return GL_FLOAT;
+      case Engine::ShaderDataType::Float3: return GL_FLOAT;
+      case Engine::ShaderDataType::Float4: return GL_FLOAT;
+      case Engine::ShaderDataType::Int: return GL_INT;
+      case Engine::ShaderDataType::Int2: return GL_INT;
+      case Engine::ShaderDataType::Int3: return GL_INT;
+      case Engine::ShaderDataType::Int4: return GL_INT;
+      case Engine::ShaderDataType::Mat3: return GL_FLOAT;
+      case Engine::ShaderDataType::Mat4: return GL_FLOAT;
+      case Engine::ShaderDataType::Bool: return GL_BOOL;
+    };
+    BE_CORE_ASSERT(false, "ShaderDataType unknown.");
+    return 0;
+  }
+   
   Application::Application(){
     BE_INFO("Creating application");
     BE_ASSERT(!s_Instance, "Application already exists.");
@@ -29,56 +47,71 @@ namespace Engine {
     m_ImGuiLayer = new ImGUILayer();
     PushOverlay(m_ImGuiLayer);
 
-
-    // Vertex Array
-    // Vertex Buffer
-    // Index Buffer
     glGenVertexArrays(1, &m_VertexArray);
     glBindVertexArray(m_VertexArray);
 
-    //glGenBuffers(1, &m_VertexBuffer);
-    //glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-
-    float vertices [4 * 3] = {
-        -0.5f, -0.5f,  0.0f,
-         0.5f, -0.5f,  0.0f,
-         0.5f,  0.5f,  0.0f,
-        -0.5f,  0.5f,  0.0f,
+    float vertices [3 * 7] = {
+        -0.5f, -0.5f,  0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+         0.5f, -0.5f,  0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+         0.5f,  0.5f,  0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
     };
-    BE_CORE_TRACE("Setting VertexBuffer");
     m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-    m_VertexBuffer->Bind();
-    BE_CORE_TRACE("VertexBuffer set.");
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    
+    {
+      BufferLayout layout = {
+        { ShaderDataType::Float3, "position" },
+        { ShaderDataType::Float4, "color" }
+      };
+      m_VertexBuffer->SetLayout(layout);
+    }
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-    //glGenBuffers(1, &m_IndexBuffer);
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
+    uint32_t index = 0;
+    const auto& layout = m_VertexBuffer->GetLayout();
+    
+    for(const auto& element: layout){
+      glEnableVertexAttribArray(index);
+      glVertexAttribPointer(
+        index,
+        element.GetComponentCount(),
+        ShaderDataTypeToOpenGLBaseType(element.Type),
+        element.Normalized ? GL_TRUE : GL_FALSE,
+        layout.GetStride(),
+        (const void*) element.Offset
+      );
+      index++;  
+    }
+    
 
-    BE_CORE_TRACE("Setting IndexBuffer");
-    uint32_t indices[6] = {0, 1, 2, 2, 3, 0};
-    m_IndexBuffer.reset(IndexBuffer::Create(indices, 6));
-    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW);
+
+    //glEnableVertexAttribArray(0);
+    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+
+    uint32_t indices[6] = {0, 1, 2};
+    m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices)/ sizeof(float)));
 
     std::string vertexSrc = R"(
       #version 130
       in vec3 position;
+      in vec4 color;
+
       out vec3 v_Position;
+      out vec4 v_Color;
 
       void main() {
         v_Position = position + 0.5;
+        v_Color = color;
         gl_Position = vec4(position + 0.5, 1.0);
       }
     )";
     std::string fragmentSrc = R"(
       #version 130
-      out vec4 Color;
+      in vec4 v_Color;
       in vec3 v_Position;
-
+      out vec4 color;
       void main() {
-        Color = vec4(v_Position * 0.5 + 0.5, 1.0);
+        color = vec4(v_Position * 0.5 + 0.5, 1.0);
+        color = v_Color;
       }
     )";
 
