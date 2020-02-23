@@ -22,6 +22,7 @@ namespace Engine {
   
   static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type){
     switch(type){
+      case Engine::ShaderDataType::None: return GL_NONE;
       case Engine::ShaderDataType::Float: return GL_FLOAT;
       case Engine::ShaderDataType::Float2: return GL_FLOAT;
       case Engine::ShaderDataType::Float3: return GL_FLOAT;
