@@ -2,22 +2,22 @@
  * File              : Renderer.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 22.02.2020
- * Last Modified Date: 22.02.2020
+ * Last Modified Date: 23.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
+#include "RenderCommand.h"
 
 namespace Engine {
-  enum class RendererAPI
-  {
-    None = 0, OpenGL = 1,
-  };
-
   class Renderer
   {
   public:
-    inline static RendererAPI GetAPI() { return s_RendererAPI; };
-  private:
-    static RendererAPI s_RendererAPI;
+
+    static void BeginScene(); // TODO: add more params ;)
+    static void EndScene();
+
+    static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
+
+    inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
   };
 };
