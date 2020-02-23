@@ -18,9 +18,10 @@ namespace Engine {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
   
   Application* Application::s_Instance = nullptr;
-  
    
-  Application::Application(){
+  Application::Application()
+  : m_Camera(-3.2f, 3.2f, -1.8f, 1.8f)
+  {
     BE_INFO("Creating application");
     BE_ASSERT(!s_Instance, "Application already exists.");
     s_Instance = this;
@@ -84,11 +85,12 @@ namespace Engine {
       #version 130
       in vec3 position;
 
+      uniform mat4 u_ViewProjection;
       out vec3 v_Position;
 
       void main() {
         v_Position = position;
-        gl_Position = vec4(position, 1.0);
+        gl_Position = u_ViewProjection * vec4(position, 1.0);
       }
     )";
     std::string fragmentSrcBlue = R"(
@@ -105,6 +107,7 @@ namespace Engine {
       #version 130
       in vec3 position;
       in vec4 color;
+      uniform mat4 u_ViewProjection;
 
       out vec3 v_Position;
       out vec4 v_Color;
@@ -112,7 +115,7 @@ namespace Engine {
       void main() {
         v_Position = position;
         v_Color = color;
-        gl_Position = vec4(position, 1.0);
+        gl_Position = u_ViewProjection * vec4(position, 1.0);
       }
     )";
     std::string fragmentSrc = R"(
@@ -166,11 +169,13 @@ namespace Engine {
     while(m_Running){
       RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1});
       RenderCommand::Clear();
-      Renderer::BeginScene();
-      m_BlueShader->Bind();
-      Renderer::Submit(m_SquareVA);
-      m_Shader->Bind();
-      Renderer::Submit(m_VertexArray);
+      
+      Renderer::BeginScene(m_Camera);
+
+      Renderer::Submit(m_SquareVA, m_BlueShader);
+
+      Renderer::Submit(m_VertexArray, m_Shader);
+
       Renderer::EndScene();
 
       for(Layer* layer : m_LayerStack){
