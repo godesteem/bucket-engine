@@ -2,7 +2,7 @@
  * File              : SandboxApp.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 18.02.2020
+ * Last Modified Date: 23.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -18,9 +18,6 @@ class ExampleLayer: public Engine::Layer
     {}
 
     virtual void OnImGuiRender() override {
-      ImGui::Begin("Test");
-      ImGui::Text("Hello World!");
-      ImGui::End();
     }
     
     void OnUpdate() override {

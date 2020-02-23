@@ -15,7 +15,8 @@ namespace Engine {
   {
   public:
     OpenGLVertexArray();
-    ~OpenGLVertexArray() override {};
+    ~OpenGLVertexArray() override;
+
 
     void Bind() const override;
     void Unbind() const override;
@@ -23,6 +24,8 @@ namespace Engine {
     void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) override;
     void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) override;
     //virtual void SetLayout(const BufferLayout& layout) override;
+    virtual std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffer() override { return m_VertexBuffers;};
+    virtual std::shared_ptr<IndexBuffer>& GetIndexBuffer() override { return m_IndexBuffer; };
 
   private:
     uint32_t m_RendererID = 0;

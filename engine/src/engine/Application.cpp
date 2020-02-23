@@ -37,18 +37,70 @@ namespace Engine {
          0.5f, -0.5f,  0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
          0.5f,  0.5f,  0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
     };
-    m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices))); 
+    std::shared_ptr<VertexBuffer> triangleVB;
+    triangleVB.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+
     BufferLayout layout = {
       { ShaderDataType::Float3, "position" },
       { ShaderDataType::Float4, "color" }
     };
     
-    m_VertexBuffer->SetLayout(layout);
-    m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+    triangleVB->SetLayout(layout);
+    m_VertexArray->AddVertexBuffer(triangleVB);
 
     uint32_t indices[3] = {0, 1, 2};
-    m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices)/ sizeof(uint32_t)));
-    m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+
+    std::shared_ptr<IndexBuffer> triangleIA;
+    triangleIA.reset(IndexBuffer::Create(indices, sizeof(indices)/ sizeof(uint32_t)));
+    m_VertexArray->SetIndexBuffer(triangleIA);
+
+    m_SquareVA.reset(VertexArray::Create());
+    
+    float squareVertices [3 * 4] = {
+        -0.75f, -0.75f,  0.0f,
+         0.75f, -0.75f,  0.0f,
+         0.75f,  0.75f,  0.0f,
+        -0.75f,  0.75f,  0.0f,
+    };
+
+    std::shared_ptr<VertexBuffer> squareVB;
+    squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+
+    squareVB->SetLayout({
+      { ShaderDataType::Float3, "position" }
+    });
+    m_SquareVA->AddVertexBuffer(squareVB);
+
+
+    uint32_t squareIndices[6] = {
+      0, 1, 2,
+      2, 3, 0
+    };
+    std::shared_ptr<IndexBuffer> squareIA;
+    squareIA.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices)/ sizeof(uint32_t)));
+    m_SquareVA->SetIndexBuffer(squareIA);
+
+    BE_CORE_TRACE("Setting Shader");
+    std::string vertexSrcBlue = R"(
+      #version 130
+      in vec3 position;
+
+      out vec3 v_Position;
+
+      void main() {
+        v_Position = position;
+        gl_Position = vec4(position, 1.0);
+      }
+    )";
+    std::string fragmentSrcBlue = R"(
+      #version 130
+      in vec3 v_Position;
+      out vec4 color;
+      void main() {
+        color = vec4(v_Position * 0.5 + 0.5, 1.0);
+      }
+    )";
+    m_BlueShader.reset(new Shader(vertexSrcBlue, fragmentSrcBlue));
 
     std::string vertexSrc = R"(
       #version 130
@@ -59,9 +111,9 @@ namespace Engine {
       out vec4 v_Color;
 
       void main() {
-        v_Position = position + 0.5;
+        v_Position = position;
         v_Color = color;
-        gl_Position = vec4(position + 0.5, 1.0);
+        gl_Position = vec4(position, 1.0);
       }
     )";
     std::string fragmentSrc = R"(
@@ -75,7 +127,6 @@ namespace Engine {
       }
     )";
 
-    BE_CORE_TRACE("Setting Shader");
     m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
 
   }
@@ -116,10 +167,14 @@ namespace Engine {
     while(m_Running){
       glClearColor(0.1f, 0.1f, 0.1f, 1);
       glClear(GL_COLOR_BUFFER_BIT);
+     
+      m_BlueShader->Bind(); 
+      m_SquareVA->Bind();
+      glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
       
       m_Shader->Bind();
       m_VertexArray->Bind();
-      glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+      glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
       for(Layer* layer : m_LayerStack){
         layer->OnUpdate();
