@@ -14,7 +14,7 @@ class ExampleLayer: public Engine::Layer
 {
   public:
     ExampleLayer()
-      :Layer("Example"), m_Camera(-3.2f, 3.2f, -1.8f, 1.8f)
+      :Layer("Example"), m_Camera(-3.2f, 3.2f, -1.8f, 1.8f), m_CameraPosition(0.0f)
     {
       m_VertexArray.reset(Engine::VertexArray::Create());
 
@@ -120,8 +120,24 @@ class ExampleLayer: public Engine::Layer
     }
     
     void OnUpdate() override {
+
+      if(Engine::Input::IsKeyPressed(BE_KEY_LEFT)){
+        m_CameraPosition.x += m_CameraSpeed;
+      }
+      if(Engine::Input::IsKeyPressed(BE_KEY_RIGHT)){
+        m_CameraPosition.x -= m_CameraSpeed;
+      }
+      if(Engine::Input::IsKeyPressed(BE_KEY_UP)){
+        m_CameraPosition.y -= m_CameraSpeed;
+      }
+      if(Engine::Input::IsKeyPressed(BE_KEY_DOWN)){
+        m_CameraPosition.y += m_CameraSpeed;
+      }
+
       Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1});
       Engine::RenderCommand::Clear();
+
+      m_Camera.SetPosition(m_CameraPosition);
 
       Engine::Renderer::BeginScene(m_Camera);
 
@@ -134,6 +150,13 @@ class ExampleLayer: public Engine::Layer
 
     }
     void OnEvent(Engine::Event& event) override {
+      Engine::EventDispatcher dispatcher(event);
+
+      dispatcher.Dispatch<Engine::KeyPressedEvent>(BE_BIND_EVENT_FN(ExampleLayer::OnKeyPresseEvent));
+
+    }
+    bool OnKeyPresseEvent(Engine::KeyPressedEvent& event){
+      return false;
     }
   private:
     std::shared_ptr<Engine::Shader> m_Shader;
@@ -143,7 +166,8 @@ class ExampleLayer: public Engine::Layer
     std::shared_ptr<Engine::VertexArray> m_SquareVA;
 
     Engine::OrthographicCamera m_Camera;
-
+    glm::vec3 m_CameraPosition;
+    float m_CameraSpeed = 0.1f;
 };
 
 class Sandbox: public Engine::Application
