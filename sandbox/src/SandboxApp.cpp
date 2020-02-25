@@ -124,20 +124,28 @@ class ExampleLayer: public Engine::Layer
       if(Engine::Input::IsKeyPressed(BE_KEY_LEFT)){
         m_CameraPosition.x += m_CameraSpeed;
       }
-      if(Engine::Input::IsKeyPressed(BE_KEY_RIGHT)){
+      else if(Engine::Input::IsKeyPressed(BE_KEY_RIGHT)){
         m_CameraPosition.x -= m_CameraSpeed;
       }
       if(Engine::Input::IsKeyPressed(BE_KEY_UP)){
         m_CameraPosition.y -= m_CameraSpeed;
       }
-      if(Engine::Input::IsKeyPressed(BE_KEY_DOWN)){
+      else if(Engine::Input::IsKeyPressed(BE_KEY_DOWN)){
         m_CameraPosition.y += m_CameraSpeed;
+      }
+
+      if(Engine::Input::IsKeyPressed(BE_KEY_A)){
+        m_CameraRotation -= m_CameraRotationSpeed;
+      }
+      else if(Engine::Input::IsKeyPressed(BE_KEY_D)){
+        m_CameraRotation += m_CameraRotationSpeed;
       }
 
       Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1});
       Engine::RenderCommand::Clear();
 
       m_Camera.SetPosition(m_CameraPosition);
+      m_Camera.SetRotation(m_CameraRotation);
 
       Engine::Renderer::BeginScene(m_Camera);
 
@@ -168,6 +176,8 @@ class ExampleLayer: public Engine::Layer
     Engine::OrthographicCamera m_Camera;
     glm::vec3 m_CameraPosition;
     float m_CameraSpeed = 0.1f;
+    float m_CameraRotation = 0.0f;
+    float m_CameraRotationSpeed = 2.0f;
 };
 
 class Sandbox: public Engine::Application
