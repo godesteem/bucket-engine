@@ -13,12 +13,23 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
+// camera
+const std::string textureSrc = "";
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
+float lastX = SCR_WIDTH / 2.0f;
+float lastY = SCR_HEIGHT / 2.0f;
+bool firstMouse = true;
 
 class ExampleLayer: public Engine::Layer
 {
   public:
     ExampleLayer()
-      :Layer("Example"), m_Camera(-3.2f, 3.2f, -1.8f, 1.8f), m_CameraPosition(0.0f), m_SquarePosition(0.0f)
+      :Layer("Example"),
+      // m_Camera(glm::vec3(0.0f, 0.0f, 3.0f)),
+      m_Camera(-1.6f, 1.6f, -0.9f, 0.9f),
+      m_CameraPosition(0.0f),
+      m_SquarePosition(0.0f)
     {
       m_VertexArray.reset(Engine::VertexArray::Create());
 
@@ -46,17 +57,18 @@ class ExampleLayer: public Engine::Layer
 
       m_SquareVA.reset(Engine::VertexArray::Create());
 
-      float squareVertices [3 * 4] = {
-          -0.5f, -0.5f,  0.0f,
-           0.5f, -0.5f,  0.0f,
-           0.5f,  0.5f,  0.0f,
-          -0.5f,  0.5f,  0.0f,
+      float squareVertices [5 * 4] = {
+          -0.5f, -0.5f,  0.0f,  0.0f,  0.0f,
+           0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+           0.5f,  0.5f,  0.0f,  1.0f,  1.0f,
+          -0.5f,  0.5f,  0.0f,  0.0f,  1.0f
       };
 
       Engine::Ref<Engine::VertexBuffer> squareVB;
       squareVB.reset(Engine::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
       squareVB->SetLayout({
-        { Engine::ShaderDataType::Float3, "position" }
+        { Engine::ShaderDataType::Float3, "position" },
+        { Engine::ShaderDataType::Float2, "textCord" }
       });
       m_SquareVA->AddVertexBuffer(squareVB);
 
@@ -99,7 +111,7 @@ class ExampleLayer: public Engine::Layer
       m_Shader.reset(Engine::Shader::Create(vertexSrc, fragmentSrc));
 
 
-      std::string flatColorvertexSrc = R"(
+      std::string flatColorVertexSrc = R"(
         #version 130
         in vec3 position;
 
@@ -113,7 +125,7 @@ class ExampleLayer: public Engine::Layer
           gl_Position = u_ViewProjection * u_Transform * vec4(position, 1.0);
         }
       )";
-      std::string flatColorfragmentSrc = R"(
+      std::string flatColorFragmentSrc = R"(
         #version 130
         in vec3 v_Position;
         uniform vec3 u_Color;
@@ -122,39 +134,91 @@ class ExampleLayer: public Engine::Layer
           color = vec4(u_Color, 1.0);
         }
       )";
-      m_FlatColorShader.reset(Engine::Shader::Create(flatColorvertexSrc, flatColorfragmentSrc));
+      m_FlatColorShader.reset(Engine::Shader::Create(flatColorVertexSrc, flatColorFragmentSrc));
+
+      std::string textureVertexSrc = R"(
+        #version 130
+        in vec3 position;
+        in vec2 textCord;
+
+        uniform mat4 u_ViewProjection;
+        uniform mat4 u_Transform;
+
+        out vec2 v_TextCord;
+
+        void main() {
+          v_TextCord = textCord;
+          gl_Position = u_ViewProjection * u_Transform * vec4(position, 1.0);
+        }
+      )";
+      std::string textureFragmentSrc = R"(
+        #version 130
+        in vec2 v_TextCord;
+
+        out vec4 color;
+
+        uniform sampler2D u_Texture;
+
+        void main() {
+          color = texture(u_Texture, v_TextCord);
+        }
+      )";
+      m_TextureShader.reset(Engine::Shader::Create(textureVertexSrc, textureFragmentSrc));
+    
+      m_Texture = Engine::Texture2D::Create(textureSrc);
+      std::dynamic_pointer_cast<Engine::OpenGLShader>(m_TextureShader)->Bind();
+      std::dynamic_pointer_cast<Engine::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 
     }
 
     void OnUpdate(Engine::Timestep ts) override {
-
-      if(Engine::Input::IsKeyPressed(BE_KEY_LEFT)){
-        m_CameraPosition.x -= m_CameraSpeed * ts;
+      {
+        if (Engine::Input::IsKeyPressed(BE_KEY_LEFT)) {
+          m_CameraPosition.x -= m_CameraSpeed * ts;
+        } else if (Engine::Input::IsKeyPressed(BE_KEY_RIGHT)) {
+          m_CameraPosition.x += m_CameraSpeed * ts;
+        }
+        if (Engine::Input::IsKeyPressed(BE_KEY_UP)) {
+          m_CameraPosition.y += m_CameraSpeed * ts;
+        } else if (Engine::Input::IsKeyPressed(BE_KEY_DOWN)) {
+          m_CameraPosition.y -= m_CameraSpeed * ts;
+        }
       }
-      else if(Engine::Input::IsKeyPressed(BE_KEY_RIGHT)){
-        m_CameraPosition.x += m_CameraSpeed * ts;
-      }
-      if(Engine::Input::IsKeyPressed(BE_KEY_UP)){
-        m_CameraPosition.y += m_CameraSpeed * ts;
-      }
-      else if(Engine::Input::IsKeyPressed(BE_KEY_DOWN)){
-        m_CameraPosition.y -= m_CameraSpeed * ts;
-      }
-
-      if(Engine::Input::IsKeyPressed(BE_KEY_J)){
-        m_SquarePosition.x += m_SquareMoveSpeed * ts;
-      }
-      else if(Engine::Input::IsKeyPressed(BE_KEY_L)){
-        m_SquarePosition.x -= m_SquareMoveSpeed * ts;
-      }
-      if(Engine::Input::IsKeyPressed(BE_KEY_I)){
-        m_SquarePosition.y -= m_SquareMoveSpeed * ts;
-      }
-      else if(Engine::Input::IsKeyPressed(BE_KEY_K)){
-        m_SquarePosition.y += m_SquareMoveSpeed * ts;
+      {
+        if (Engine::Input::IsKeyPressed(BE_KEY_J)) {
+          m_SquarePosition.x += m_SquareMoveSpeed * ts;
+        } else if (Engine::Input::IsKeyPressed(BE_KEY_L)) {
+          m_SquarePosition.x -= m_SquareMoveSpeed * ts;
+        }
+        if (Engine::Input::IsKeyPressed(BE_KEY_I)) {
+          m_SquarePosition.y -= m_SquareMoveSpeed * ts;
+        } else if (Engine::Input::IsKeyPressed(BE_KEY_K)) {
+          m_SquarePosition.y += m_SquareMoveSpeed * ts;
+        }
       }
       Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1});
       Engine::RenderCommand::Clear();
+
+      /*
+      {
+        float xpos = Engine::Input::GetMouseX();
+        float ypos = Engine::Input::GetMouseY();
+
+        if (firstMouse)
+        {
+          lastX = xpos;
+          lastY = ypos;
+          firstMouse = false;
+        }
+
+        float xoffset = xpos - lastX;
+        float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+        lastX = xpos;
+        lastY = ypos;
+        m_Camera.ProcessMouseMovement(xoffset, yoffset);
+      }
+      */
 
       m_Camera.SetPosition(m_CameraPosition);
       m_Camera.SetRotation(0.0f);
@@ -172,8 +236,9 @@ class ExampleLayer: public Engine::Layer
       //ml->Set("u_Color", redColor);
       //squareMesh->SetMaterial(ml);
 
-      for(int y = 0; y < 20; ++y) {
-        for(int x = 0; x < 20; ++x) {
+      // Grid
+      for(int y = -10; y < 20; ++y) {
+        for(int x = -10; x < 20; ++x) {
           glm::vec3 pos(x * 0.1f, y * 0.1f, 0.0f);
           glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
           Engine::Renderer::Submit(m_SquareVA, m_FlatColorShader, transform);
@@ -181,7 +246,11 @@ class ExampleLayer: public Engine::Layer
         }
       }
 
-      Engine::Renderer::Submit(m_VertexArray, m_Shader);
+      m_Texture->Bind();
+      Engine::Renderer::Submit(m_SquareVA, m_TextureShader, glm::mat4(1.0f));
+      
+      // Triangle
+      // Engine::Renderer::Submit(m_VertexArray, m_Shader);
 
       Engine::Renderer::EndScene();
 
@@ -190,10 +259,10 @@ class ExampleLayer: public Engine::Layer
     void OnEvent(Engine::Event& event) override {
       Engine::EventDispatcher dispatcher(event);
 
-      dispatcher.Dispatch<Engine::KeyPressedEvent>(BE_BIND_EVENT_FN(ExampleLayer::OnKeyPresseEvent));
+      dispatcher.Dispatch<Engine::KeyPressedEvent>(BE_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
 
     }
-    bool OnKeyPresseEvent(Engine::KeyPressedEvent& event){
+    bool OnKeyPressedEvent(Engine::KeyPressedEvent& event){
       return false;
     }
 
@@ -204,10 +273,12 @@ class ExampleLayer: public Engine::Layer
     }
   private:
     Engine::Ref<Engine::Shader> m_Shader;
-    Engine::Ref<Engine::Shader> m_FlatColorShader;
+    Engine::Ref<Engine::Shader> m_FlatColorShader, m_TextureShader;
 
     Engine::Ref<Engine::VertexArray> m_VertexArray;
     Engine::Ref<Engine::VertexArray> m_SquareVA;
+
+    Engine::Ref<Engine::Texture2D> m_Texture;
 
     Engine::OrthographicCamera m_Camera;
     glm::vec3 m_CameraPosition;

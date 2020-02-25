@@ -31,6 +31,7 @@ set(ENGINE_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/RendererAPI.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/VertexArray.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCamera.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Texture.cpp
 
   #platform
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
@@ -42,6 +43,7 @@ set(ENGINE_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLRendererAPI.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLVertexArray.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLShader.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLTexture.cpp
 
   #3rd party
   ${imgui_root}/imgui.cpp
@@ -83,6 +85,7 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/RenderCommand.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/VertexArray.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCamera.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Texture.h
 
   ## Platform
   # windows
@@ -95,6 +98,7 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLBuffer.h
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLVertexArray.h
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLShader.h
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLTexture.h
 
   #3rd party
   ${imgui_root}/imconfig.h
@@ -120,9 +124,13 @@ include_directories(
   "${CMAKE_SOURCE_DIR}/engine/vendor/spdlog/include/spdlog"
   "${GLAD_DIR}/include"
   "${imgui_root}"
+  "${CMAKE_SOURCE_DIR}/engine/vendor/stb_image"
 )
 target_precompile_headers(engine PRIVATE ${CMAKE_SOURCE_DIR}/engine/src/bepch.h)
-
+add_library(stb_image STATIC
+  ${CMAKE_SOURCE_DIR}/engine/vendor/stb_image/stb_image.cpp
+  ${CMAKE_SOURCE_DIR}/engine/vendor/stb_image/stb_image.h
+)
 add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/glfw-3.3.2)
 add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/glm/glm)
 #add_library(glm SHARED ${CMAKE_SOURCE_DIR}/engine/vendor/glm/glm)
@@ -133,7 +141,7 @@ add_library(glad STATIC ${GLAD_DIR}/src/glad.c)
 # target_include_directories(glad PRIVATE "${GLAD_DIR}/include")
 
 find_package(OpenGL REQUIRED)
-target_link_libraries(engine PUBLIC OpenGL::GL glad glfw glm)
+target_link_libraries(engine PUBLIC OpenGL::GL glad glfw glm stb_image)
 
 # add_library("glad" "${GLAD_DIR}/src/glad.c")
 # target_include_directories(engine PRIVATE "${GLAD_DIR}/include")

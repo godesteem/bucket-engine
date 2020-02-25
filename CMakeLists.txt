@@ -59,6 +59,7 @@ add_subdirectory(./engine)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 include_directories(${CMAKE_BINARY_DIR}/sandbox/src)
+include_directories(${CMAKE_BINARY_DIR}/sandbox/assets)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 add_executable(bucket-rpg ${HEADER_FILES} ${SOURCE_FILES})

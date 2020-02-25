@@ -127,6 +127,7 @@ namespace Engine {
       MouseMovedEvent event(xPos, yPos);
       data.EventCallback(event);
     });
+    glEnable(GL_DEBUG_OUTPUT);
 
     BE_CORE_INFO("Callbacks set.");
   }
