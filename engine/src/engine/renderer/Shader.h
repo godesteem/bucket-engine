@@ -2,7 +2,7 @@
  * File              : Shader.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 23.02.2020
- * Last Modified Date: 23.02.2020
+ * Last Modified Date: 25.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 //
@@ -25,6 +25,7 @@ namespace Engine {
     void Unbind() const;
     
     void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
+    void UploadUniformFloat4(const std::string& name, const glm::vec4& values);
   private:
     uint32_t m_RendererID;
   };

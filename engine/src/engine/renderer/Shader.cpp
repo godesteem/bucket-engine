@@ -2,7 +2,7 @@
  * File              : Shader.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 23.02.2020
- * Last Modified Date: 23.02.2020
+ * Last Modified Date: 25.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -128,6 +128,10 @@ namespace Engine {
     glUseProgram(0);
   }
 
+  void Shader::UploadUniformFloat4(const std::string& name, const glm::vec4& values){
+    GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+    glUniform4f(location, values.x, values.y, values.z, values.w);
+  }
   void Shader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix){
     GLint location = glGetUniformLocation(m_RendererID, name.c_str());
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));

@@ -67,30 +67,6 @@ class ExampleLayer: public Engine::Layer
       m_SquareVA->SetIndexBuffer(squareIA);
 
       BE_CORE_TRACE("Setting Shader");
-      std::string vertexSrcBlue = R"(
-        #version 130
-        in vec3 position;
-
-        uniform mat4 u_ViewProjection;
-        uniform mat4 u_Transform;
-
-        out vec3 v_Position;
-
-        void main() {
-          v_Position = position;
-          gl_Position = u_ViewProjection * u_Transform * vec4(position, 1.0);
-        }
-      )";
-      std::string fragmentSrcBlue = R"(
-        #version 130
-        in vec3 v_Position;
-        out vec4 color;
-        void main() {
-          color = vec4(0.0, 0.0, 1.0, 1.0);
-        }
-      )";
-      m_BlueShader.reset(new Engine::Shader(vertexSrcBlue, fragmentSrcBlue));
-
       std::string vertexSrc = R"(
         #version 130
         in vec3 position;
@@ -118,6 +94,33 @@ class ExampleLayer: public Engine::Layer
         }
       )";
       m_Shader.reset(new Engine::Shader(vertexSrc, fragmentSrc));
+
+
+      std::string flatColorvertexSrc = R"(
+        #version 130
+        in vec3 position;
+
+        uniform mat4 u_ViewProjection;
+        uniform mat4 u_Transform;
+
+        out vec3 v_Position;
+
+        void main() {
+          v_Position = position;
+          gl_Position = u_ViewProjection * u_Transform * vec4(position, 1.0);
+        }
+      )";
+      std::string flatColorfragmentSrc = R"(
+        #version 130
+        in vec3 v_Position;
+        uniform vec4 u_Color;
+        out vec4 color;
+        void main() {
+          color = u_Color;
+        }
+      )";
+      m_FlatColorShader.reset(new Engine::Shader(flatColorvertexSrc, flatColorfragmentSrc));
+
     }
 
     virtual void OnImGuiRender() override {
@@ -158,12 +161,29 @@ class ExampleLayer: public Engine::Layer
 
       Engine::Renderer::BeginScene(m_Camera);
 
-      static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+      glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
+      glm::vec4 redColor(0.8f, 0.2f, 0.3f, 1.0f);
+      glm::vec4 blueColor(0.2f, 0.3f, 0.8f, 1.0f);
+
+      // TODO: Goal
+      //Engine::MaterialRef material = new Engine::Material(m_FlatColorShader);
+      //Engine::MaterialInstanceRef ml = new Engine::MaterialInstance(material);
+      //ml->Set("u_Color", redColor);
+      //squareMesh->SetMaterial(ml);
+
       for(int y = 0; y < 20; y++) {
         for(int x = 0; x < 20; x++) {
           glm::vec3 pos(x * 0.1f, y * 0.1f, 0.0f);
           glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-          Engine::Renderer::Submit(m_SquareVA, m_BlueShader, transform);
+          if(x % 2 == 0){
+            m_FlatColorShader->UploadUniformFloat4("u_Color", redColor);
+          }
+          else {
+            m_FlatColorShader->UploadUniformFloat4("u_Color", blueColor);
+          }
+          Engine::Renderer::Submit(m_SquareVA, m_FlatColorShader, transform);
+          //Engine::Renderer::Submit(ml, m_FlatColorShader, transform);
         }
       }
 
@@ -184,7 +204,7 @@ class ExampleLayer: public Engine::Layer
     }
   private:
     std::shared_ptr<Engine::Shader> m_Shader;
-    std::shared_ptr<Engine::Shader> m_BlueShader;
+    std::shared_ptr<Engine::Shader> m_FlatColorShader;
 
     std::shared_ptr<Engine::VertexArray> m_VertexArray;
     std::shared_ptr<Engine::VertexArray> m_SquareVA;
