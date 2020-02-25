@@ -2,7 +2,7 @@
  * File              : Renderer.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 22.02.2020
- * Last Modified Date: 23.02.2020
+ * Last Modified Date: 25.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -18,7 +18,7 @@ namespace Engine {
     static void BeginScene(OrthographicCamera& camera); // TODO: add more params ;)
     static void EndScene();
 
-    static void Submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader);
+    static void Submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, const glm::mat4& transform = glm::mat4(1.0f));
 
     inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
   private:
