@@ -2,7 +2,7 @@
  * File              : Application.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 23.02.2020
+ * Last Modified Date: 25.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
@@ -20,7 +20,6 @@ namespace Engine {
   Application* Application::s_Instance = nullptr;
    
   Application::Application()
-  : m_Camera(-3.2f, 3.2f, -1.8f, 1.8f)
   {
     BE_INFO("Creating application");
     BE_ASSERT(!s_Instance, "Application already exists.");
@@ -29,108 +28,6 @@ namespace Engine {
     m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
     m_ImGuiLayer = new ImGUILayer();
     PushOverlay(m_ImGuiLayer);
-
-    m_VertexArray.reset(VertexArray::Create());
-
-    float vertices [3 * 7] = {
-        -0.5f, -0.5f,  0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-         0.5f, -0.5f,  0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-         0.5f,  0.5f,  0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
-    };
-    std::shared_ptr<VertexBuffer> triangleVB;
-    triangleVB.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-
-    BufferLayout layout = {
-      { ShaderDataType::Float3, "position" },
-      { ShaderDataType::Float4, "color" }
-    };
-    
-    triangleVB->SetLayout(layout);
-    m_VertexArray->AddVertexBuffer(triangleVB);
-
-    uint32_t indices[3] = {0, 1, 2};
-
-    std::shared_ptr<IndexBuffer> triangleIA;
-    triangleIA.reset(IndexBuffer::Create(indices, sizeof(indices)/ sizeof(uint32_t)));
-    m_VertexArray->SetIndexBuffer(triangleIA);
-
-    m_SquareVA.reset(VertexArray::Create());
-    
-    float squareVertices [3 * 4] = {
-        -0.75f, -0.75f,  0.0f,
-         0.75f, -0.75f,  0.0f,
-         0.75f,  0.75f,  0.0f,
-        -0.75f,  0.75f,  0.0f,
-    };
-
-    std::shared_ptr<VertexBuffer> squareVB;
-    squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-
-    squareVB->SetLayout({
-      { ShaderDataType::Float3, "position" }
-    });
-    m_SquareVA->AddVertexBuffer(squareVB);
-
-
-    uint32_t squareIndices[6] = {
-      0, 1, 2,
-      2, 3, 0
-    };
-    std::shared_ptr<IndexBuffer> squareIA;
-    squareIA.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices)/ sizeof(uint32_t)));
-    m_SquareVA->SetIndexBuffer(squareIA);
-
-    BE_CORE_TRACE("Setting Shader");
-    std::string vertexSrcBlue = R"(
-      #version 130
-      in vec3 position;
-
-      uniform mat4 u_ViewProjection;
-      out vec3 v_Position;
-
-      void main() {
-        v_Position = position;
-        gl_Position = u_ViewProjection * vec4(position, 1.0);
-      }
-    )";
-    std::string fragmentSrcBlue = R"(
-      #version 130
-      in vec3 v_Position;
-      out vec4 color;
-      void main() {
-        color = vec4(v_Position * 0.5 + 0.5, 1.0);
-      }
-    )";
-    m_BlueShader.reset(new Shader(vertexSrcBlue, fragmentSrcBlue));
-
-    std::string vertexSrc = R"(
-      #version 130
-      in vec3 position;
-      in vec4 color;
-      uniform mat4 u_ViewProjection;
-
-      out vec3 v_Position;
-      out vec4 v_Color;
-
-      void main() {
-        v_Position = position;
-        v_Color = color;
-        gl_Position = u_ViewProjection * vec4(position, 1.0);
-      }
-    )";
-    std::string fragmentSrc = R"(
-      #version 130
-      in vec4 v_Color;
-      in vec3 v_Position;
-      out vec4 color;
-      void main() {
-        color = vec4(v_Position * 0.5 + 0.5, 1.0);
-        color = v_Color;
-      }
-    )";
-
-    m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
-
   }
 
   Application::~Application(){
@@ -167,17 +64,6 @@ namespace Engine {
 
   void Application::Run(){
     while(m_Running){
-      RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1});
-      RenderCommand::Clear();
-      
-      Renderer::BeginScene(m_Camera);
-
-      Renderer::Submit(m_SquareVA, m_BlueShader);
-
-      Renderer::Submit(m_VertexArray, m_Shader);
-
-      Renderer::EndScene();
-
       for(Layer* layer : m_LayerStack){
         layer->OnUpdate();
       }

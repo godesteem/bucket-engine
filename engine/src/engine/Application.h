@@ -2,7 +2,7 @@
  * File              : Application.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 23.02.2020
+ * Last Modified Date: 25.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -47,13 +47,6 @@ namespace Engine {
       bool m_Running = true;
       LayerStack m_LayerStack;
 
-      std::shared_ptr<Shader> m_Shader;
-      std::shared_ptr<Shader> m_BlueShader;
-
-      std::shared_ptr<VertexArray> m_VertexArray;
-      std::shared_ptr<VertexArray> m_SquareVA;
-
-      OrthographicCamera m_Camera;
       static Application* s_Instance;
   };
   
