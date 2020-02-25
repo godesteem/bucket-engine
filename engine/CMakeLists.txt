@@ -41,6 +41,7 @@ set(ENGINE_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLBuffer.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLRendererAPI.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLVertexArray.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLShader.cpp
 
   #3rd party
   ${imgui_root}/imgui.cpp
@@ -93,6 +94,7 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLRendererAPI.h
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLBuffer.h
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLVertexArray.h
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLShader.h
 
   #3rd party
   ${imgui_root}/imconfig.h

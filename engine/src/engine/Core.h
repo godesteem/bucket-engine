@@ -2,10 +2,12 @@
  * File              : Core.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 18.02.2020
+ * Last Modified Date: 25.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
+
+#include <memory>
 
 #ifdef BE_PLATFORM_WINDOWS
   #define BE_API
@@ -16,3 +18,14 @@
 #define BIT(x)(1 << x)
 
 #define BE_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+namespace Engine {
+  
+  template<typename T>
+  using Scope = std::unique_ptr<T>;
+
+  template<typename T>
+  using Ref = std::shared_ptr<T>;
+
+  using byte = unsigned char;
+}

@@ -2,7 +2,7 @@
  * File              : OpenGLVertexArray.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 23.02.2020
- * Last Modified Date: 23.02.2020
+ * Last Modified Date: 25.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -45,7 +45,7 @@ namespace Engine {
       glBindVertexArray(0);
     }
 
-    void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer){
+    void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer){
       glBindVertexArray(m_RendererID);
       BE_CORE_ASSERT(m_RendererID, "VertexArray not bound.");
       vertexBuffer->Bind();
@@ -71,7 +71,7 @@ namespace Engine {
       m_VertexBuffers.push_back(vertexBuffer);
     }
 
-    void OpenGLVertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer){
+    void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer){
       glBindVertexArray(m_RendererID);
       BE_CORE_ASSERT(m_RendererID, "VertexArray not bound.");
       indexBuffer->Bind();

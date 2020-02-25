@@ -9,6 +9,9 @@
 #include <engine.h>
 #include <imgui/imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include "platform/opengl/OpenGLShader.h"
+
+#include <glm/gtc/type_ptr.hpp>
 
 
 class ExampleLayer: public Engine::Layer
@@ -24,7 +27,7 @@ class ExampleLayer: public Engine::Layer
            0.5f, -0.5f,  0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
            0.5f,  0.5f,  0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
       };
-      std::shared_ptr<Engine::VertexBuffer> triangleVB;
+      Engine::Ref<Engine::VertexBuffer> triangleVB;
       triangleVB.reset(Engine::VertexBuffer::Create(vertices, sizeof(vertices)));
 
       Engine::BufferLayout layout = {
@@ -37,7 +40,7 @@ class ExampleLayer: public Engine::Layer
 
       uint32_t indices[3] = {0, 1, 2};
 
-      std::shared_ptr<Engine::IndexBuffer> triangleIA;
+      Engine::Ref<Engine::IndexBuffer> triangleIA;
       triangleIA.reset(Engine::IndexBuffer::Create(indices, sizeof(indices)/ sizeof(uint32_t)));
       m_VertexArray->SetIndexBuffer(triangleIA);
 
@@ -50,7 +53,7 @@ class ExampleLayer: public Engine::Layer
           -0.5f,  0.5f,  0.0f,
       };
 
-      std::shared_ptr<Engine::VertexBuffer> squareVB;
+      Engine::Ref<Engine::VertexBuffer> squareVB;
       squareVB.reset(Engine::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
       squareVB->SetLayout({
         { Engine::ShaderDataType::Float3, "position" }
@@ -62,7 +65,7 @@ class ExampleLayer: public Engine::Layer
         0, 1, 2,
         2, 3, 0
       };
-      std::shared_ptr<Engine::IndexBuffer> squareIA;
+      Engine::Ref<Engine::IndexBuffer> squareIA;
       squareIA.reset(Engine::IndexBuffer::Create(squareIndices, sizeof(squareIndices)/ sizeof(uint32_t)));
       m_SquareVA->SetIndexBuffer(squareIA);
 
@@ -93,7 +96,7 @@ class ExampleLayer: public Engine::Layer
           color = v_Color;
         }
       )";
-      m_Shader.reset(new Engine::Shader(vertexSrc, fragmentSrc));
+      m_Shader.reset(Engine::Shader::Create(vertexSrc, fragmentSrc));
 
 
       std::string flatColorvertexSrc = R"(
@@ -113,19 +116,16 @@ class ExampleLayer: public Engine::Layer
       std::string flatColorfragmentSrc = R"(
         #version 130
         in vec3 v_Position;
-        uniform vec4 u_Color;
+        uniform vec3 u_Color;
         out vec4 color;
         void main() {
-          color = u_Color;
+          color = vec4(u_Color, 1.0);
         }
       )";
-      m_FlatColorShader.reset(new Engine::Shader(flatColorvertexSrc, flatColorfragmentSrc));
+      m_FlatColorShader.reset(Engine::Shader::Create(flatColorvertexSrc, flatColorfragmentSrc));
 
     }
 
-    virtual void OnImGuiRender() override {
-    }
-    
     void OnUpdate(Engine::Timestep ts) override {
 
       if(Engine::Input::IsKeyPressed(BE_KEY_LEFT)){
@@ -163,8 +163,8 @@ class ExampleLayer: public Engine::Layer
 
       glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-      glm::vec4 redColor(0.8f, 0.2f, 0.3f, 1.0f);
-      glm::vec4 blueColor(0.2f, 0.3f, 0.8f, 1.0f);
+      std::dynamic_pointer_cast<Engine::OpenGLShader>(m_FlatColorShader)->Bind();
+      std::dynamic_pointer_cast<Engine::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 
       // TODO: Goal
       //Engine::MaterialRef material = new Engine::Material(m_FlatColorShader);
@@ -172,16 +172,10 @@ class ExampleLayer: public Engine::Layer
       //ml->Set("u_Color", redColor);
       //squareMesh->SetMaterial(ml);
 
-      for(int y = 0; y < 20; y++) {
-        for(int x = 0; x < 20; x++) {
+      for(int y = 0; y < 20; ++y) {
+        for(int x = 0; x < 20; ++x) {
           glm::vec3 pos(x * 0.1f, y * 0.1f, 0.0f);
           glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-          if(x % 2 == 0){
-            m_FlatColorShader->UploadUniformFloat4("u_Color", redColor);
-          }
-          else {
-            m_FlatColorShader->UploadUniformFloat4("u_Color", blueColor);
-          }
           Engine::Renderer::Submit(m_SquareVA, m_FlatColorShader, transform);
           //Engine::Renderer::Submit(ml, m_FlatColorShader, transform);
         }
@@ -202,12 +196,18 @@ class ExampleLayer: public Engine::Layer
     bool OnKeyPresseEvent(Engine::KeyPressedEvent& event){
       return false;
     }
-  private:
-    std::shared_ptr<Engine::Shader> m_Shader;
-    std::shared_ptr<Engine::Shader> m_FlatColorShader;
 
-    std::shared_ptr<Engine::VertexArray> m_VertexArray;
-    std::shared_ptr<Engine::VertexArray> m_SquareVA;
+    virtual void OnImGuiRender() override {
+      ImGui::Begin("Settings");
+      ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+      ImGui::End();
+    }
+  private:
+    Engine::Ref<Engine::Shader> m_Shader;
+    Engine::Ref<Engine::Shader> m_FlatColorShader;
+
+    Engine::Ref<Engine::VertexArray> m_VertexArray;
+    Engine::Ref<Engine::VertexArray> m_SquareVA;
 
     Engine::OrthographicCamera m_Camera;
     glm::vec3 m_CameraPosition;
@@ -215,6 +215,7 @@ class ExampleLayer: public Engine::Layer
     float m_SquareMoveSpeed = 5.0f;
 
     glm::vec3 m_SquarePosition;
+    glm::vec3 m_SquareColor = {0.2f, 0.3f, 0.8f};
 };
 
 class Sandbox: public Engine::Application
