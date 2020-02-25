@@ -64,8 +64,12 @@ namespace Engine {
 
   void Application::Run(){
     while(m_Running){
+      float time = glfwGetTime(); // TODO: Platform!
+      Timestep timestep = time - m_FrameLastTime;
+      m_FrameLastTime = time;
+
       for(Layer* layer : m_LayerStack){
-        layer->OnUpdate();
+        layer->OnUpdate(timestep);
       }
 
       m_ImGuiLayer->Begin();

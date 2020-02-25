@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Core.h"
+#include "engine/core/Timestep.h"
 #include "events/Event.h"
 #include "events/ApplicationEvent.h"
 #include "Window.h"
@@ -46,7 +47,7 @@ namespace Engine {
       ImGUILayer* m_ImGuiLayer;
       bool m_Running = true;
       LayerStack m_LayerStack;
-
+      float m_FrameLastTime = 0.0f;
       static Application* s_Instance;
   };
   

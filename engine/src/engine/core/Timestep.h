@@ -1,0 +1,28 @@
+/**
+ * File              : Timestep.h
+ * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
+ * Date              : 25.02.2020
+ * Last Modified Date: 25.02.2020
+ * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
+ */
+#pragma once
+
+namespace Engine {
+  
+  class Timestep
+  {
+  public:
+    Timestep(float time = 0.0f)
+    :m_Time(time)
+    {
+    }
+    operator float() const { return m_Time; };
+
+    float GetSeconds() { return m_Time; };
+    float GetMilliseconds() { return m_Time * 1000.0f; };
+
+  private:
+    float m_Time;
+  };
+
+}

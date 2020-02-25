@@ -10,6 +10,8 @@ elseif(BE_PLATFORM_LINUX)
   add_compile_definitions(IMGUI_API)
 endif(BE_PLATFORM_WINDOWS)
 
+set(CORE_DIR ${CMAKE_SOURCE_DIR}/engine/src/engine/core/)
+
 set(ENGINE_SOURCE_FILES
   # sources
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Application.cpp
@@ -58,6 +60,7 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Window.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/KeyCodes.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/MouseButtonCodes.h
+  ${CORE_DIR}Timestep.h
 
   #GUI
   ${CMAKE_SOURCE_DIR}/engine/src/engine/imgui/ImGuiLayer.h
