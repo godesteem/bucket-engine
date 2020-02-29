@@ -2,7 +2,7 @@
  * File              : Shader.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 23.02.2020
- * Last Modified Date: 25.02.2020
+ * Last Modified Date: 29.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 //
@@ -22,6 +22,7 @@ namespace Engine {
     virtual void Unbind() const = 0;
     
     static Shader* Create(const std::string& vertexSrc, const std::string& fragmentSrc);
+    static Shader* Create(const std::string& filePath);
     // virtual void UploadUniformBuffer() = 0;
   };
 }

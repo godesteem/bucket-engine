@@ -85,88 +85,12 @@ class ExampleLayer: public Engine::Layer
       m_SquareVA->SetIndexBuffer(squareIA);
 
       BE_CORE_TRACE("Setting Shader");
-      std::string vertexSrc = R"(
-        #version 130
-        in vec3 position;
-        in vec4 color;
-        uniform mat4 u_ViewProjection;
-        uniform mat4 u_Transform;
+      m_Shader.reset(Engine::Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Default.glsl"));
 
-        out vec3 v_Position;
-        out vec4 v_Color;
+      // Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Texture.glsl");
+      m_FlatColorShader.reset(Engine::Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/FlatColor.glsl"));
 
-        void main() {
-          v_Position = position;
-          v_Color = color;
-          gl_Position = u_ViewProjection * u_Transform * vec4(position, 1.0);
-        }
-      )";
-      std::string fragmentSrc = R"(
-        #version 130
-        in vec4 v_Color;
-        in vec3 v_Position;
-        out vec4 color;
-        void main() {
-          color = vec4(v_Position * 0.5 + 0.5, 1.0);
-          color = v_Color;
-        }
-      )";
-      m_Shader.reset(Engine::Shader::Create(vertexSrc, fragmentSrc));
-
-
-      std::string flatColorVertexSrc = R"(
-        #version 130
-        in vec3 position;
-
-        uniform mat4 u_ViewProjection;
-        uniform mat4 u_Transform;
-
-        out vec3 v_Position;
-
-        void main() {
-          v_Position = position;
-          gl_Position = u_ViewProjection * u_Transform * vec4(position, 1.0);
-        }
-      )";
-      std::string flatColorFragmentSrc = R"(
-        #version 130
-        in vec3 v_Position;
-        uniform vec3 u_Color;
-        out vec4 color;
-        void main() {
-          color = vec4(u_Color, 1.0);
-        }
-      )";
-      m_FlatColorShader.reset(Engine::Shader::Create(flatColorVertexSrc, flatColorFragmentSrc));
-
-      std::string textureVertexSrc = R"(
-        #version 130
-        in vec3 position;
-        in vec2 textCord;
-
-        uniform mat4 u_ViewProjection;
-        uniform mat4 u_Transform;
-
-        out vec2 v_TextCord;
-
-        void main() {
-          v_TextCord = textCord;
-          gl_Position = u_ViewProjection * u_Transform * vec4(position, 1.0);
-        }
-      )";
-      std::string textureFragmentSrc = R"(
-        #version 130
-        in vec2 v_TextCord;
-
-        out vec4 color;
-
-        uniform sampler2D u_Texture;
-
-        void main() {
-          color = texture(u_Texture, v_TextCord);
-        }
-      )";
-      m_TextureShader.reset(Engine::Shader::Create(textureVertexSrc, textureFragmentSrc));
+      m_TextureShader.reset(Engine::Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Texture.glsl"));
     
       m_Texture = Engine::Texture2D::Create(textureSrc);
       m_PortalTexture = Engine::Texture2D::Create(textureSrc2);
