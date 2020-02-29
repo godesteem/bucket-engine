@@ -2,7 +2,7 @@
  * File              : Renderer.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 22.02.2020
- * Last Modified Date: 25.02.2020
+ * Last Modified Date: 29.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -14,6 +14,7 @@ namespace Engine {
   class Renderer
   {
   public:
+    static void Init();
 
     static void BeginScene(Camera& camera); // TODO: add more params ;)
     static void EndScene();

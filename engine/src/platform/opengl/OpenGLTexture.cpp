@@ -2,7 +2,7 @@
  * File              : OpenGLTexture.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 25.02.2020
- * Last Modified Date: 25.02.2020
+ * Last Modified Date: 29.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -36,6 +36,7 @@ namespace Engine {
       internalFormat = GL_RGB8;
       dataFormat = GL_RGB;
     }
+    BE_CORE_ASSERT(internalFormat & dataFormat, "Format not supported.");
 
     glGenTextures(1, &m_RendererID);
 

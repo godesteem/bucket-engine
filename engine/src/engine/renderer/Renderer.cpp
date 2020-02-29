@@ -2,7 +2,7 @@
  * File              : Renderer.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 22.02.2020
- * Last Modified Date: 25.02.2020
+ * Last Modified Date: 29.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
@@ -13,6 +13,11 @@
 
 namespace Engine {
   Renderer::SceneData* Renderer::m_SceneData = new Renderer::SceneData;
+
+  void Renderer::Init(){
+    RenderCommand::Init();
+  }
+
   void Renderer::BeginScene(Camera& camera){
     m_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix(); 
   }

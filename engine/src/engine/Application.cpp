@@ -2,7 +2,7 @@
  * File              : Application.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 25.02.2020
+ * Last Modified Date: 29.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
@@ -23,8 +23,12 @@ namespace Engine {
     BE_INFO("Creating application");
     BE_ASSERT(!s_Instance, "Application already exists.");
     s_Instance = this;
+
     m_Window = Scope<Window>(Window::Create());
     m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+
+    Renderer::Init();
+
     m_ImGuiLayer = new ImGUILayer();
     PushOverlay(m_ImGuiLayer);
   }

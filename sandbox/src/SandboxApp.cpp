@@ -2,7 +2,7 @@
  * File              : SandboxApp.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 25.02.2020
+ * Last Modified Date: 29.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -14,7 +14,10 @@
 #include <glm/gtc/type_ptr.hpp>
 
 // camera
-const std::string textureSrc = "";
+//m_Texture = Engine::Texture2D::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/portal.png");
+//const std::string textureSrc = "";
+const std::string textureSrc = "/home/phil/work/private/games/bucket-engine/sandbox/assets/Checkerboard.png";
+const std::string textureSrc2 = "/home/phil/work/private/games/bucket-engine/sandbox/assets/portal.png";
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 float lastX = SCR_WIDTH / 2.0f;
@@ -166,6 +169,7 @@ class ExampleLayer: public Engine::Layer
       m_TextureShader.reset(Engine::Shader::Create(textureVertexSrc, textureFragmentSrc));
     
       m_Texture = Engine::Texture2D::Create(textureSrc);
+      m_PortalTexture = Engine::Texture2D::Create(textureSrc2);
       std::dynamic_pointer_cast<Engine::OpenGLShader>(m_TextureShader)->Bind();
       std::dynamic_pointer_cast<Engine::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 
@@ -247,8 +251,16 @@ class ExampleLayer: public Engine::Layer
       }
 
       m_Texture->Bind();
-      Engine::Renderer::Submit(m_SquareVA, m_TextureShader, glm::mat4(1.0f));
-      
+      Engine::Renderer::Submit(m_SquareVA, m_TextureShader, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+      m_PortalTexture->Bind();
+      Engine::Renderer::Submit(m_SquareVA, m_TextureShader, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+      /*
+      Engine::Renderer::Submit(
+        m_SquareVA,
+        m_TextureShader,
+        glm::translate(glm::mat4(1.0f), glm::vec3(0.25f, -0.25f, 0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(1.5f))
+      );
+      */
       // Triangle
       // Engine::Renderer::Submit(m_VertexArray, m_Shader);
 
@@ -279,6 +291,7 @@ class ExampleLayer: public Engine::Layer
     Engine::Ref<Engine::VertexArray> m_SquareVA;
 
     Engine::Ref<Engine::Texture2D> m_Texture;
+    Engine::Ref<Engine::Texture2D> m_PortalTexture;
 
     Engine::OrthographicCamera m_Camera;
     glm::vec3 m_CameraPosition;
