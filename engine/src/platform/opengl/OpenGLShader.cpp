@@ -31,6 +31,22 @@ namespace Engine {
     std::string shaderSrc = ReadFile(filePath);
     auto shaderSources = PreProcess(shaderSrc);
     Compile(shaderSources);
+    auto last = filePath.find_last_of("/\\");
+    last = last == std::string::npos ? 0 : last + 1;
+    auto lastDot = filePath.rfind('.');
+
+    auto count = lastDot == std::string::npos ? filePath.size() - last : lastDot - last;
+    filePath.substr(last, count);
+  }
+
+  OpenGLShader::OpenGLShader(const std::string& name, const std::string &vertexSrc, const std::string &fragmentSrc)
+  : m_Name(name)
+  {
+    std::unordered_map<GLenum, std::string> sources;
+    sources[GL_VERTEX_SHADER] = vertexSrc;
+    sources[GL_FRAGMENT_SHADER] = fragmentSrc;
+
+    Compile(sources);
   }
 
   std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source){
@@ -60,7 +76,7 @@ namespace Engine {
 
   std::string OpenGLShader::ReadFile(const std::string& filePath){
     std::string result;
-    std::ifstream in(filePath, std::ios::binary);
+    std::ifstream in(filePath, std::ios::in | std::ios::binary);
     if (in){
       in.seekg(0, std::ios::end);
       result.resize(in.tellg());
@@ -73,22 +89,17 @@ namespace Engine {
     }
     return result; 
   }
-  OpenGLShader::OpenGLShader(const std::string &vertexSrc, const std::string &fragmentSrc) {
-    std::unordered_map<GLenum, std::string> sources;
-    sources[GL_VERTEX_SHADER] = vertexSrc;
-    sources[GL_FRAGMENT_SHADER] = fragmentSrc;
-
-    Compile(sources);
-  }
 
   void OpenGLShader::Compile(std::unordered_map<GLenum, std::string>& shaderSources){
 
-    std::vector<GLenum> glShaderIDs(shaderSources.size()); 
-
+    BE_CORE_ASSERT(shaderSources.size() <= 2, "Currently only 2 shaders supported.");
     // Vertex and fragment shaders are successfully compiled.
     // Now time to link them together into a program.
     // Get a program object.
+    std::array<GLenum, 2> glShaderIDs; 
     GLuint program = glCreateProgram();
+    
+    int glShaderIndex = 0;
     for(auto& kv : shaderSources){
       GLenum type = kv.first;
       const std::string& src = kv.second;
@@ -116,7 +127,7 @@ namespace Engine {
         BE_CORE_ASSERT(0, "Shader compilation failed.");
       }
       glAttachShader(program, shader);
-      glShaderIDs.push_back(shader);
+      glShaderIDs[glShaderIndex++] = shader;
     }
 
 

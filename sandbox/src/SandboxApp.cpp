@@ -85,12 +85,9 @@ class ExampleLayer: public Engine::Layer
       m_SquareVA->SetIndexBuffer(squareIA);
 
       BE_CORE_TRACE("Setting Shader");
-      m_Shader.reset(Engine::Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Default.glsl"));
-
-      // Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Texture.glsl");
-      m_FlatColorShader.reset(Engine::Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/FlatColor.glsl"));
-
-      m_TextureShader.reset(Engine::Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Texture.glsl"));
+      m_Shader = Engine::Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Default.glsl");
+      m_FlatColorShader = Engine::Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/FlatColor.glsl");
+      m_TextureShader = Engine::Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Texture.glsl");
     
       m_Texture = Engine::Texture2D::Create(textureSrc);
       m_PortalTexture = Engine::Texture2D::Create(textureSrc2);
