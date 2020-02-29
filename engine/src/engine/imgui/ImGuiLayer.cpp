@@ -104,9 +104,5 @@ namespace Engine {
     }
 
     void ImGUILayer::OnImGuiRender() {
-#ifdef BE_DEBUG
-      static bool show = true;
-      ImGui::ShowDemoWindow(&show);
-#endif
     }
 }

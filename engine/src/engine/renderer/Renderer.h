@@ -16,7 +16,10 @@ namespace Engine {
   public:
     static void Init();
 
-    static void BeginScene(Camera& camera); // TODO: add more params ;)
+    inline static void BeginScene(Camera& camera){
+      BE_CORE_TRACE("Renderer::BeginScene<{0}>", typeid(camera).name());
+      m_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
+    }; // TODO: add more params ;)
     static void EndScene();
 
     static void Submit(const Ref<VertexArray>& vertexArray, const Ref<Shader>& shader, const glm::mat4& transform = glm::mat4(1.0f));

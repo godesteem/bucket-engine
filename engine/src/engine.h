@@ -3,7 +3,7 @@
  * File              : engine.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 25.02.2020
+ * Last Modified Date: 29.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -36,6 +36,7 @@
 #include "engine/renderer/VertexArray.h"
 
 #include "engine/renderer/OrthographicCamera.h"
+#include "engine/renderer/OrthographicCameraLayer.h"
 
 // --- Entry point ---
 // -------------------

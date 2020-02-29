@@ -2,11 +2,11 @@
  * File              : OrthographicCamera.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 23.02.2020
- * Last Modified Date: 25.02.2020
+ * Last Modified Date: 29.02.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
-
+#include "engine/Log.h"
 #include <glm/glm.hpp>
 
 namespace Engine {
@@ -19,7 +19,7 @@ namespace Engine {
   class Camera
   {
   public:
-    Camera(float left, float right, float bottom, float top);
+    Camera(glm::mat4 projection, glm::mat4 view);
     void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix();};
     void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix();};
 
@@ -52,6 +52,7 @@ namespace Engine {
   class ThirdPersonCamera: public Camera
   {
   public:
+    ThirdPersonCamera(float left, float right, float bottom, float top);
     ThirdPersonCamera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
     ThirdPersonCamera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
 
@@ -71,6 +72,9 @@ namespace Engine {
           Pitch = -89.0f;
       }
 
+      m_Rotation = Pitch;
+      BE_TRACE("Pitch: {0}", Pitch);
+      BE_TRACE("YAW: {0}", Yaw);
       RecalculateViewMatrix();
     }
   private:

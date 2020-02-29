@@ -31,6 +31,7 @@ set(ENGINE_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/RendererAPI.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/VertexArray.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCamera.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCameraLayer.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Texture.cpp
 
   #platform
@@ -85,6 +86,7 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/RenderCommand.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/VertexArray.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCamera.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCameraLayer.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Texture.h
 
   ## Platform
