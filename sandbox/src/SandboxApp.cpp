@@ -2,14 +2,13 @@
  * File              : SandboxApp.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 29.02.2020
+ * Last Modified Date: 01.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
 #include <engine.h>
 #include <imgui/imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include "platform/opengl/OpenGLShader.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -136,15 +135,16 @@ class ExampleLayer: public Engine::Layer
 
       m_Texture = Engine::Texture2D::Create(textureSrc);
       m_PortalTexture = Engine::Texture2D::Create(textureSrc2);
+
+      m_Suzanne = Engine::Model::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/models/obj-viewer_suzanne.obj");
       
       glm::mat4 model = glm::mat4(1.0f);
       model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
-      std::dynamic_pointer_cast<Engine::OpenGLShader>(m_Shader)->Bind();
-      std::dynamic_pointer_cast<Engine::OpenGLShader>(m_Shader)->UploadUniformMat4("model", model);
-      std::dynamic_pointer_cast<Engine::OpenGLShader>(textureShader)->Bind();
-      std::dynamic_pointer_cast<Engine::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
-
+      m_Shader->Bind();
+      m_Shader->UploadUniformMat4("model", model);
+      textureShader->Bind();
+      textureShader->UploadUniformInt("u_Texture", 0);
     }
 
     void OnUpdate(Engine::Timestep ts) override {
@@ -166,14 +166,12 @@ class ExampleLayer: public Engine::Layer
 
       glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-      std::dynamic_pointer_cast<Engine::OpenGLShader>(m_FlatColorShader)->Bind();
-      std::dynamic_pointer_cast<Engine::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
+      m_FlatColorShader->Bind();
+      m_FlatColorShader->UploadUniformFloat3("u_Color", m_SquareColor);
       
       glm::mat4 model = glm::mat4(1.0f);
-      std::dynamic_pointer_cast<Engine::OpenGLShader>(m_Shader)->Bind();
-      std::dynamic_pointer_cast<Engine::OpenGLShader>(m_Shader)->UploadUniformMat4("model", model);
-
-      BE_TRACE("SandboxApp::OnUpdate Render");
+      m_Shader->Bind();
+      m_Shader->UploadUniformMat4("model", model);
 
       // TODO: Goal
       //Engine::MaterialRef material = new Engine::Material(m_FlatColorShader);
@@ -208,11 +206,13 @@ class ExampleLayer: public Engine::Layer
       */
       // Triangle
       //glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0f)) * scale;
+
       Engine::Renderer::Submit(m_VertexArray, m_Shader, glm::mat4(1.0f));
 
-      Engine::Renderer::EndScene();
-
       m_PlayerCameraLayer.OnUpdate(ts);
+      m_Suzanne->OnUpdate(ts, m_PlayerCameraLayer.GetCamera());
+
+      Engine::Renderer::EndScene();
     }
     void OnEvent(Engine::Event& event) override {
       Engine::EventDispatcher dispatcher(event);
@@ -242,7 +242,9 @@ class ExampleLayer: public Engine::Layer
     Engine::Ref<Engine::Texture2D> m_Texture;
     Engine::Ref<Engine::Texture2D> m_PortalTexture;
 
-    Engine::OrthographicCameraLayer m_PlayerCameraLayer;
+    Engine::OrthographicCameraController m_PlayerCameraLayer;
+
+    Engine::Ref<Engine::Model> m_Suzanne;
 
     float m_SquareMoveSpeed = 5.0f;
 

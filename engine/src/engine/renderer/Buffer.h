@@ -2,11 +2,12 @@
  * File              : Buffer.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 22.02.2020
- * Last Modified Date: 23.02.2020
+ * Last Modified Date: 01.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
 #include "bepch.h"
+#include <glm/glm.hpp>
 
 namespace Engine {
   enum class ShaderDataType: uint8_t {
@@ -116,6 +117,8 @@ namespace Engine {
     virtual const BufferLayout& GetLayout() const = 0;
 
     static VertexBuffer* Create(float* vertices, uint32_t size);
+    static VertexBuffer* Create(std::vector<glm::vec3> vertices, uint32_t size);
+    static VertexBuffer* Create(std::vector<glm::vec4> vertices, uint32_t size);
   };
 
   class IndexBuffer {
@@ -128,6 +131,6 @@ namespace Engine {
     virtual uint32_t GetCount() const = 0;
 
     static IndexBuffer* Create(uint32_t* indices, uint32_t count);
-
+    static IndexBuffer* Create(std::vector<ushort> indices, uint32_t count);
   };
 }

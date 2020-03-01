@@ -18,9 +18,6 @@ extern Engine::Application* Engine::CreateApplication();
 int main(int argc, char **argv){
   Engine::Log::Init();
 
-  BE_CORE_WARN("Initialized Log.");
-  BE_INFO("Initialized Log.");
-
   auto app = Engine::CreateApplication();
   app->Run();
   delete app;

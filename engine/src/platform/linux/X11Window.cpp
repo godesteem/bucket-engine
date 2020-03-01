@@ -58,8 +58,6 @@ namespace Engine {
     glfwSetWindowUserPointer(m_Window, &m_Data);
     SetVSync(true);
 
-    BE_CORE_INFO("Setting callbacks");
-
     // GLFW Callbacks
     glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
       WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -128,8 +126,6 @@ namespace Engine {
       data.EventCallback(event);
     });
     glEnable(GL_DEBUG_OUTPUT);
-
-    BE_CORE_INFO("Callbacks set.");
   }
   void X11Window::ShutDown()
   {

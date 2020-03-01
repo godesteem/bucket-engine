@@ -2,7 +2,7 @@
  * File              : OpenGLBuffer.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 22.02.2020
- * Last Modified Date: 23.02.2020
+ * Last Modified Date: 01.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
@@ -17,14 +17,9 @@ namespace Engine {
 
   OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
   {
-    BE_CORE_TRACE("Creating OpenGLVertexBuffer");
-    // TODO: This might be Platform dependent
     glGenBuffers(1, &m_RendererID);
-    BE_CORE_TRACE("Binding OpenGLVertexBuffer.");
     glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-    BE_CORE_TRACE("Setting OpenGLVertexBuffer data.");
     glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
-    BE_CORE_TRACE("OpenGLVertexBuffer creation done.");
   }
 
   OpenGLVertexBuffer::~OpenGLVertexBuffer()
@@ -34,7 +29,6 @@ namespace Engine {
 
   void OpenGLVertexBuffer::Bind() const
   {
-    BE_CORE_TRACE("Binding OpenGLVertexBuffer");
     glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
   }
 

@@ -1,8 +1,8 @@
 /**
- * File              : OrthographicCameraLayer.h
+ * File              : OrthographicCameraController.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 29.02.2020
- * Last Modified Date: 29.02.2020
+ * Last Modified Date: 01.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -11,11 +11,11 @@
 #include "OrthographicCamera.h"
 
 namespace Engine {
-  class OrthographicCameraLayer
+  class OrthographicCameraController
   {
   public:
-    OrthographicCameraLayer(const std::string& name = "Camera");
-    ~OrthographicCameraLayer();
+    OrthographicCameraController(const std::string& name = "Camera");
+    ~OrthographicCameraController();
 
     void OnAttach();
     void OnDetach();

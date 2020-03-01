@@ -2,7 +2,7 @@
  * File              : OpenGLShader.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 25.02.2020
- * Last Modified Date: 29.02.2020
+ * Last Modified Date: 01.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
@@ -23,20 +23,21 @@ namespace Engine {
     if(type != "pixel")
       return GL_FRAGMENT_SHADER;
 
-    BE_CORE_TRACE("Shader type: {}", type);
     BE_CORE_ASSERT(false, "Unknown shader type!");
     return 0;
   }
   OpenGLShader::OpenGLShader(const std::string& filePath) {
-    std::string shaderSrc = ReadFile(filePath);
-    auto shaderSources = PreProcess(shaderSrc);
-    Compile(shaderSources);
     auto last = filePath.find_last_of("/\\");
     last = last == std::string::npos ? 0 : last + 1;
     auto lastDot = filePath.rfind('.');
-
+    BE_CHECK_FILE(filePath, ".glsl");
     auto count = lastDot == std::string::npos ? filePath.size() - last : lastDot - last;
-    filePath.substr(last, count);
+
+    m_Name = filePath.substr(last, count);
+
+    std::string shaderSrc = ReadFile(filePath);
+    auto shaderSources = PreProcess(shaderSrc);
+    Compile(shaderSources);
   }
 
   OpenGLShader::OpenGLShader(const std::string& name, const std::string &vertexSrc, const std::string &fragmentSrc)
@@ -91,7 +92,6 @@ namespace Engine {
   }
 
   void OpenGLShader::Compile(std::unordered_map<GLenum, std::string>& shaderSources){
-
     BE_CORE_ASSERT(shaderSources.size() <= 2, "Currently only 2 shaders supported.");
     // Vertex and fragment shaders are successfully compiled.
     // Now time to link them together into a program.
@@ -158,6 +158,20 @@ namespace Engine {
       BE_CORE_ASSERT(0, "Shader link failure.");
     }
 
+    GLint validate_ok = 0;
+    glValidateProgram(program);
+    glGetProgramiv(program, GL_VALIDATE_STATUS, &validate_ok);
+    if (!validate_ok)
+    {
+      GLint maxLength = 0;
+      glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+      std::vector<GLchar> infoLog(maxLength);
+      glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
+      BE_CORE_ERROR("{0}", infoLog.data());
+      BE_CORE_ASSERT(0, "Shader validation failure.");
+    }
+
+
     // Always detach shaders after a successful link.
     for(auto id : glShaderIDs){
       glDetachShader(program, id);
@@ -184,9 +198,7 @@ namespace Engine {
   void OpenGLShader::UploadUniformMat3(const std::string& name, const glm::mat3& matrix){
     GLint location = GetUniformLocation(name.c_str());
     glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
-
   }
-    
   void OpenGLShader::UploadUniformFloat(const std::string& name, float value){
     GLint location = GetUniformLocation(name.c_str());
     glUniform1f(location, value);
@@ -216,7 +228,7 @@ namespace Engine {
     }
     GLint location = glGetUniformLocation(m_RendererID, name.c_str());
     if(location == -1){
-      BE_CORE_WARN("Uniform {0} not found", name);
+      BE_CORE_WARN("{0}::GetUniformLocation: Uniform {1} not found", m_Name, name);
       return location;
     }
     m_UniformLocationCache[name] = location;

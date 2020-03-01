@@ -9,7 +9,8 @@ uniform mat4 model;
 
 out vec3 v_Position;
 out vec4 v_Color;
-void main() {
+void main()
+{
   v_Position = position;
   v_Color = color;
   gl_Position = u_ViewProjection * model * u_Transform * vec4(position, 1.0);

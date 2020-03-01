@@ -2,7 +2,7 @@
  * File              : Shader.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 23.02.2020
- * Last Modified Date: 29.02.2020
+ * Last Modified Date: 01.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -54,7 +54,7 @@ namespace Engine {
   }
 
   bool ShaderLibrary::Exists(const std::string& name) const{
-    return m_Shaders.find(name) != m_Shaders.end();
+    return m_Shaders.size() > 0 && m_Shaders.find(name) != m_Shaders.end();
   }
 
 }

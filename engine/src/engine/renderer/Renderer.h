@@ -2,7 +2,7 @@
  * File              : Renderer.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 22.02.2020
- * Last Modified Date: 29.02.2020
+ * Last Modified Date: 01.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -17,7 +17,6 @@ namespace Engine {
     static void Init();
 
     inline static void BeginScene(Camera& camera){
-      BE_CORE_TRACE("Renderer::BeginScene<{0}>", typeid(camera).name());
       m_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
     }; // TODO: add more params ;)
     static void EndScene();
