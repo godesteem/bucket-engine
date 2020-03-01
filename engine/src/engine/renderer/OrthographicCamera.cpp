@@ -2,7 +2,7 @@
  * File              : OrthographicCamera.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 23.02.2020
- * Last Modified Date: 29.02.2020
+ * Last Modified Date: 01.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
@@ -35,8 +35,13 @@ namespace Engine {
   :Camera(glm::perspective(glm::radians(45.0f), (right-left)/(bottom-top), 0.1f, 100.0f), glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f))),
   MouseSensitivity(SENSITIFITY),
   MouseSpeed(SPEED),
-  Zoom(ZOOM)
+  Zoom(ZOOM),
+  WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
+  m_Target(glm::vec3(0.0f)),
+  m_Front(glm::vec3(0.0f, 0.0f, -1.0f)),
+  Up(glm::vec3(0.0f, 1.0f, 0.0f))
   {
+    m_Direction = glm::normalize(m_Position - m_Target);
     RecalculateViewMatrix();
   }
   ThirdPersonCamera::ThirdPersonCamera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
@@ -62,17 +67,17 @@ namespace Engine {
     Position(glm::vec3(posX, posY, posZ)),
     WorldUp(glm::vec3(upX, upY, upZ)),
     Yaw(yaw),
-    Pitch(pitch)
+    Pitch(pitch),
+    m_Target(glm::vec3(0.0f)),
+    m_Front(glm::vec3(0.0f))
     {
+      m_Direction = glm::normalize(m_Position - m_Target);
       RecalculateViewMatrix();
     }
 
   void ThirdPersonCamera::RecalculateViewMatrix() {
-    glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) *
-                          glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.x), glm::vec3(1, 0, 0)) *
-                          glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.y), glm::vec3(0, 1, 0));
-
-    m_ViewMatrix = transform; //glm::inverse(transform);
+    m_ViewMatrix = glm::inverse(glm::lookAt(m_Position, m_Position + m_Front, Up));
+    //glm::inverse(transform);
     m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
     
     /*

@@ -17,7 +17,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
-static bool firstMouse = true;
+bool firstMouse = true;
 
 namespace Engine {
   OrthographicCameraController::OrthographicCameraController(const std::string& name)
@@ -56,27 +56,24 @@ namespace Engine {
       }
     }
     {
-      if(Input::IsMouseButtonPressed(BE_MOUSE_BUTTON_2)) {
-        float xpos = Engine::Input::GetMouseX();
-        float ypos = Engine::Input::GetMouseY();
+      float xpos = Engine::Input::GetMouseX();
+      float ypos = Engine::Input::GetMouseY();
 
-        if (firstMouse) {
-          lastX = xpos;
-          lastY = ypos;
-          firstMouse = false;
-        }
-
-        float xoffset = xpos - lastX;
-        float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-
+      if (firstMouse) {
         lastX = xpos;
         lastY = ypos;
-        m_Camera.ProcessMouseMovement(xoffset, yoffset);
+        firstMouse = false;
       }
-    }  
+
+      float xoffset = xpos - lastX;
+      float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+      lastX = xpos;
+      lastY = ypos;
+      m_Camera.ProcessMouseMovement(xoffset, yoffset);
+    }
 
     m_Camera.SetPosition(m_CameraPosition);
-    m_Camera.SetRotation(glm::vec2(0.0f));
   }
 
   void OrthographicCameraController::OnEvent(Event& event){}
@@ -90,6 +87,8 @@ namespace Engine {
     ImGui::SliderFloat("y", &m_CameraPosition.y, 0.0f, 10.0f, "%.0f");
     ImGui::SameLine();
     ImGui::SliderFloat("z", &m_CameraPosition.z, 0.0f, 10.0f, "%.0f");
+    ImGui::SliderFloat("Yaw", &m_Camera.Yaw, 0.0f, 90.0f, "%.0f");
+    ImGui::SliderFloat("Pitch", &m_Camera.Pitch, 0.0f, 90.0f, "%.0f");
     ImGui::PopItemWidth();
     ImGui::End();
   }

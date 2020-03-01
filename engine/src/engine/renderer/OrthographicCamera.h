@@ -2,7 +2,7 @@
  * File              : OrthographicCamera.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 23.02.2020
- * Last Modified Date: 29.02.2020
+ * Last Modified Date: 01.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -13,7 +13,7 @@ namespace Engine {
   const float YAW = -90.0f;
   const float PITCH = 0.0f;
   const float SPEED = 2.5f;
-  const float SENSITIFITY = 0.1f;
+  const float SENSITIFITY = 0.5f;
   const float ZOOM = 45.0f;
   
   class Camera
@@ -72,13 +72,21 @@ namespace Engine {
           Pitch = -89.0f;
       }
 
-      SetRotation({Yaw, Pitch});
+      m_Direction.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+      m_Direction.y = sin(glm::radians(Pitch));
+      m_Direction.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+      m_Front = glm::normalize(m_Direction);
+
       RecalculateViewMatrix();
     }
   private:
     virtual void RecalculateViewMatrix() override;
-
+    
+    glm::vec3 m_Target;
+    glm::vec3 m_Front;
+    glm::vec3 m_Direction;
     glm::vec3 Position, Front, Up, Right, WorldUp;
+  public:
     float Yaw, Pitch, MouseSpeed, MouseSensitivity, Zoom;
   };
 }
