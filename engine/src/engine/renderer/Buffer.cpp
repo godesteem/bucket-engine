@@ -18,9 +18,9 @@ namespace Engine {
     BE_CORE_ASSERT(false, "Unknown RendererAPI");
     return nullptr;
   };
-  VertexBuffer* VertexBuffer::Create(std::vector<glm::vec3> vertices, uint32_t size){
-    BE_CORE_ASSERT(size % 3 == 0, "Wrong vector size for vertices");
-    float _vertices[size];
+  VertexBuffer* VertexBuffer::Create(const std::vector<glm::vec3> &vertices, uint32_t size){
+//    BE_CORE_ASSERT(size % 3 == 0, "Wrong vector size for vertices");
+    float _vertices[size * 3];
     int ind = 0;
     for(auto i : vertices){
       _vertices[ind] = i.x;
@@ -31,8 +31,8 @@ namespace Engine {
     return Create(_vertices, size);
 
   }
-  VertexBuffer* VertexBuffer::Create(std::vector<glm::vec4> vertices, uint32_t size){
-    BE_CORE_ASSERT(size % 4 == 0, "Wrong vector size for vertices");
+  VertexBuffer* VertexBuffer::Create(const std::vector<glm::vec4> &vertices, uint32_t size){
+    //BE_CORE_ASSERT(size % 4 == 0, "Wrong vector size for vertices");
     float _vertices[size];
     int ind = 0;
     for(auto i : vertices){

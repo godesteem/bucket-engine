@@ -38,6 +38,7 @@ namespace Engine {
     static Ref<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
     static Ref<Shader> Create(const std::string& filePath);
     virtual int GetUniformLocation(const std::string& name) const = 0;
+    virtual int GetAttributeLocation(const std::string& name) const = 0;
     // virtual void UploadUniformBuffer() = 0;
   };
 

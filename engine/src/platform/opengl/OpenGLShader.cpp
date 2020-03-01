@@ -234,4 +234,17 @@ namespace Engine {
     m_UniformLocationCache[name] = location;
     return location;
   }
+
+  GLint OpenGLShader::GetAttributeLocation(const std::string &name) const {
+    if(m_AttributeLocationCache.find(name) != m_AttributeLocationCache.end()){
+      return m_AttributeLocationCache[name];
+    }
+    GLint location = glGetAttribLocation(m_RendererID, name.c_str());
+    if(location == -1){
+      BE_CORE_WARN("{0}::GetAttributeLocation: Uniform {1} not found", m_Name, name);
+      return location;
+    }
+    m_AttributeLocationCache[name] = location;
+    return location;
+  }
 }

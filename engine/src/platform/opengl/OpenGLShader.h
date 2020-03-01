@@ -44,6 +44,7 @@ namespace Engine {
     void UploadUniformInt4(const std::string& name, const glm::vec4& values);
     */
     virtual GLint GetUniformLocation(const std::string& name) const override;
+    virtual GLint GetAttributeLocation(const std::string& name) const override;
   private:
     void Compile(std::unordered_map<GLenum, std::string>& shaderSources);
     std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
@@ -52,6 +53,7 @@ namespace Engine {
     uint32_t m_RendererID;
     std::string m_Name;
     mutable std::unordered_map<std::string, GLint> m_UniformLocationCache;
+    mutable std::unordered_map<std::string, GLint> m_AttributeLocationCache;
 
   };
 }

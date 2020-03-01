@@ -1,29 +1,29 @@
 #type vertex
 attribute vec4 v_coord;
-uniform vec3 v_normal;
-varying vec4 position;
-varying vec3 varyingNormalDirection;
-uniform mat4 u_ViewProjection;
+attribute vec3 u_Normal;
+varying vec4 position;  // position of the vertex (and fragment) in world space
+varying vec3 varyingNormalDirection;  // surface normal vector in world space
+uniform mat4 p;
 uniform mat4 u_Transform;
+uniform mat4 u_ViewProjection;
 uniform mat3 m_inv_transp;
 
 void main()
 {
     position = u_Transform * v_coord;
-    varyingNormalDirection = normalize(m_inv_transp * v_normal);
+    varyingNormalDirection = normalize(m_inv_transp * u_Normal);
 
-    mat4 mvp = u_ViewProjection*u_Transform;
+    mat4 mvp = u_ViewProjection * u_Transform;
     gl_Position = mvp * v_coord;
 }
 
 
+
 #type fragment
-vec4 position;  // position of the vertex (and fragment) in world space
-vec3 varyingNormalDirection;  // surface normal vector in world space
-uniform mat4 u_ViewProjection;
-uniform mat4 u_Transform;
+varying vec4 position;  // position of the vertex (and fragment) in world space
+varying vec3 varyingNormalDirection;  // surface normal vector in world space
+uniform mat4 m, v, p;
 uniform mat4 v_inv;
-uniform vec3 v_normal;
 
 struct lightSource
 {

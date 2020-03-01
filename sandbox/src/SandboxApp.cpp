@@ -169,7 +169,7 @@ class ExampleLayer: public Engine::Layer
       m_FlatColorShader->Bind();
       m_FlatColorShader->UploadUniformFloat3("u_Color", m_SquareColor);
       
-      glm::mat4 model = glm::mat4(1.0f);
+      glm::mat4 model = glm::mat4(5.0f);
       m_Shader->Bind();
       m_Shader->UploadUniformMat4("model", model);
 
@@ -211,7 +211,6 @@ class ExampleLayer: public Engine::Layer
 
       m_PlayerCameraLayer.OnUpdate(ts);
       m_Suzanne->OnUpdate(ts, m_PlayerCameraLayer.GetCamera());
-
       Engine::Renderer::EndScene();
     }
     void OnEvent(Engine::Event& event) override {
@@ -229,6 +228,7 @@ class ExampleLayer: public Engine::Layer
       ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
       ImGui::End();
       m_PlayerCameraLayer.OnImGuiRender();
+      m_Suzanne->OnImGuiRender();
 
     }
   private:

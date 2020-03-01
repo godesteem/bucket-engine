@@ -10,6 +10,7 @@
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <fstream>
+#include <imgui/imgui.h>
 #include "engine/renderer/Renderer.h"
 
 namespace Engine {
@@ -57,13 +58,19 @@ namespace Engine {
 
     m_VertexArray.reset(VertexArray::Create());
     m_VertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * 4));
-    Engine::BufferLayout layout = {
-        { Engine::ShaderDataType::Float4, "v" },
-        { Engine::ShaderDataType::Float3, "v_normal" }
+    Engine::BufferLayout vertexLayout = {
+        { Engine::ShaderDataType::Float3, "u_Normal" }
     };
-    m_VertexBuffer->SetLayout(layout);
+    m_VertexBuffer->SetLayout(vertexLayout);
     m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+
     m_NormalBuffer.reset(VertexBuffer::Create(normals, normals.size() * 3));
+    Engine::BufferLayout layout = {
+        { Engine::ShaderDataType::Float4, "v_coord" }
+    };
+    m_NormalBuffer->SetLayout(layout);
+    m_VertexArray->AddVertexBuffer(m_NormalBuffer);
+
     m_ElementsBuffer.reset(IndexBuffer::Create(elements, elements.size()));
     m_VertexArray->SetIndexBuffer(m_ElementsBuffer);
 
@@ -77,27 +84,60 @@ namespace Engine {
     m_Shader = Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Suzanne.glsl");
     m_Shader->Bind();
 
-    m_Shader->UploadUniformMat4("v", glm::mat4(1.0f));
-    m_Shader->UploadUniformMat4("p", glm::mat4(1.0f));
     m_Shader->UploadUniformMat4("v_inv", glm::inverse(glm::mat4(1.0f)));
-    m_Shader->UploadUniformFloat3("v_normal", glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position);
     m_Shader->UploadUniformMat3("m_inv_transp", glm::mat3(glm::transpose(glm::inverse(transform))));
 
 
+
+    glEnableVertexAttribArray(m_Shader->GetAttributeLocation("v_coord"));
+    m_VertexBuffer->Bind();
+    glVertexAttribPointer(
+        m_Shader->GetAttributeLocation("v_coord"),  // attribute
+        4,                  // number of elements per vertex, here (x,y,z,w)
+        GL_FLOAT,           // the type of each element
+        GL_FALSE,           // take our values as-is
+        0,                  // no extra data between each position
+        0                   // offset of first element
+    );
+
+    glEnableVertexAttribArray(m_Shader->GetAttributeLocation("u_Normal"));
+    m_NormalBuffer->Bind();
+    glVertexAttribPointer(
+        m_Shader->GetAttributeLocation("u_Normal"), // attribute
+        3,                  // number of elements per vertex, here (x,y,z)
+        GL_FLOAT,           // the type of each element
+        GL_FALSE,           // take our values as-is
+        0,                  // no extra data between each position
+        0                   // offset of first element
+    );
+
+    m_Shader->Unbind();
+    glDisableVertexAttribArray(m_Shader->GetAttributeLocation("v_coord"));
+    glDisableVertexAttribArray(m_Shader->GetAttributeLocation("u_Normal"));
   }
 
   void OpenGLModel::Bind() const {
     m_Shader->Bind();
-    m_VertexBuffer->Bind();
-    m_NormalBuffer->Bind();
-    m_ElementsBuffer->Bind();
-
   }
   void OpenGLModel::Unbind() const {
+    m_Shader->Unbind();
+    m_VertexBuffer->Unbind();
+    m_NormalBuffer->Unbind();
+    m_ElementsBuffer->Unbind();
   }
 
   void OpenGLModel::OnImGuiRender() {
+    ImGui::Begin("Model");
+    ImGui::Text("Object Position (%d, %d, %d)", (int)m_Position.x, (int)m_Position.y, (int)m_Position.z);
+    ImGui::PushItemWidth(120);
+    ImGui::SliderFloat("Modelx", &m_Position.x, -100.0f, 100.0f, "%.2f");
+    ImGui::SameLine(160);
+    ImGui::SliderFloat("Modely", &m_Position.y, -100.0f, 100.0f, "%.2f");
+    ImGui::SameLine(320);
+    ImGui::SliderFloat("Modelz", &m_Position.z, -100.0f, 100.0f, "%.2f");
+    ImGui::PopItemWidth();
+    ImGui::End();
 
   }
 
@@ -110,17 +150,12 @@ namespace Engine {
     glm::mat3 m_3x3_inv_transp = glm::transpose(glm::inverse(glm::mat3(transform)));
     m_Shader->UploadUniformMat3("m_inv_transp", m_3x3_inv_transp);
 
-
-
-//    m_ElementsBuffer->Bind();
+    m_ElementsBuffer->Bind();
 //    int size; glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
 //    glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-    m_ElementsBuffer->Bind();
 //    int size;  glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
 //    glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
 
     Renderer::Submit(m_VertexArray, m_Shader, transform);
-    glDisableVertexAttribArray(m_Shader->GetUniformLocation("v"));
-    glDisableVertexAttribArray(m_Shader->GetUniformLocation("v_normal"));
   }
 }

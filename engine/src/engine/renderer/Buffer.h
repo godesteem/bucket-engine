@@ -117,8 +117,8 @@ namespace Engine {
     virtual const BufferLayout& GetLayout() const = 0;
 
     static VertexBuffer* Create(float* vertices, uint32_t size);
-    static VertexBuffer* Create(std::vector<glm::vec3> vertices, uint32_t size);
-    static VertexBuffer* Create(std::vector<glm::vec4> vertices, uint32_t size);
+    static VertexBuffer* Create(const std::vector<glm::vec3> &vertices, uint32_t size);
+    static VertexBuffer* Create(const std::vector<glm::vec4> &vertices, uint32_t size);
   };
 
   class IndexBuffer {
