@@ -42,6 +42,9 @@ namespace Engine {
       glBindVertexArray(m_RendererID);
     }
     void OpenGLVertexArray::Unbind() const{
+      glBindVertexArray(m_RendererID);
+      for(size_t i = 0; i < m_VertexBuffersAttributesSize; ++i)
+          glDisableVertexAttribArray(i);
       glBindVertexArray(0);
     }
 
@@ -52,7 +55,7 @@ namespace Engine {
 
       BE_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "VertexBuffer has no layout!");
 
-      uint32_t index = 0;
+      uint32_t index = m_VertexBuffersAttributesSize;
       const auto& layout = vertexBuffer->GetLayout();
 
       for(const auto& element: layout){
@@ -67,8 +70,10 @@ namespace Engine {
         );
         index++;  
       }
-
+      m_VertexBuffersAttributesSize = index;
       m_VertexBuffers.push_back(vertexBuffer);
+      for(size_t i = index; i > 0; --i)
+        glDisableVertexAttribArray(i);
     }
 
     void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer){

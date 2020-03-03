@@ -20,6 +20,8 @@ float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 namespace Engine {
+  static std::pair<float,float> prev_position = {0.0f, 0.0f};
+  bool init = true;
   OrthographicCameraController::OrthographicCameraController(const std::string& name)
   : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f),
   m_CameraPosition(0.0f, 0.0f, -3.0f)
@@ -70,7 +72,11 @@ namespace Engine {
 
       lastX = xpos;
       lastY = ypos;
-      m_Camera.ProcessMouseMovement(xoffset, yoffset);
+      if(init || ((xpos != prev_position.first || ypos != prev_position.second) && Input::IsMouseButtonPressed(BE_MOUSE_BUTTON_2))){
+        m_Camera.ProcessMouseMovement(xoffset, yoffset, false);
+        prev_position = {xpos, ypos};
+        init = false;
+      }
     }
 
     m_Camera.SetPosition(m_CameraPosition);

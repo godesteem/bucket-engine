@@ -14,11 +14,13 @@ namespace Engine {
   {
   friend Model;
   public:
-    OpenGLModel(const std::string& filePath);
+    OpenGLModel(const std::string &objectFilePath, const std::string &shaderFilePath);
+    OpenGLModel(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile);
     virtual void Bind() const override;
     virtual void Unbind() const override;
     virtual void OnUpdate(Timestep ts, Camera& camera) override;
     virtual void OnImGuiRender() override;
+    virtual void SetVertexArraySize(uint32_t size) override;
 
   private:
     std::string m_Name;

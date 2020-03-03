@@ -28,5 +28,10 @@ namespace Engine {
     virtual Ref<IndexBuffer>& GetIndexBuffer() = 0;
 
     static VertexArray* Create();
+    inline uint32_t GetSize() const { return m_Size; };
+    inline void SetSize(uint32_t s) { m_Size = s; };
+
+  protected:
+    uint32_t m_Size = 0;
   };
 }

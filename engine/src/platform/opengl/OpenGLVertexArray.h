@@ -32,6 +32,7 @@ namespace Engine {
     uint32_t m_RendererID = 0;
     std::vector<Ref<VertexBuffer>> m_VertexBuffers;
     Ref<IndexBuffer> m_IndexBuffer;
+    uint32_t m_VertexBuffersAttributesSize = 0;
   };
 
 }

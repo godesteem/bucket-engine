@@ -10,13 +10,22 @@
 #include "platform/opengl/OpenGLModel.h"
 
 namespace Engine {
-  Ref<Model> Model::Create(const std::string& filePath){
+  Ref<Model> Model::Create(const std::string &objectFilePath, const std::string &shaderFilePath) {
     switch(Renderer::GetAPI()){
       case RendererAPI::API::None: BE_CORE_ASSERT(false, "RendererAPI::None is currently not supported ");
-      case RendererAPI::API::OpenGL: return std::make_shared<OpenGLModel>(filePath);
+      case RendererAPI::API::OpenGL: return std::make_shared<OpenGLModel>(objectFilePath, shaderFilePath);
     }
     BE_CORE_ASSERT(false, "Unknown RendererAPI");
     return nullptr; 
     
+  }
+
+  Ref<Model> Model::Create(Ref<VertexBuffer>& vertexBuffer, Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile) {
+    switch(Renderer::GetAPI()){
+      case RendererAPI::API::None: BE_CORE_ASSERT(false, "RendererAPI::None is currently not supported ");
+      case RendererAPI::API::OpenGL: return std::make_shared<OpenGLModel>(vertexBuffer, indexBuffer, shaderFile);
+    }
+    BE_CORE_ASSERT(false, "Unknown RendererAPI");
+    return nullptr;
   }
 }

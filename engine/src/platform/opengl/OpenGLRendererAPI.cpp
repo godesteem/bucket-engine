@@ -2,7 +2,7 @@
  * File              : OpenGLRendererAPI.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 23.02.2020
- * Last Modified Date: 29.02.2020
+ * Last Modified Date: 01.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -27,7 +27,10 @@ namespace Engine {
   }
 
   void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray){
-    //glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+    if(vertexArray->GetIndexBuffer() != nullptr)
+      glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+    else{
+      glDrawArrays(GL_TRIANGLES, 0, vertexArray->GetSize());
+    }
   }
 }

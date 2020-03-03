@@ -14,148 +14,167 @@
 #include "engine/renderer/Renderer.h"
 
 namespace Engine {
-  OpenGLModel::OpenGLModel(const std::string& filePath){
-    BE_CHECK_FILE(filePath, ".obj");
-    std::vector<glm::vec4> vertices;
+  OpenGLModel::OpenGLModel(const std::string &objectFilePath, const std::string &shaderFilePath) {
+    BE_CHECK_FILE(objectFilePath, ".obj");
+    BE_CHECK_FILE(shaderFilePath, ".glsl");
+    std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> normals;
+    std::vector<glm::vec2> uvs;
     std::vector<GLushort> elements;
+    std::vector<std::string> attributes;
 
-    std::ifstream in(filePath, std::ios::in);
-    if(!in){
-      BE_CORE_ASSERT(false, "Cannot open model file");
+    std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
+    std::vector<glm::vec3> temp_vertices;
+    std::vector<glm::vec2> temp_uvs;
+    std::vector<glm::vec3> temp_normals;
+
+
+    FILE * file = fopen(objectFilePath.c_str(), "r");
+    if( file == NULL ){
+      printf("Impossible to open the file ! Are you in the right path ? See Tutorial 1 for details\n");
+      getchar();
     }
-    std::string line;
-    while(getline(in, line)){
-      std::string type = line.substr(0,2);
-      if(type == "v "){ // Vertex
-        std::istringstream s(line.substr(2));
-        glm::vec4 v; s >> v.x; s >> v.y; s >> v.z; v.w = 1.0f;
-        vertices.push_back(v);
-      } else if(type == "f "){ // Fragment
-        std::istringstream s(line.substr(2));
-        GLushort a, b, c;
-        s >> a; s >> b; s >> c;
-        a--; b--; c--;
-        elements.push_back(a); elements.push_back(b); elements.push_back(c);
-      } else if(line[0] == '#'){ // Comment line
 
-      } else {
-        BE_CORE_WARN("Unknown format \"{}\"", type);
+    while( 1 ){
+      char lineHeader[128];
+      // read the first word of the line
+      int res = fscanf(file, "%s", lineHeader);
+      if (res == EOF)
+        break; // EOF = End Of File. Quit the loop.
+
+      // else : parse lineHeader
+
+      if ( strcmp( lineHeader, "v" ) == 0 ){
+        glm::vec3 vertex;
+        fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z );
+        temp_vertices.push_back(vertex);
+      }else if ( strcmp( lineHeader, "vt" ) == 0 ){
+        glm::vec2 uv;
+        fscanf(file, "%f %f\n", &uv.x, &uv.y );
+        uv.y = -uv.y; // Invert V coordinate since we will only use DDS texture, which are inverted. Remove if you want to use TGA or BMP loaders.
+        temp_uvs.push_back(uv);
+      }else if ( strcmp( lineHeader, "vn" ) == 0 ){
+        glm::vec3 normal;
+        fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z );
+        temp_normals.push_back(normal);
+      }else if ( strcmp( lineHeader, "f" ) == 0 ){
+        std::string vertex1, vertex2, vertex3;
+        unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+        int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
+        if (matches != 9){
+          printf("File can't be read by our simple parser :-( Try exporting with other options\n");
+          fclose(file);
+        }
+        vertexIndices.push_back(vertexIndex[0]);
+        vertexIndices.push_back(vertexIndex[1]);
+        vertexIndices.push_back(vertexIndex[2]);
+        uvIndices    .push_back(uvIndex[0]);
+        uvIndices    .push_back(uvIndex[1]);
+        uvIndices    .push_back(uvIndex[2]);
+        normalIndices.push_back(normalIndex[0]);
+        normalIndices.push_back(normalIndex[1]);
+        normalIndices.push_back(normalIndex[2]);
+      }else{
+        // Probably a comment, eat up the rest of the line
+        char stupidBuffer[1000];
+        fgets(stupidBuffer, 1000, file);
       }
+
     }
-    BE_CORE_ASSERT(vertices.size() > 0, "OpenGLModel::OpenGLModel() No data from file.");
-    normals.resize(vertices.size(), glm::vec3(0.0f));
-    for(int i = 0; i < elements.size(); ++i){
-      GLushort ia = elements[i];
-      GLushort ib = elements[i+1];
-      GLushort ic = elements[i+2];
-      glm::vec3 normal = glm::normalize(glm::cross(
-        glm::vec3(vertices[ib]) - glm::vec3(vertices[ia]),
-        glm::vec3(vertices[ic]) - glm::vec3(vertices[ia])
-      ));
-      normals[ia] = normals[ib] = normals[ic] = normal;
+
+    // For each vertex of each triangle
+    for( unsigned int i=0; i<vertexIndices.size(); i++ ){
+
+      // Get the indices of its attributes
+      unsigned int vertexIndex = vertexIndices[i];
+      unsigned int uvIndex = uvIndices[i];
+      unsigned int normalIndex = normalIndices[i];
+
+      // Get the attributes thanks to the index
+      glm::vec3 vertex = temp_vertices[ vertexIndex-1 ];
+      glm::vec2 uv = temp_uvs[ uvIndex-1 ];
+      glm::vec3 normal = temp_normals[ normalIndex-1 ];
+
+      // Put the attributes in buffers
+      vertices.push_back(vertex);
+      uvs     .push_back(uv);
+      normals .push_back(normal);
+
     }
+    fclose(file);
 
     m_VertexArray.reset(VertexArray::Create());
-    m_VertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * 4));
-    Engine::BufferLayout vertexLayout = {
-        { Engine::ShaderDataType::Float3, "u_Normal" }
-    };
-    m_VertexBuffer->SetLayout(vertexLayout);
-    m_VertexArray->AddVertexBuffer(m_VertexBuffer);
-
-    m_NormalBuffer.reset(VertexBuffer::Create(normals, normals.size() * 3));
-    Engine::BufferLayout layout = {
-        { Engine::ShaderDataType::Float4, "v_coord" }
-    };
-    m_NormalBuffer->SetLayout(layout);
-    m_VertexArray->AddVertexBuffer(m_NormalBuffer);
-
-    m_ElementsBuffer.reset(IndexBuffer::Create(elements, elements.size()));
-    m_VertexArray->SetIndexBuffer(m_ElementsBuffer);
-
-    auto last = filePath.find_last_of("/\\");
+    if(!vertices.empty()) {
+      m_VertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(glm::vec3)));
+      Engine::BufferLayout vertexLayout = {
+          {Engine::ShaderDataType::Float3, "position"}
+      };
+      m_VertexBuffer->SetLayout(vertexLayout);
+      m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+    }
+    if(!uvs.empty()) {
+      m_VertexBuffer.reset(Engine::VertexBuffer::Create(uvs, vertices.size() * sizeof(glm::vec2)));
+      Engine::BufferLayout vertexLayout = {
+          {Engine::ShaderDataType::Float2, "vertexUV"}
+      };
+      m_VertexBuffer->SetLayout(vertexLayout);
+      m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+    }
+//    if(normals.size() > 0) {
+//      m_NormalBuffer.reset(VertexBuffer::Create(normals, normals.size() * 3));
+//      Engine::BufferLayout layout = {
+//          {Engine::ShaderDataType::Float4, "v_coord"}
+//      };
+//      m_NormalBuffer->SetLayout(layout);
+//      m_VertexArray->AddVertexBuffer(m_NormalBuffer);
+//    }
+//    if(elements.size() > 0) {
+//      m_ElementsBuffer.reset(IndexBuffer::Create(elements, elements.size()));
+//      m_VertexArray->SetIndexBuffer(m_ElementsBuffer);
+//    }
+    auto last = objectFilePath.find_last_of("/\\");
     last = last == std::string::npos ? 0 : last + 1;
-    auto lastDot = filePath.rfind('.');
+    auto lastDot = objectFilePath.rfind('.');
 
-    auto count = lastDot == std::string::npos ? filePath.size() - last : lastDot - last;
-    m_Name = filePath.substr(last, count);
-
-    m_Shader = Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Suzanne.glsl");
-    m_Shader->Bind();
-
-    m_Shader->UploadUniformMat4("v_inv", glm::inverse(glm::mat4(1.0f)));
-    glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position);
-    m_Shader->UploadUniformMat3("m_inv_transp", glm::mat3(glm::transpose(glm::inverse(transform))));
-
-
-
-    glEnableVertexAttribArray(m_Shader->GetAttributeLocation("v_coord"));
-    m_VertexBuffer->Bind();
-    glVertexAttribPointer(
-        m_Shader->GetAttributeLocation("v_coord"),  // attribute
-        4,                  // number of elements per vertex, here (x,y,z,w)
-        GL_FLOAT,           // the type of each element
-        GL_FALSE,           // take our values as-is
-        0,                  // no extra data between each position
-        0                   // offset of first element
-    );
-
-    glEnableVertexAttribArray(m_Shader->GetAttributeLocation("u_Normal"));
-    m_NormalBuffer->Bind();
-    glVertexAttribPointer(
-        m_Shader->GetAttributeLocation("u_Normal"), // attribute
-        3,                  // number of elements per vertex, here (x,y,z)
-        GL_FLOAT,           // the type of each element
-        GL_FALSE,           // take our values as-is
-        0,                  // no extra data between each position
-        0                   // offset of first element
-    );
-
-    m_Shader->Unbind();
-    glDisableVertexAttribArray(m_Shader->GetAttributeLocation("v_coord"));
-    glDisableVertexAttribArray(m_Shader->GetAttributeLocation("u_Normal"));
+    auto count = lastDot == std::string::npos ? objectFilePath.size() - last : lastDot - last;
+    m_Name = objectFilePath.substr(last, count);
+    SetVertexArraySize(vertices.size());
+    m_Shader = Shader::Create(shaderFilePath);
   }
 
-  void OpenGLModel::Bind() const {
+  OpenGLModel::OpenGLModel(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile){
+    m_VertexArray->AddVertexBuffer(vertexBuffer);
+    m_VertexArray->SetIndexBuffer(indexBuffer);
+    m_Shader = Shader::Create(shaderFile);
     m_Shader->Bind();
+  }
+  void OpenGLModel::Bind() const {
   }
   void OpenGLModel::Unbind() const {
-    m_Shader->Unbind();
-    m_VertexBuffer->Unbind();
-    m_NormalBuffer->Unbind();
-    m_ElementsBuffer->Unbind();
   }
 
   void OpenGLModel::OnImGuiRender() {
-    ImGui::Begin("Model");
+    ImGui::Begin(m_Name.c_str());
     ImGui::Text("Object Position (%d, %d, %d)", (int)m_Position.x, (int)m_Position.y, (int)m_Position.z);
     ImGui::PushItemWidth(120);
-    ImGui::SliderFloat("Modelx", &m_Position.x, -100.0f, 100.0f, "%.2f");
+    ImGui::SliderFloat(std::string(m_Name + "ModelX").c_str(), &m_Position.x, -100.0f, 100.0f, "%.2f");
     ImGui::SameLine(160);
-    ImGui::SliderFloat("Modely", &m_Position.y, -100.0f, 100.0f, "%.2f");
+    ImGui::SliderFloat(std::string(m_Name + "ModelY").c_str(), &m_Position.y, -100.0f, 100.0f, "%.2f");
     ImGui::SameLine(320);
-    ImGui::SliderFloat("Modelz", &m_Position.z, -100.0f, 100.0f, "%.2f");
+    ImGui::SliderFloat(std::string(m_Name + "ModelZ").c_str(), &m_Position.z, -100.0f, 100.0f, "%.2f");
     ImGui::PopItemWidth();
     ImGui::End();
-
   }
 
   void OpenGLModel::OnUpdate(Timestep ts, Camera& camera) {
     Bind();
-
-    glm::mat4 world2camera = camera.GetViewMatrix();  // up
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position);
-
-    glm::mat3 m_3x3_inv_transp = glm::transpose(glm::inverse(glm::mat3(transform)));
-    m_Shader->UploadUniformMat3("m_inv_transp", m_3x3_inv_transp);
-
-    m_ElementsBuffer->Bind();
-//    int size; glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-//    glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-//    int size;  glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-//    glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-
     Renderer::Submit(m_VertexArray, m_Shader, transform);
+    Unbind();
   }
+
+  void OpenGLModel::SetVertexArraySize(uint32_t size) {
+    m_VertexArray->SetSize(size);
+  }
+
 }
