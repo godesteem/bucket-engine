@@ -7,6 +7,7 @@ in vec2 vertexUV;
 
 // Output data ; will be interpolated for each fragment.
 out vec2 UV;
+out vec4 u_Pos;
 
 // Values that stay constant for the whole mesh.
 uniform mat4 u_ViewProjection;
@@ -17,7 +18,7 @@ void main(){
 
     // Output position of the vertex, in clip space : MVP * position
     gl_Position =  u_ViewProjection * model * u_Transform * vec4(position, 1.0);
-
+    u_Pos = gl_Position;
     // UV of the vertex. No special space for this one.
     UV = vertexUV;
 }
@@ -27,15 +28,12 @@ void main(){
 #version 130
 // Interpolated values from the vertex shaders
 in vec2 UV;
+in vec4 u_Pos;
 
 // Ouput data
-out vec3 color;
+out vec4 color;
 
-// Values that stay constant for the whole mesh.
-uniform sampler2D myTextureSampler;
 
-void main(){
-
-    // Output color = color of the texture at the specified UV
-    color = texture( myTextureSampler, UV ).rgb;
+void main() {
+    color = u_Pos;
 }

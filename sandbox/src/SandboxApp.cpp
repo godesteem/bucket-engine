@@ -192,7 +192,6 @@ class ExampleLayer: public Engine::Layer
             glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
             glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
             Engine::Renderer::Submit(m_SquareVA, m_FlatColorShader, transform);
-            //Engine::Renderer::Submit(ml, m_FlatColorShader, transform);
           }
         }
       }

@@ -8,13 +8,14 @@
 #pragma once
 
 #include "engine/renderer/Model.h"
+#include "engine/renderer/Texture.h"
 
 namespace Engine {
   class OpenGLModel: public Model
   {
   friend Model;
   public:
-    OpenGLModel(const std::string &objectFilePath, const std::string &shaderFilePath);
+    OpenGLModel(const std::string &objectFilePath, const std::string &shaderFilePath="", const std::string &textureFilePath="");
     OpenGLModel(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile);
     virtual void Bind() const override;
     virtual void Unbind() const override;
@@ -32,6 +33,7 @@ namespace Engine {
     Ref<VertexArray> m_VertexArray;
     ShaderLibrary m_ShaderLibrary;
     Ref<Shader> m_Shader;
+    Ref<Texture2D> m_Texture;
     glm::vec3 m_Position = {1.0f, 1.0f, 1.0f};
   };
 }

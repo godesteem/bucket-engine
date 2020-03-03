@@ -13,10 +13,14 @@
 #include <imgui/imgui.h>
 #include "engine/renderer/Renderer.h"
 
+const std::string DEFAULT_TEXTURE = "/home/phil/work/private/games/bucket-engine/sandbox/assets/Default.png";
+const std::string DEFAULT_SHADER = "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Example.glsl";
+
 namespace Engine {
-  OpenGLModel::OpenGLModel(const std::string &objectFilePath, const std::string &shaderFilePath) {
+  OpenGLModel::OpenGLModel(const std::string &objectFilePath, const std::string &shaderFilePath, const std::string &textureFilePath) {
     BE_CHECK_FILE(objectFilePath, ".obj");
-    BE_CHECK_FILE(shaderFilePath, ".glsl");
+    if(!shaderFilePath.empty())
+      BE_CHECK_FILE(shaderFilePath, ".glsl");
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> normals;
     std::vector<glm::vec2> uvs;
@@ -48,7 +52,8 @@ namespace Engine {
     auto count = lastDot == std::string::npos ? objectFilePath.size() - last : lastDot - last;
     m_Name = objectFilePath.substr(last, count);
     SetVertexArraySize(vertices.size());
-    m_Shader = Shader::Create(shaderFilePath);
+    m_Shader = Shader::Create(shaderFilePath.empty() ? DEFAULT_SHADER : shaderFilePath);
+    m_Texture = Texture2D::Create(textureFilePath.empty() ? DEFAULT_TEXTURE : textureFilePath);
   }
 
   OpenGLModel::OpenGLModel(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile){
@@ -58,6 +63,7 @@ namespace Engine {
     m_Shader->Bind();
   }
   void OpenGLModel::Bind() const {
+    m_Texture->Bind();
   }
   void OpenGLModel::Unbind() const {
   }

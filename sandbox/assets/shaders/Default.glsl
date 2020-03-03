@@ -21,9 +21,22 @@ void main()
 in vec4 v_Color;
 in vec3 v_Position;
 out vec4 color;
+
+float near = 0.1;
+float far  = 100.0;
+
+void LinearizeDepth(float depth, float depthOut)
+{
+  float z = depth * 2.0 - 1.0; // back to NDC
+  depthOut = (2.0 * near * far) / (far + near - z * (far - near));
+}
+
 void main() {
-  color = vec4(v_Position * 0.5 + 0.5, 1.0);
-  color = v_Color;
+  float depth;
+  LinearizeDepth(gl_FragCoord.z, depth);
+  depth = depth / far; // divide by far for demonstration
+  color = vec4(vec3(depth), 1.0);
+
 }
 
 
