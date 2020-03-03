@@ -16,9 +16,6 @@ namespace Engine {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
     glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-    // Cull triangles which normal is not towards the camera
-    glEnable(GL_CULL_FACE);
   }
 
   void OpenGLRendererAPI::SetClearColor(const glm::vec4& color){

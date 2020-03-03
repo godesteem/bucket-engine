@@ -23,6 +23,8 @@ namespace Engine {
     virtual void SetVertexArraySize(uint32_t size) override;
 
   private:
+    bool ReadObjFile(const std::string &filePath, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs);
+  private:
     std::string m_Name;
     Ref<VertexBuffer> m_VertexBuffer;
     Ref<VertexBuffer> m_NormalBuffer;
