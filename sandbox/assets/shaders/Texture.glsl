@@ -2,6 +2,7 @@
 #version 130
 in vec3 position;
 in vec2 textCord;
+
 uniform mat4 u_ViewProjection;
 uniform mat4 u_Transform;
 

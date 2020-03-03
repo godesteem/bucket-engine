@@ -17,6 +17,7 @@ const std::string DEFAULT_TEXTURE = "/home/phil/work/private/games/bucket-engine
 const std::string DEFAULT_SHADER = "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Example.glsl";
 
 namespace Engine {
+  int shaderCount = 0;
   OpenGLModel::OpenGLModel(const std::string &objectFilePath, const std::string &shaderFilePath, const std::string &textureFilePath) {
     BE_CHECK_FILE(objectFilePath, ".obj");
     if(!shaderFilePath.empty())
@@ -27,7 +28,14 @@ namespace Engine {
     std::vector<GLushort> elements;
     std::vector<std::string> attributes;
 
-    ReadObjFile(objectFilePath, vertices, normals, uvs);
+    FILE * file = fopen(objectFilePath.c_str(), "r");
+    if( file == NULL ){
+      printf("Impossible to open the file ! Are you in the right path ? See Tutorial 1 for details\n");
+      getchar();
+    }
+    ReadObjFile(file, vertices, normals, uvs);
+    fclose(file);
+
     m_VertexArray.reset(VertexArray::Create());
     if(!vertices.empty()) {
       m_VertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(glm::vec3)));
@@ -53,7 +61,24 @@ namespace Engine {
     m_Name = objectFilePath.substr(last, count);
     SetVertexArraySize(vertices.size());
     m_Shader = Shader::Create(shaderFilePath.empty() ? DEFAULT_SHADER : shaderFilePath);
-    m_Texture = Texture2D::Create(textureFilePath.empty() ? DEFAULT_TEXTURE : textureFilePath);
+#ifdef BE_DEBUG
+
+    std::ifstream shaderFile(shaderFilePath.empty() ? DEFAULT_SHADER.c_str() : shaderFilePath.c_str());
+    if( !shaderFile.is_open() ){
+      printf("Impossible to open the file ! Are you in the right path ? See Tutorial 1 for details\n");
+    }
+
+    std::string line;
+    while ( getline (shaderFile,line) )
+    {
+      m_ShaderFile += line;
+      m_ShaderFile += "\n";
+    }
+
+    shaderFile.close();
+#endif
+    if(!textureFilePath.empty())
+      m_Texture = Texture2D::Create(textureFilePath);
   }
 
   OpenGLModel::OpenGLModel(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile){
@@ -63,7 +88,7 @@ namespace Engine {
     m_Shader->Bind();
   }
   void OpenGLModel::Bind() const {
-    m_Texture->Bind();
+    if(m_Texture != nullptr) m_Texture->Bind();
   }
   void OpenGLModel::Unbind() const {
   }
@@ -78,6 +103,15 @@ namespace Engine {
     ImGui::SameLine(320);
     ImGui::SliderFloat(std::string(m_Name + "ModelZ").c_str(), &m_Position.z, -100.0f, 100.0f, "%.2f");
     ImGui::PopItemWidth();
+//    ImGui::TextWrapped("%s", m_ShaderFile.c_str());
+    ImGui::InputTextMultiline(std::string(m_Name + "Shader").c_str(), &m_ShaderFile[0], 10000);
+    if(ImGui::Button("Save Shader", {80, 0})){
+      std::string newShaderFileName = "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/" + m_Name + ".glsl";
+      std::ofstream out(newShaderFileName.c_str());
+      out << m_ShaderFile.c_str();
+      out.close();
+      m_Shader = Shader::Create(newShaderFileName);
+    }
     ImGui::End();
   }
 
@@ -85,6 +119,7 @@ namespace Engine {
     Bind();
     glm::mat4 model(1.0f);
     m_Shader->Bind();
+    m_Shader->UploadUniformMat3("m_3x3_inv_transp", glm::transpose(glm::inverse(glm::mat3(model))));
     m_Shader->UploadUniformMat4("model", model);
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position);
     Renderer::Submit(m_VertexArray, m_Shader, transform);
@@ -95,19 +130,14 @@ namespace Engine {
     m_VertexArray->SetSize(size);
   }
 
-  bool OpenGLModel::ReadObjFile(const std::string &filePath, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs) {
+  bool OpenGLModel::ReadObjFile(FILE* file, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs) {
     std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
     std::vector<glm::vec3> temp_vertices;
     std::vector<glm::vec2> temp_uvs;
     std::vector<glm::vec3> temp_normals;
 
     bool hasUVs = true;
-    FILE * file = fopen(filePath.c_str(), "r");
-    if( file == NULL ){
-      printf("Impossible to open the file ! Are you in the right path ? See Tutorial 1 for details\n");
-      getchar();
-      return false;
-    }
+
 
     while( 1 ){
       char lineHeader[128];
@@ -177,7 +207,6 @@ namespace Engine {
         normals.push_back(normal);
       }
     }
-    fclose(file);
     return true;
   }
 

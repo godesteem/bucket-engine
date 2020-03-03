@@ -1,39 +1,34 @@
 #type vertex
 #version 130
 
-// Input vertex data, different for all executions of this shader.
-in vec3 position;
-in vec2 vertexUV;
+in vec4 v_coord;
+in vec3 u_Normal;
 
-// Output data ; will be interpolated for each fragment.
-out vec2 UV;
-out vec4 u_Pos;
-
-// Values that stay constant for the whole mesh.
-uniform mat4 u_ViewProjection;
-uniform mat4 u_Transform;
 uniform mat4 model;
+uniform mat4 u_Transform;
+uniform mat4 u_ViewProjection;
+uniform mat3 m_3x3_inv_transp;
 
-void main(){
+out vec4 color;
 
-    // Output position of the vertex, in clip space : MVP * position
-    gl_Position =  u_ViewProjection * model * u_Transform * vec4(position, 1.0);
-    u_Pos = gl_Position;
-    // UV of the vertex. No special space for this one.
-    UV = vertexUV;
+void main(void)
+{
+    mat4 mvp = u_ViewProjection * model * u_Transform;
+    gl_Position = mvp * gl_Vertex;
+    color = gl_Vertex;
+    gl_TexCoord[0]  = gl_MultiTexCoord0;
 }
 
 
 #type fragment
 #version 130
-// Interpolated values from the vertex shaders
-in vec2 UV;
-in vec4 u_Pos;
+in vec4 color;
+uniform mat4 u_Transform;
 
-// Ouput data
-out vec4 color;
-
-
-void main() {
-    color = u_Pos;
-}
+void main()
+{             
+    if(color.x < 0.25)
+        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+    else
+        gl_FragColor = vec4(0.0, 1.0, 1.0, 1.0);        
+}  
