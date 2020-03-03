@@ -11,11 +11,12 @@ out vec2 UV;
 // Values that stay constant for the whole mesh.
 uniform mat4 u_ViewProjection;
 uniform mat4 u_Transform;
+uniform mat4 model;
 
 void main(){
 
     // Output position of the vertex, in clip space : MVP * position
-    gl_Position =  u_ViewProjection * vec4(position,1) * u_Transform;
+    gl_Position =  u_ViewProjection * model * u_Transform * vec4(position, 1.0);
 
     // UV of the vertex. No special space for this one.
     UV = vertexUV;

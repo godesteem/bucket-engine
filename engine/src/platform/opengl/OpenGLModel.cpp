@@ -120,18 +120,6 @@ namespace Engine {
       m_VertexBuffer->SetLayout(vertexLayout);
       m_VertexArray->AddVertexBuffer(m_VertexBuffer);
     }
-//    if(normals.size() > 0) {
-//      m_NormalBuffer.reset(VertexBuffer::Create(normals, normals.size() * 3));
-//      Engine::BufferLayout layout = {
-//          {Engine::ShaderDataType::Float4, "v_coord"}
-//      };
-//      m_NormalBuffer->SetLayout(layout);
-//      m_VertexArray->AddVertexBuffer(m_NormalBuffer);
-//    }
-//    if(elements.size() > 0) {
-//      m_ElementsBuffer.reset(IndexBuffer::Create(elements, elements.size()));
-//      m_VertexArray->SetIndexBuffer(m_ElementsBuffer);
-//    }
     auto last = objectFilePath.find_last_of("/\\");
     last = last == std::string::npos ? 0 : last + 1;
     auto lastDot = objectFilePath.rfind('.');
@@ -168,6 +156,9 @@ namespace Engine {
 
   void OpenGLModel::OnUpdate(Timestep ts, Camera& camera) {
     Bind();
+    glm::mat4 model(1.0f);
+    m_Shader->Bind();
+    m_Shader->UploadUniformMat4("model", model);
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position);
     Renderer::Submit(m_VertexArray, m_Shader, transform);
     Unbind();
