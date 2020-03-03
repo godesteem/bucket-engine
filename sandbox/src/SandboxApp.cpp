@@ -136,9 +136,9 @@ class ExampleLayer: public Engine::Layer
 
       m_Texture = Engine::Texture2D::Create(textureSrc);
       m_PortalTexture = Engine::Texture2D::Create(textureSrc2);
-//      m_Suzanne = Engine::Model::Create(
-//          "/home/phil/work/private/games/bucket-engine/sandbox/assets/models/obj-viewer_suzanne.obj",
-//          "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Suzanne.glsl");
+      m_Suzanne = Engine::Model::Create(
+          "/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Suzanne.obj",
+          "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Example.glsl");
       m_Cube = Engine::Model::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Example.obj",
                                      "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Example.glsl");
       glm::mat4 model = glm::mat4(1.0f);
@@ -215,7 +215,7 @@ class ExampleLayer: public Engine::Layer
       if(objects[Objects::Triangle]) glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0f)) * scale;
 
       if(objects[Objects::Cube3D]) m_Cube->OnUpdate(ts, m_PlayerCameraLayer.GetCamera());
-//      if(objects[Objects::Suzanne]) m_Suzanne->OnUpdate(ts, m_PlayerCameraLayer.GetCamera());
+      if(objects[Objects::Suzanne]) m_Suzanne->OnUpdate(ts, m_PlayerCameraLayer.GetCamera());
 
       m_PlayerCameraLayer.OnUpdate(ts);
 

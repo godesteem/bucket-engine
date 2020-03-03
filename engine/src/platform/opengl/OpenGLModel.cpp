@@ -28,15 +28,19 @@ namespace Engine {
     std::vector<glm::vec2> temp_uvs;
     std::vector<glm::vec3> temp_normals;
 
+    bool hasUVs = true;
 
-    FILE * file = fopen(objectFilePath.c_str(), "r");
-    if( file == NULL ){
-      printf("Impossible to open the file ! Are you in the right path ? See Tutorial 1 for details\n");
-      getchar();
-    }
-
-    while( 1 ){
-      char lineHeader[128];
+    std::ifstream file;
+    file.open(objectFilePath.c_str());
+//
+//    if( file == NULL ){
+//      printf("Impossible to open the file ! Are you in the right path ? See Tutorial 1 for details\n");
+//      getchar();
+//    }
+    std::string line;
+    bool hasUVs = true;
+    while( getline(file, line) ){
+      const char *lineHeader = line.substr(0, 2).c_str();
       // read the first word of the line
       int res = fscanf(file, "%s", lineHeader);
       if (res == EOF)
@@ -68,9 +72,11 @@ namespace Engine {
         vertexIndices.push_back(vertexIndex[0]);
         vertexIndices.push_back(vertexIndex[1]);
         vertexIndices.push_back(vertexIndex[2]);
-        uvIndices    .push_back(uvIndex[0]);
-        uvIndices    .push_back(uvIndex[1]);
-        uvIndices    .push_back(uvIndex[2]);
+        if(hasUVs) {
+          uvIndices.push_back(uvIndex[0]);
+          uvIndices.push_back(uvIndex[1]);
+          uvIndices.push_back(uvIndex[2]);
+        }
         normalIndices.push_back(normalIndex[0]);
         normalIndices.push_back(normalIndex[1]);
         normalIndices.push_back(normalIndex[2]);
@@ -84,22 +90,21 @@ namespace Engine {
 
     // For each vertex of each triangle
     for( unsigned int i=0; i<vertexIndices.size(); i++ ){
-
-      // Get the indices of its attributes
-      unsigned int vertexIndex = vertexIndices[i];
-      unsigned int uvIndex = uvIndices[i];
-      unsigned int normalIndex = normalIndices[i];
-
-      // Get the attributes thanks to the index
-      glm::vec3 vertex = temp_vertices[ vertexIndex-1 ];
-      glm::vec2 uv = temp_uvs[ uvIndex-1 ];
-      glm::vec3 normal = temp_normals[ normalIndex-1 ];
-
-      // Put the attributes in buffers
-      vertices.push_back(vertex);
-      uvs     .push_back(uv);
-      normals .push_back(normal);
-
+      if(!temp_vertices.empty()) {
+        unsigned int vertexIndex = vertexIndices[i];
+        glm::vec3 vertex = temp_vertices[vertexIndex - 1];
+        vertices.push_back(vertex);
+      }
+      if(!temp_uvs.empty()) {
+        unsigned int uvIndex = uvIndices[i];
+        glm::vec2 uv = temp_uvs[uvIndex - 1];
+        uvs.push_back(uv);
+      }
+      if(!temp_normals.empty()) {
+        unsigned int normalIndex = normalIndices[i];
+        glm::vec3 normal = temp_normals[normalIndex - 1];
+        normals.push_back(normal);
+      }
     }
     fclose(file);
 
