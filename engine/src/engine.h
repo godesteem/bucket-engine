@@ -33,7 +33,7 @@
 #include "engine/renderer/Buffer.h"
 #include "engine/renderer/Shader.h"
 #include "engine/renderer/Texture.h"
-#include "engine/renderer/Model.h"
+#include "engine/renderer/Mesh.h"
 #include "engine/renderer/VertexArray.h"
 
 #include "engine/renderer/OrthographicCamera.h"

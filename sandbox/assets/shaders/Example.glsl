@@ -7,28 +7,44 @@ in vec3 u_Normal;
 uniform mat4 model;
 uniform mat4 u_Transform;
 uniform mat4 u_ViewProjection;
-uniform mat3 m_3x3_inv_transp;
 
-out vec4 color;
+#version 330 core
+layout (location = 0) in vec3 aPos;
 
-void main(void)
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
+void main()
 {
-    mat4 mvp = u_ViewProjection * model * u_Transform;
-    gl_Position = mvp * gl_Vertex;
-    color = gl_Vertex;
-    gl_TexCoord[0]  = gl_MultiTexCoord0;
+    gl_Position = u_ViewProjection * model * u_Transform * gl_Vertex;
 }
 
 
 #type fragment
 #version 130
 in vec4 color;
+in vec3 Normal;
+in vec3 FragPos;
+
 uniform mat4 u_Transform;
 
+out vec4 FragColor;
+vec3 objectColor = vec3(1.0, 1.0, 0.0);
+vec3 lightColor = vec3(1.0, 1.0, 1.0);
+vec3 lightPos = vec3(-1.0, -1.0, 0.0);
 void main()
-{             
-    if(color.x < 0.25)
-        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-    else
-        gl_FragColor = vec4(0.0, 1.0, 1.0, 1.0);        
-}  
+{
+    // ambient
+    float ambientStrength = 0.1;
+    vec3 ambient = ambientStrength * lightColor;
+
+    // diffuse
+    vec3 norm = normalize(Normal);
+    vec3 lightDir = normalize(lightPos - FragPos);
+    float diff = max(dot(norm, lightDir), 0.0);
+    vec3 diffuse = diff * lightColor;
+
+    vec3 result = (ambient + diffuse) * objectColor;
+    FragColor = vec4(result, 1.0);
+}

@@ -1,5 +1,5 @@
 /**
- * File              : Model.h
+ * File              : Mesh.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 01.03.2020
  * Last Modified Date: 01.03.2020
@@ -27,10 +27,10 @@ namespace Engine {
     : name(std::move(n)), buffer(b)
     {}
   };
-  class Model
+  class Mesh
   {
   public:
-    virtual ~Model() = default;
+    virtual ~Mesh() = default;
     virtual void Bind() const = 0;
     virtual void Unbind() const = 0;
     virtual void OnUpdate(Timestep ts, Camera& camera) = 0;
@@ -41,10 +41,10 @@ namespace Engine {
       m_Attributes.emplace_back(key, buffer);
     };
 
-    static Ref<Model> Create(const std::string &objectFilePath, const std::string &shaderFilePath);
-    static Ref<Model> Create(Ref<VertexBuffer>& vertexBuffer, Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile);
+    static Ref<Mesh> Create(const std::string &objectFilePath, const std::string &shaderFilePath);
+    static Ref<Mesh> Create(Ref<VertexBuffer>& vertexBuffer, Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile);
     virtual void SetVertexArraySize(uint32_t size) = 0;
-    //static Ref<Model> Create(const std::string& filePath);
+    //static Ref<Mesh> Create(const std::string& filePath);
   protected:
     std::vector<ModelAttribute> m_Attributes;
   };

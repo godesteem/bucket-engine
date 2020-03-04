@@ -136,11 +136,13 @@ class ExampleLayer: public Engine::Layer
 
       m_Texture = Engine::Texture2D::Create(textureSrc);
       m_PortalTexture = Engine::Texture2D::Create(textureSrc2);
-      m_Suzanne = Engine::Model::Create(
+      m_Suzanne = Engine::Mesh::Create(
           "/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Suzanne.obj",
           "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Suzanne.glsl");
-      m_Cube = Engine::Model::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Example.obj",
-                                     "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Suzanne.glsl");
+      m_Cube = Engine::Mesh::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Example.obj",
+                                    "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Suzanne.glsl");
+      m_Models.push_back(Engine::Mesh::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Light.obj",
+                                              "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Light.glsl"));
       glm::mat4 model = glm::mat4(1.0f);
       model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
@@ -215,7 +217,9 @@ class ExampleLayer: public Engine::Layer
 
       if(objects[Objects::Cube3D]) m_Cube->OnUpdate(ts, m_PlayerCameraLayer.GetCamera());
       if(objects[Objects::Suzanne]) m_Suzanne->OnUpdate(ts, m_PlayerCameraLayer.GetCamera());
-
+      for(const auto& obj : m_Models){
+        obj->OnUpdate(ts, m_PlayerCameraLayer.GetCamera());
+      }
       m_PlayerCameraLayer.OnUpdate(ts);
 
       Engine::Renderer::EndScene();
@@ -244,6 +248,9 @@ class ExampleLayer: public Engine::Layer
       m_PlayerCameraLayer.OnImGuiRender();
       m_Suzanne->OnImGuiRender();
       m_Cube->OnImGuiRender();
+      for(const auto& obj : m_Models){
+        obj->OnImGuiRender();
+      }
     }
   private:
     Engine::ShaderLibrary m_ShaderLibrary;
@@ -258,8 +265,9 @@ class ExampleLayer: public Engine::Layer
 
     Engine::OrthographicCameraController m_PlayerCameraLayer;
 
-    Engine::Ref<Engine::Model> m_Suzanne;
-    Engine::Ref<Engine::Model> m_Cube;
+    Engine::Ref<Engine::Mesh> m_Suzanne;
+    Engine::Ref<Engine::Mesh> m_Cube;
+    std::vector<Engine::Ref<Engine::Mesh>> m_Models;
 
     float m_SquareMoveSpeed = 5.0f;
     bool objects[7] = {false, false, false, false, false, false, true};

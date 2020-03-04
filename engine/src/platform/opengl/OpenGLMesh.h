@@ -1,5 +1,5 @@
 /**
- * File              : OpenGLModel.h
+ * File              : OpenGLMesh.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 01.03.2020
  * Last Modified Date: 01.03.2020
@@ -7,16 +7,16 @@
  */
 #pragma once
 
-#include "engine/renderer/Model.h"
+#include "engine/renderer/Mesh.h"
 #include "engine/renderer/Texture.h"
 
 namespace Engine {
-  class OpenGLModel: public Model
+  class OpenGLMesh: public Mesh
   {
-  friend Model;
+  friend Mesh;
   public:
-    OpenGLModel(const std::string &objectFilePath, const std::string &shaderFilePath="", const std::string &textureFilePath="");
-    OpenGLModel(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile);
+    OpenGLMesh(const std::string &objectFilePath, const std::string &shaderFilePath="", const std::string &textureFilePath="");
+    OpenGLMesh(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile);
     virtual void Bind() const override;
     virtual void Unbind() const override;
     virtual void OnUpdate(Timestep ts, Camera& camera) override;
@@ -24,7 +24,7 @@ namespace Engine {
     virtual void SetVertexArraySize(uint32_t size) override;
 
   private:
-    bool ReadObjFile(FILE* file, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs);
+    static bool ReadObjFile(FILE* file, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs);
   private:
     std::string m_Name;
     Ref<VertexBuffer> m_VertexBuffer;

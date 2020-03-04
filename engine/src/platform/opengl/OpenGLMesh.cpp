@@ -1,24 +1,23 @@
 /**
- * File              : OpenGLModel.cpp
+ * File              : OpenGLMesh.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 01.03.2020
  * Last Modified Date: 01.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
-#include "OpenGLModel.h"
+#include "OpenGLMesh.h"
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <fstream>
 #include <imgui/imgui.h>
 #include "engine/renderer/Renderer.h"
 
-const std::string DEFAULT_TEXTURE = "/home/phil/work/private/games/bucket-engine/sandbox/assets/Default.png";
-const std::string DEFAULT_SHADER = "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Example.glsl";
+std::string DEFAULT_SHADER = "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Example.glsl";
 
 namespace Engine {
   int shaderCount = 0;
-  OpenGLModel::OpenGLModel(const std::string &objectFilePath, const std::string &shaderFilePath, const std::string &textureFilePath) {
+  OpenGLMesh::OpenGLMesh(const std::string &objectFilePath, const std::string &shaderFilePath, const std::string &textureFilePath) {
     BE_CHECK_FILE(objectFilePath, ".obj");
     if(!shaderFilePath.empty())
       BE_CHECK_FILE(shaderFilePath, ".glsl");
@@ -29,7 +28,7 @@ namespace Engine {
     std::vector<std::string> attributes;
 
     FILE * file = fopen(objectFilePath.c_str(), "r");
-    if( file == NULL ){
+    if( file == nullptr){
       printf("Impossible to open the file ! Are you in the right path ? See Tutorial 1 for details\n");
       getchar();
     }
@@ -64,13 +63,10 @@ namespace Engine {
 #ifdef BE_DEBUG
 
     std::ifstream shaderFile(shaderFilePath.empty() ? DEFAULT_SHADER.c_str() : shaderFilePath.c_str());
-    if( !shaderFile.is_open() ){
-      printf("Impossible to open the file ! Are you in the right path ? See Tutorial 1 for details\n");
-    }
+    BE_CORE_ASSERT(!shaderFile.is_open(), "Impossible to open shader file!");
 
     std::string line;
-    while ( getline (shaderFile,line) )
-    {
+    while ( getline (shaderFile,line) ) {
       m_ShaderFile += line;
       m_ShaderFile += "\n";
     }
@@ -81,19 +77,19 @@ namespace Engine {
       m_Texture = Texture2D::Create(textureFilePath);
   }
 
-  OpenGLModel::OpenGLModel(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile){
+  OpenGLMesh::OpenGLMesh(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile){
     m_VertexArray->AddVertexBuffer(vertexBuffer);
     m_VertexArray->SetIndexBuffer(indexBuffer);
     m_Shader = Shader::Create(shaderFile);
     m_Shader->Bind();
   }
-  void OpenGLModel::Bind() const {
+  void OpenGLMesh::Bind() const {
     if(m_Texture != nullptr) m_Texture->Bind();
   }
-  void OpenGLModel::Unbind() const {
+  void OpenGLMesh::Unbind() const {
   }
 
-  void OpenGLModel::OnImGuiRender() {
+  void OpenGLMesh::OnImGuiRender() {
     ImGui::Begin(m_Name.c_str());
     ImGui::Text("Object Position (%d, %d, %d)", (int)m_Position.x, (int)m_Position.y, (int)m_Position.z);
     ImGui::PushItemWidth(120);
@@ -115,22 +111,21 @@ namespace Engine {
     ImGui::End();
   }
 
-  void OpenGLModel::OnUpdate(Timestep ts, Camera& camera) {
+  void OpenGLMesh::OnUpdate(Timestep ts, Camera& camera) {
     Bind();
     glm::mat4 model(1.0f);
     m_Shader->Bind();
-    m_Shader->UploadUniformMat3("m_3x3_inv_transp", glm::transpose(glm::inverse(glm::mat3(model))));
     m_Shader->UploadUniformMat4("model", model);
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position);
     Renderer::Submit(m_VertexArray, m_Shader, transform);
     Unbind();
   }
 
-  void OpenGLModel::SetVertexArraySize(uint32_t size) {
+  void OpenGLMesh::SetVertexArraySize(uint32_t size) {
     m_VertexArray->SetSize(size);
   }
 
-  bool OpenGLModel::ReadObjFile(FILE* file, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs) {
+  bool OpenGLMesh::ReadObjFile(FILE* file, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs) {
     std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
     std::vector<glm::vec3> temp_vertices;
     std::vector<glm::vec2> temp_uvs;
@@ -139,7 +134,7 @@ namespace Engine {
     bool hasUVs = true;
 
 
-    while( 1 ){
+    while( true ){
       char lineHeader[128];
       // read the first word of the line
       int res = fscanf(file, "%s", lineHeader);
