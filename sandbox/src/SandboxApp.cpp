@@ -2,7 +2,7 @@
  * File              : SandboxApp.cpp
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 01.03.2020
+ * Last Modified Date: 09.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
@@ -140,7 +140,7 @@ class ExampleLayer: public Engine::Layer
           "/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Suzanne.obj",
           "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Suzanne.glsl");
       m_Cube = Engine::Mesh::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Example.obj",
-                                    "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Suzanne.glsl");
+                                    "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Example.glsl");
       m_Models.push_back(Engine::Mesh::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Light.obj",
                                               "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Light.glsl"));
       glm::mat4 model = glm::mat4(1.0f);
@@ -284,10 +284,7 @@ class Sandbox: public Engine::Application
       PushLayer(new ExampleLayer());
     }
 
-    ~Sandbox()
-    {
-
-    }
+    ~Sandbox() = default;
 };
 
 Engine::Application* Engine::CreateApplication(){

@@ -33,7 +33,7 @@ set(ENGINE_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCamera.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCameraController.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Texture.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Model.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Mesh.cpp
 
   #platform
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
@@ -46,7 +46,7 @@ set(ENGINE_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLVertexArray.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLShader.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLTexture.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLModel.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLMesh.cpp
 
   #3rd party
   ${imgui_root}/imgui.cpp
@@ -90,7 +90,7 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCamera.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCameraController.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Texture.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Model.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Mesh.h
 
   ## Platform
   # windows
@@ -104,7 +104,7 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLVertexArray.h
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLShader.h
   ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLTexture.h
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLModel.h
+  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLMesh.h
 
   #3rd party
   ${imgui_root}/imconfig.h

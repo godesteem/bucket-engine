@@ -63,7 +63,7 @@ namespace Engine {
 #ifdef BE_DEBUG
 
     std::ifstream shaderFile(shaderFilePath.empty() ? DEFAULT_SHADER.c_str() : shaderFilePath.c_str());
-    BE_CORE_ASSERT(!shaderFile.is_open(), "Impossible to open shader file!");
+    BE_CORE_ASSERT(shaderFile.is_open(), "Impossible to open shader file!");
 
     std::string line;
     while ( getline (shaderFile,line) ) {
@@ -160,10 +160,13 @@ namespace Engine {
         std::string vertex1, vertex2, vertex3;
         unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
         int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
-        if (matches != 9){
-          printf("File can't be read by our simple parser :-( Try exporting with other options\n");
-          fclose(file);
-          return false;
+        if (matches != 9) {
+          hasUVs = false;
+          if (matches != 6){
+            printf("File can't be read by our simple parser :-( Try exporting with other options\n");
+            fclose(file);
+            return false;
+          }
         }
         vertexIndices.push_back(vertexIndex[0]);
         vertexIndices.push_back(vertexIndex[1]);

@@ -19,11 +19,11 @@ namespace Engine {
     unsigned int Width;
     unsigned int Height;
 
+    // TODO: Game settings
     WindowProps(const std::string &title = "Bucket Engine",
                 const unsigned int width = 1280,
                 const unsigned int height = 720)
-      : Title(title), Width(width), Height(height)
-    {}
+        : Title(title), Width(width), Height(height) {}
   };
 
   class BE_API Window
@@ -31,7 +31,7 @@ namespace Engine {
     public:
       using EventCallbackFn = std::function<void(Event&)>;
 
-      virtual ~Window(){};
+      virtual ~Window() = default;
       virtual void OnUpdate() const = 0;
 
       virtual unsigned int GetWidth() const = 0;

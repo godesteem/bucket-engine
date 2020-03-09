@@ -7,7 +7,11 @@
  */
 #pragma once
 #include "engine/Log.h"
+#include "engine/core/Timestep.h"
 #include <glm/glm.hpp>
+#include "engine/KeyCodes.h"
+#include "engine/MouseButtonCodes.h"
+#include "RenderCommand.h"
 
 namespace Engine {
   const float YAW = -90.0f;
@@ -15,7 +19,8 @@ namespace Engine {
   const float SPEED = 2.5f;
   const float SENSITIFITY = 0.05f;
   const float ZOOM = 45.0f;
-  
+
+
   class Camera
   {
   public:
@@ -23,6 +28,7 @@ namespace Engine {
     void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix();};
     void SetRotation(glm::vec2 rotation) { m_Rotation = rotation; RecalculateViewMatrix();};
 
+    virtual void OnUpdate(Timestep &ts) = 0;
     glm::vec3& GetPosition() {return m_Position; };
     glm::vec2 GetRotation() const { return m_Rotation; };
     
@@ -38,12 +44,13 @@ namespace Engine {
 
     glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
     glm::vec2 m_Rotation = {0.0f, 0.0f};
+    float m_Speed = 10.0f;
   };
   
   class OrthographicCamera: public Camera
   {
   public:
-    OrthographicCamera(float left, float right, float bottom, float top);
+    virtual void OnUpdate(Timestep &ts) override;
 
   private:
     virtual void RecalculateViewMatrix() override;
@@ -53,32 +60,11 @@ namespace Engine {
   {
   public:
     ThirdPersonCamera(float left, float right, float bottom, float top);
-    ThirdPersonCamera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
-    ThirdPersonCamera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
 
-    inline void ProcessMouseMovement(float xoffset, float yoffset, bool constrainPitch = true)
-    {
-      xoffset *= MouseSensitivity;
-      yoffset *= MouseSensitivity;
+    virtual void OnUpdate(Timestep &ts) override;
 
-      Yaw   += xoffset;
-      Pitch += yoffset;
+    void ProcessMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
 
-      if (constrainPitch)
-      {
-        if (Pitch > 89.0f)
-          Pitch = 89.0f;
-        if (Pitch < -89.0f)
-          Pitch = -89.0f;
-      }
-
-      m_Direction.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-      m_Direction.y = sin(glm::radians(Pitch));
-      m_Direction.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-      m_Front = glm::normalize(m_Direction);
-
-      RecalculateViewMatrix();
-    }
   private:
     virtual void RecalculateViewMatrix() override;
     
@@ -88,5 +74,9 @@ namespace Engine {
     glm::vec3 Position, Front, Up, Right, WorldUp;
   public:
     float Yaw, Pitch, MouseSpeed, MouseSensitivity, Zoom;
+
+    float &GetYaw();
+
+    float &GetPitch();
   };
 }

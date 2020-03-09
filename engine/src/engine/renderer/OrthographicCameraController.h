@@ -15,7 +15,7 @@ namespace Engine {
   {
   public:
     OrthographicCameraController(const std::string& name = "Camera");
-    ~OrthographicCameraController();
+    ~OrthographicCameraController() = default;
 
     void OnAttach();
     void OnDetach();
@@ -26,9 +26,7 @@ namespace Engine {
     inline Camera& GetCamera() { return m_Camera; };
   private:
     ThirdPersonCamera m_Camera;
-    glm::vec3 m_CameraPosition;
-    float m_CameraSpeed = 5.0f;
-    
+
     std::string m_Name;
   };
 }
