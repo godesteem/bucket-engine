@@ -19,6 +19,14 @@ endif(BE_PLATFORM_WINDOWS)
 file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.c ${CMAKE_SOURCE_DIR}/sandbox/src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.h ${CMAKE_SOURCE_DIR}/sandbox/src/*.hpp)
 
+set(TEST_SOURCES
+  ${CMAKE_SOURCE_DIR}/engine/tests/main.cpp
+)
+
+set(TEST_HEADERS
+  ${CMAKE_SOURCE_DIR}/engine/tests/test_math.h
+)
+
 
 if(BE_PLATFORM_WINDOWS)
   add_compile_definitions(IMGUI_API=__declspec(dllimport))
@@ -65,6 +73,15 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 add_executable(bucket-rpg ${HEADER_FILES} ${SOURCE_FILES})
 
 target_link_libraries(bucket-rpg PRIVATE engine)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+add_executable(engine-test ${TEST_HEADERS} ${TEST_SOURCES})
+
+target_include_directories(engine-test PUBLIC
+  ${CMAKE_SOURCE_DIR}/engine/src
+  ${CMAKE_SOURCE_DIR}/engine/vendor)
+
+target_link_libraries(engine-test PRIVATE engine)
 
 # find & configure openGL
 # set(OpenGL_GL_PREFERENCE "GLVND")

@@ -2,7 +2,7 @@
 # File              : build.sh
 # Author            : Philipp Zettl <philipp.zettl@godesteem.de>
 # Date              : 28.09.2019
-# Last Modified Date: 25.02.2020
+# Last Modified Date: 10.03.2020
 # Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
 # build.sh
 # Copyright (c) 2019 Philipp Zettl <philipp.zettl@godesteem.de>
@@ -33,7 +33,8 @@ cmake -Wdev -Wall -Wextra -Winvalid-pch --debug-output -DCMAKE_BUILD_TYPE=Debug 
 #cmake --build .
 make -j4
 
-./bucket-rpg
+./engine/engine-test
+#./bucket-rpg
 #cd ../../sandbox/build
 
 #cmake -Wdev -Wall -Wextra --debug-output ..
