@@ -12,7 +12,7 @@ namespace Engine {
   Level::Level(const std::string& name, float height, float width)
     :Layer(name)
   {
-    m_World = Mesh::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Cube3D.obj", "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Example.glsl");
+    m_World = Mesh::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Example.obj", "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Example.glsl");
   }
 
   void Level::OnAttach() {};

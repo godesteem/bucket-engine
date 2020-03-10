@@ -19,21 +19,14 @@ namespace Engine {
   int shaderCount = 0;
   OpenGLMesh::OpenGLMesh(const std::string &objectFilePath, const std::string &shaderFilePath, const std::string &textureFilePath) {
     BE_CHECK_FILE(objectFilePath, ".obj");
-    if(!shaderFilePath.empty())
+    if(!shaderFilePath.empty()){
       BE_CHECK_FILE(shaderFilePath, ".glsl");
+    }
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> normals;
     std::vector<glm::vec2> uvs;
-    std::vector<GLushort> elements;
-    std::vector<std::string> attributes;
 
-    FILE * file = fopen(objectFilePath.c_str(), "r");
-    if( file == nullptr){
-      printf("Impossible to open the file ! Are you in the right path ? See Tutorial 1 for details\n");
-      getchar();
-    }
-    ReadObjFile(file, vertices, normals, uvs);
-    fclose(file);
+    ReadObjFile(objectFilePath, vertices, normals, uvs);
 
     m_VertexArray.reset(VertexArray::Create());
     if(!vertices.empty()) {
@@ -59,20 +52,17 @@ namespace Engine {
     auto count = lastDot == std::string::npos ? objectFilePath.size() - last : lastDot - last;
     m_Name = objectFilePath.substr(last, count);
     SetVertexArraySize(vertices.size());
-    m_Shader = Shader::Create(shaderFilePath.empty() ? DEFAULT_SHADER : shaderFilePath);
-#ifdef BE_DEBUG
+    m_ShaderLibrary.Load("Main", shaderFilePath.empty() ? DEFAULT_SHADER : shaderFilePath);
 
     std::ifstream shaderFile(shaderFilePath.empty() ? DEFAULT_SHADER.c_str() : shaderFilePath.c_str());
     BE_CORE_ASSERT(shaderFile.is_open(), "Impossible to open shader file!");
-
     std::string line;
     while ( getline (shaderFile,line) ) {
-      m_ShaderFile += line;
-      m_ShaderFile += "\n";
+      m_ShaderFileContent += line;
+      m_ShaderFileContent += "\n";
     }
-
     shaderFile.close();
-#endif
+
     if(!textureFilePath.empty())
       m_Texture = Texture2D::Create(textureFilePath);
   }
@@ -80,8 +70,7 @@ namespace Engine {
   OpenGLMesh::OpenGLMesh(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile){
     m_VertexArray->AddVertexBuffer(vertexBuffer);
     m_VertexArray->SetIndexBuffer(indexBuffer);
-    m_Shader = Shader::Create(shaderFile);
-    m_Shader->Bind();
+    m_ShaderLibrary.Load("Main", shaderFile);
   }
   void OpenGLMesh::Bind() const {
     if(m_Texture != nullptr) m_Texture->Bind();
@@ -99,14 +88,14 @@ namespace Engine {
     ImGui::SameLine(320);
     ImGui::SliderFloat(std::string(m_Name + "ModelZ").c_str(), &m_Position.z, -100.0f, 100.0f, "%.2f");
     ImGui::PopItemWidth();
-//    ImGui::TextWrapped("%s", m_ShaderFile.c_str());
-    ImGui::InputTextMultiline(std::string(m_Name + "Shader").c_str(), &m_ShaderFile[0], 10000);
+//    ImGui::TextWrapped("%s", m_ShaderFileContent.c_str());
+    ImGui::InputTextMultiline(std::string(m_Name + "Shader").c_str(), &m_ShaderFileContent[0], 10000);
     if(ImGui::Button("Save Shader", {80, 0})){
       std::string newShaderFileName = "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/" + m_Name + ".glsl";
       std::ofstream out(newShaderFileName.c_str());
-      out << m_ShaderFile.c_str();
+      out << m_ShaderFileContent.c_str();
       out.close();
-      m_Shader = Shader::Create(newShaderFileName);
+      m_ShaderLibrary.Load("Main", newShaderFileName);
     }
     ImGui::End();
   }
@@ -114,10 +103,11 @@ namespace Engine {
   void OpenGLMesh::OnUpdate(Timestep ts) {
     Bind();
     glm::mat4 model(1.0f);
-    m_Shader->Bind();
-    m_Shader->UploadUniformMat4("model", model);
+    auto shader = m_ShaderLibrary.Get("Main");
+    shader->Bind();
+    shader->UploadUniformMat4("model", model);
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position);
-    Renderer::Submit(m_VertexArray, m_Shader, transform);
+    Renderer::Submit(m_VertexArray, shader, transform);
     Unbind();
   }
 
@@ -125,15 +115,18 @@ namespace Engine {
     m_VertexArray->SetSize(size);
   }
 
-  bool OpenGLMesh::ReadObjFile(FILE* file, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs) {
+  bool OpenGLMesh::ReadObjFile(const std::string& filePath, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs) {
     std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
     std::vector<glm::vec3> temp_vertices;
     std::vector<glm::vec2> temp_uvs;
     std::vector<glm::vec3> temp_normals;
-
     bool hasUVs = true;
 
-
+    FILE * file = fopen(filePath.c_str(), "r");
+    if( file == nullptr){
+      BE_CORE_ERROR("Impossible to open the file \"{0}\"! Are you in the right path?", filePath);
+      getchar();
+    }
     while( true ){
       char lineHeader[128];
       // read the first word of the line
@@ -163,7 +156,7 @@ namespace Engine {
         if (matches != 9) {
           hasUVs = false;
           if (matches != 6){
-            printf("File can't be read by our simple parser :-( Try exporting with other options\n");
+            BE_CORE_ERROR("File \"{0}\" can't be read by parser", filePath.c_str());
             fclose(file);
             return false;
           }
@@ -186,6 +179,7 @@ namespace Engine {
       }
 
     }
+    fclose(file);
 
     // For each vertex of each triangle
     for( unsigned int i=0; i<vertexIndices.size(); i++ ){
