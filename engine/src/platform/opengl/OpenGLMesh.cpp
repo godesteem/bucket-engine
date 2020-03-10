@@ -111,7 +111,7 @@ namespace Engine {
     ImGui::End();
   }
 
-  void OpenGLMesh::OnUpdate(Timestep ts, Camera& camera) {
+  void OpenGLMesh::OnUpdate(Timestep ts) {
     Bind();
     glm::mat4 model(1.0f);
     m_Shader->Bind();

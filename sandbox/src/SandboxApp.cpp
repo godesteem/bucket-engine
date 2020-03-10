@@ -107,10 +107,10 @@ class ExampleLayer: public Engine::Layer
       m_SquareVA.reset(Engine::VertexArray::Create());
 
       float squareVertices [5 * 4] = {
-          -0.5f, -0.5f,  0.0f,  0.0f,  0.0f,
-           0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-           0.5f,  0.5f,  0.0f,  1.0f,  1.0f,
-          -0.5f,  0.5f,  0.0f,  0.0f,  1.0f
+          -0.5f, 0.0f, -0.5f, 0.0f,  0.0f,
+           0.5f, 0.0f, -0.5f, 1.0f,  0.0f,
+           0.5f, 0.0f,  0.5f, 1.0f,  1.0f,
+          -0.5f, 0.0f,  0.5f, 0.0f,  1.0f
       };
 
       Engine::Ref<Engine::VertexBuffer> squareVB;
@@ -189,9 +189,9 @@ class ExampleLayer: public Engine::Layer
 
       if(objects[Objects::Grid]) {
         // Grid
-        for (int y = -10; y < 20; ++y) {
-          for (int x = -10; x < 20; ++x) {
-            glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
+        for (int y = -15; y < 30; ++y) {
+          for (int x = -15; x < 30; ++x) {
+            glm::vec3 pos(x * 0.1f, 0.0f, y * 0.1f);
             glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
             Engine::Renderer::Submit(m_SquareVA, m_FlatColorShader, transform);
           }
@@ -215,10 +215,10 @@ class ExampleLayer: public Engine::Layer
 
       if(objects[Objects::Triangle]) glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0f)) * scale;
 
-      if(objects[Objects::Cube3D]) m_Cube->OnUpdate(ts, m_PlayerCameraLayer.GetCamera());
-      if(objects[Objects::Suzanne]) m_Suzanne->OnUpdate(ts, m_PlayerCameraLayer.GetCamera());
+      if(objects[Objects::Cube3D]) m_Cube->OnUpdate(ts);
+      if(objects[Objects::Suzanne]) m_Suzanne->OnUpdate(ts);
       for(const auto& obj : m_Models){
-        obj->OnUpdate(ts, m_PlayerCameraLayer.GetCamera());
+        obj->OnUpdate(ts);
       }
       m_PlayerCameraLayer.OnUpdate(ts);
 
@@ -282,6 +282,7 @@ class Sandbox: public Engine::Application
     Sandbox()
     {
       PushLayer(new ExampleLayer());
+      PushLayer(new Engine::Level("Level 0-0"));
     }
 
     ~Sandbox() = default;

@@ -35,6 +35,10 @@ set(ENGINE_SOURCE_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Texture.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Mesh.cpp
 
+  # game
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/game/Level.cpp
+
+
   #platform
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/LinuxInput.cpp
@@ -91,6 +95,10 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCameraController.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Texture.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Mesh.h
+
+  # game
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/game/Level.h
+
 
   ## Platform
   # windows

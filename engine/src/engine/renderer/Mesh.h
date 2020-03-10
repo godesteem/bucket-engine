@@ -2,7 +2,7 @@
  * File              : Mesh.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 01.03.2020
- * Last Modified Date: 01.03.2020
+ * Last Modified Date: 09.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -33,7 +33,7 @@ namespace Engine {
     virtual ~Mesh() = default;
     virtual void Bind() const = 0;
     virtual void Unbind() const = 0;
-    virtual void OnUpdate(Timestep ts, Camera& camera) = 0;
+    virtual void OnUpdate(Timestep ts) = 0;
     virtual void OnImGuiRender() = 0;
 
     std::vector<ModelAttribute> GetAttributes () { return m_Attributes; };

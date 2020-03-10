@@ -19,7 +19,7 @@ namespace Engine {
     OpenGLMesh(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile);
     virtual void Bind() const override;
     virtual void Unbind() const override;
-    virtual void OnUpdate(Timestep ts, Camera& camera) override;
+    virtual void OnUpdate(Timestep ts) override;
     virtual void OnImGuiRender() override;
     virtual void SetVertexArraySize(uint32_t size) override;
 
