@@ -5,9 +5,11 @@
  * Last Modified Date: 10.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
+#include "bepch.h"
 #include "test_math.h"
 
 int main(int argc, char **argv){
+  Engine::Log::Init();
   test_math();
   return 0;
 }

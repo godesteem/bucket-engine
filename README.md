@@ -17,3 +17,8 @@ API is already present to add other engines/backends.
 
 Next step: Vulkan
 
+
+## Development
+1) close repository `git clone --recurse-submodules -j8 git://github.com/godesteem/bucket-engine.git`
+1) develop
+1) run `build.sh`
