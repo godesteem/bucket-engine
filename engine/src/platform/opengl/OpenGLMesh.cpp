@@ -79,25 +79,27 @@ namespace Engine {
   }
 
   void OpenGLMesh::OnImGuiRender() {
-    ImGui::Begin(m_Name.c_str());
-    ImGui::Text("Object Position (%d, %d, %d)", (int)m_Position.x, (int)m_Position.y, (int)m_Position.z);
-    ImGui::PushItemWidth(120);
-    ImGui::SliderFloat(std::string(m_Name + "ModelX").c_str(), &m_Position.x, -100.0f, 100.0f, "%.2f");
-    ImGui::SameLine(160);
-    ImGui::SliderFloat(std::string(m_Name + "ModelY").c_str(), &m_Position.y, -100.0f, 100.0f, "%.2f");
-    ImGui::SameLine(320);
-    ImGui::SliderFloat(std::string(m_Name + "ModelZ").c_str(), &m_Position.z, -100.0f, 100.0f, "%.2f");
-    ImGui::PopItemWidth();
+    if(ImGui::BeginTabItem(m_Name.c_str())) {
+      ImGui::Text("Object Position (%d, %d, %d)", (int) m_Position.x, (int) m_Position.y, (int) m_Position.z);
+      ImGui::PushItemWidth(120);
+      ImGui::SliderFloat(std::string(m_Name + "ModelX").c_str(), &m_Position.x, -100.0f, 100.0f, "%.2f");
+      ImGui::SameLine(160);
+      ImGui::SliderFloat(std::string(m_Name + "ModelY").c_str(), &m_Position.y, -100.0f, 100.0f, "%.2f");
+      ImGui::SameLine(320);
+      ImGui::SliderFloat(std::string(m_Name + "ModelZ").c_str(), &m_Position.z, -100.0f, 100.0f, "%.2f");
+      ImGui::PopItemWidth();
 //    ImGui::TextWrapped("%s", m_ShaderFileContent.c_str());
-    ImGui::InputTextMultiline(std::string(m_Name + "Shader").c_str(), &m_ShaderFileContent[0], 10000);
-    if(ImGui::Button("Save Shader", {80, 0})){
-      std::string newShaderFileName = "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/" + m_Name + ".glsl";
-      std::ofstream out(newShaderFileName.c_str());
-      out << m_ShaderFileContent.c_str();
-      out.close();
-      m_ShaderLibrary.Load("Main", newShaderFileName);
+      ImGui::InputTextMultiline(std::string(m_Name + "Shader").c_str(), &m_ShaderFileContent[0], 10000);
+      if (ImGui::Button("Save Shader", {80, 0})) {
+        std::string newShaderFileName =
+            "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/" + m_Name + ".glsl";
+        std::ofstream out(newShaderFileName.c_str());
+        out << m_ShaderFileContent.c_str();
+        out.close();
+        m_ShaderLibrary.Load("Main", newShaderFileName);
+      }
+      ImGui::EndTabItem();
     }
-    ImGui::End();
   }
 
   void OpenGLMesh::OnUpdate(Timestep ts) {

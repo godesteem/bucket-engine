@@ -235,21 +235,33 @@ class ExampleLayer: public Engine::Layer
     }
 
     virtual void OnImGuiRender() override {
-      ImGui::Begin("Admin");
-      ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
-      ImGui::Checkbox("Suzanne", &objects[0]);
-      ImGui::Checkbox( "Triangle", &objects[1]);
-      ImGui::Checkbox("Cube3D", &objects[2]);
-      ImGui::Checkbox( "Cube2D", &objects[3]);
-      ImGui::Checkbox("Grid", &objects[4]);
-      ImGui::Checkbox("ImageTexture", &objects[5]);
-      ImGui::Checkbox("Cube3DMan", &objects[6]);
-      ImGui::End();
+      {
+        // Admin panel
+        ImGui::Begin("Admin");
+        ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+        ImGui::Checkbox("Suzanne", &objects[0]);
+        ImGui::Checkbox("Triangle", &objects[1]);
+        ImGui::Checkbox("Cube3D", &objects[2]);
+        ImGui::Checkbox("Cube2D", &objects[3]);
+        ImGui::Checkbox("Grid", &objects[4]);
+        ImGui::Checkbox("ImageTexture", &objects[5]);
+        ImGui::Checkbox("Cube3DMan", &objects[6]);
+        ImGui::End();
+      }
       m_PlayerCameraLayer.OnImGuiRender();
-      m_Suzanne->OnImGuiRender();
-      m_Cube->OnImGuiRender();
-      for(const auto& obj : m_Models){
-        obj->OnImGuiRender();
+      // Mesh panel
+      {
+        ImGui::Begin("Meshs");
+        ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_FittingPolicyDefault_ | ImGuiTabBarFlags_Reorderable;
+        if (ImGui::BeginTabBar("##tabs", tab_bar_flags)) {
+          m_Suzanne->OnImGuiRender();
+          m_Cube->OnImGuiRender();
+          for (const auto &obj : m_Models) {
+            obj->OnImGuiRender();
+          }
+          ImGui::EndTabBar();
+        }
+        ImGui::End();
       }
     }
   private:

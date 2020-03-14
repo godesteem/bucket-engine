@@ -33,8 +33,8 @@ cmake -Wdev -Wall -Wextra -Winvalid-pch --debug-output -DCMAKE_BUILD_TYPE=Debug 
 #cmake --build .
 make -j4
 
-./engine/engine-test
-#./bucket-rpg
+#./engine/engine-test
+./bucket-rpg
 #cd ../../sandbox/build
 
 #cmake -Wdev -Wall -Wextra --debug-output ..
