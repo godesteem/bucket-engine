@@ -54,23 +54,17 @@ namespace Engine {
     SetVertexArraySize(vertices.size());
     m_ShaderLibrary.Load("Main", shaderFilePath.empty() ? DEFAULT_SHADER : shaderFilePath);
 
-    std::ifstream shaderFile(shaderFilePath.empty() ? DEFAULT_SHADER.c_str() : shaderFilePath.c_str());
-    BE_CORE_ASSERT(shaderFile.is_open(), "Impossible to open shader file!");
-    std::string line;
-    while ( getline (shaderFile,line) ) {
-      m_ShaderFileContent += line;
-      m_ShaderFileContent += "\n";
-    }
-    shaderFile.close();
-
+    ExtractShaderFileContent(shaderFilePath);
     if(!textureFilePath.empty())
       m_Texture = Texture2D::Create(textureFilePath);
   }
 
   OpenGLMesh::OpenGLMesh(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile){
+    m_VertexArray.reset(VertexArray::Create());
     m_VertexArray->AddVertexBuffer(vertexBuffer);
     m_VertexArray->SetIndexBuffer(indexBuffer);
     m_ShaderLibrary.Load("Main", shaderFile);
+    ExtractShaderFileContent(shaderFile);
   }
   void OpenGLMesh::Bind() const {
     if(m_Texture != nullptr) m_Texture->Bind();
@@ -157,6 +151,18 @@ namespace Engine {
     m_Texture = ms->m_Texture;
     m_Position = ms->m_Position;
     m_ShaderFileContent = ms->m_ShaderFileContent;
+  }
+
+  bool OpenGLMesh::ExtractShaderFileContent(const std::string& shaderFilePath) {
+    std::ifstream shaderFile(shaderFilePath.empty() ? DEFAULT_SHADER.c_str() : shaderFilePath.c_str());
+    BE_CORE_ASSERT(shaderFile.is_open(), "Impossible to open shader file!");
+    std::string line;
+    while ( getline (shaderFile,line) ) {
+      m_ShaderFileContent += line;
+      m_ShaderFileContent += "\n";
+    }
+    shaderFile.close();
+    return true;
   }
 
 }

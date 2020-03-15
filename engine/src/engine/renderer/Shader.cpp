@@ -31,7 +31,11 @@ namespace Engine {
     return nullptr; 
   }
   void ShaderLibrary::Add(const std::string& name, const Ref<Shader>& shader){
-    BE_CORE_ASSERT(!Exists(name), "Shader already exists");
+    if(Exists(name)) {
+      BE_CORE_WARN("Shader {0} already exists with shader {1}", name, shader->GetName());
+      Remove(name);
+      BE_CORE_WARN("Dropped shader {0}", name);
+    }
     m_Shaders[name] = shader;
   }
   void ShaderLibrary::Add(const Ref<Shader>& shader){
@@ -57,4 +61,8 @@ namespace Engine {
     return m_Shaders.size() > 0 && m_Shaders.find(name) != m_Shaders.end();
   }
 
+  void ShaderLibrary::Remove(const std::string& name) {
+    BE_CORE_ASSERT(Exists(name), "Shader not found.");
+    m_Shaders.erase(name);
+  }
 }

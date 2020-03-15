@@ -218,9 +218,9 @@ class ExampleLayer: public Engine::Layer
 
       if(objects[Objects::Cube3D]) m_Cube->OnUpdate(ts);
       if(objects[Objects::Suzanne]) m_Suzanne->OnUpdate(ts);
-      for(const auto& obj : m_Models){
-        obj->OnUpdate(ts);
-      }
+//      for(const auto& obj : m_Models){
+//        obj->OnUpdate(ts);
+//      }
       m_PlayerCameraLayer.OnUpdate(ts);
 
       Engine::Renderer::EndScene();
@@ -283,7 +283,7 @@ class ExampleLayer: public Engine::Layer
     std::vector<Engine::Ref<Engine::Mesh>> m_Models;
 
     float m_SquareMoveSpeed = 5.0f;
-    bool objects[7] = {false, false, false, false, false, false, true};
+    bool objects[7] = {false, false, false, false, false, false, false};
 
     glm::vec3 m_SquarePosition;
     glm::vec3 m_SquareColor = {0.2f, 0.3f, 0.8f};

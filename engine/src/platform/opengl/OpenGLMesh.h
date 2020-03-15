@@ -24,9 +24,11 @@ namespace Engine {
     virtual void OnUpdate(Timestep ts) override;
     virtual void OnImGuiRender() override;
     virtual void SetVertexArraySize(uint32_t size) override;
+    virtual void SetName(const std::string& name) override {m_Name = name;}
     virtual OpenGLMesh& operator=(const OpenGLMesh& msh);
 
   private:
+    bool ExtractShaderFileContent(const std::string& shaderFilePath);
     static bool ReadObjFile(const std::string& filePath, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs);
   private:
     std::string m_Name;
@@ -142,22 +144,27 @@ namespace Engine {
         line_size = getline(&line_buf, &line_buf_size, file);
       }
       Close();
+      int correction = 1;
 
       // For each vertex of each triangle
       for (unsigned int i = 0; i < vertexIndices.size(); i++) {
         if (!temp_vertices.empty()) {
           unsigned int vertexIndex = vertexIndices[i];
-          glm::vec3 vertex = temp_vertices[vertexIndex - 1];
+          for(auto i : vertexIndices){
+            if(i == 0)
+              correction = 0;
+          }
+          glm::vec3 vertex = temp_vertices[vertexIndex - correction];
           vertices.push_back(vertex);
         }
         if (!temp_uvs.empty()) {
           unsigned int uvIndex = uvIndices[i];
-          glm::vec2 uv = temp_uvs[uvIndex - 1];
+          glm::vec2 uv = temp_uvs[uvIndex - correction];
           uvs.push_back(uv);
         }
         if (!temp_normals.empty()) {
           unsigned int normalIndex = normalIndices[i];
-          glm::vec3 normal = temp_normals[normalIndex - 1];
+          glm::vec3 normal = temp_normals[normalIndex - correction];
           normals.push_back(normal);
         }
       }

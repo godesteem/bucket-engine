@@ -47,6 +47,7 @@ namespace Engine {
   public:
     void Add(const Ref<Shader>& shader);
     void Add(const std::string& name, const Ref<Shader>& shader);
+    void Remove(const std::string& name);
     Ref<Shader> Load(const std::string& filePath);
     Ref<Shader> Load(const std::string& name, const std::string& filePath);
     
