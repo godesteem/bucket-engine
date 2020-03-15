@@ -78,6 +78,18 @@ namespace Engine {
   void OpenGLMesh::Unbind() const {
   }
 
+  OpenGLMesh& OpenGLMesh::operator=(const OpenGLMesh& ms){
+    m_Name = ms.m_Name;
+    m_VertexBuffer = ms.m_VertexBuffer;
+    m_VertexArray = ms.m_VertexArray;
+    m_ShaderLibrary = ms.m_ShaderLibrary;
+    m_Texture = ms.m_Texture;
+    m_Position = ms.m_Position;
+    m_ShaderFileContent = ms.m_ShaderFileContent;
+
+    return *this;
+  }
+
   void OpenGLMesh::OnImGuiRender() {
     if(ImGui::BeginTabItem(m_Name.c_str())) {
       ImGui::Text("Object Position (%d, %d, %d)", (int) m_Position.x, (int) m_Position.y, (int) m_Position.z);
@@ -118,90 +130,33 @@ namespace Engine {
   }
 
   bool OpenGLMesh::ReadObjFile(const std::string& filePath, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs) {
-    std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
-    std::vector<glm::vec3> temp_vertices;
-    std::vector<glm::vec2> temp_uvs;
-    std::vector<glm::vec3> temp_normals;
-    bool hasUVs = true;
+    /*
+     * Loads a .obj file with following layout
+     * vertices    : v %f %f %f
+     * uvs         : vt %f %f
+     * normals     : vn %f %f %f
+     * figure faces:
+     * syntax: <v>/<vt>/<vn> || <v> || <v>//<vn>
+     * f %d %d %d
+     * f %d//%d %d//%d %d//%d
+     * f %d/%d/%d %d/%d/%d %d/%d/%d
+     */
 
-    FILE * file = fopen(filePath.c_str(), "r");
-    if( file == nullptr){
-      BE_CORE_ERROR("Impossible to open the file \"{0}\"! Are you in the right path?", filePath);
-      getchar();
-    }
-    while( true ){
-      char lineHeader[128];
-      // read the first word of the line
-      int res = fscanf(file, "%s", lineHeader);
-      if (res == EOF)
-        break; // EOF = End Of File. Quit the loop.
-
-      // else : parse lineHeader
-
-      if ( strcmp( lineHeader, "v" ) == 0 ){
-        glm::vec3 vertex;
-        fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z );
-        temp_vertices.push_back(vertex);
-      }else if ( strcmp( lineHeader, "vt" ) == 0 ){
-        glm::vec2 uv;
-        fscanf(file, "%f %f\n", &uv.x, &uv.y );
-        uv.y = -uv.y; // Invert V coordinate since we will only use DDS texture, which are inverted. Remove if you want to use TGA or BMP loaders.
-        temp_uvs.push_back(uv);
-      }else if ( strcmp( lineHeader, "vn" ) == 0 ){
-        glm::vec3 normal;
-        fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z );
-        temp_normals.push_back(normal);
-      }else if ( strcmp( lineHeader, "f" ) == 0 ){
-        std::string vertex1, vertex2, vertex3;
-        unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-        int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
-        if (matches != 9) {
-          hasUVs = false;
-          if (matches != 6){
-            BE_CORE_ERROR("File \"{0}\" can't be read by parser", filePath.c_str());
-            fclose(file);
-            return false;
-          }
-        }
-        vertexIndices.push_back(vertexIndex[0]);
-        vertexIndices.push_back(vertexIndex[1]);
-        vertexIndices.push_back(vertexIndex[2]);
-        if(hasUVs) {
-          uvIndices.push_back(uvIndex[0]);
-          uvIndices.push_back(uvIndex[1]);
-          uvIndices.push_back(uvIndex[2]);
-        }
-        normalIndices.push_back(normalIndex[0]);
-        normalIndices.push_back(normalIndex[1]);
-        normalIndices.push_back(normalIndex[2]);
-      }else{
-        // Probably a comment, eat up the rest of the line
-        char stupidBuffer[1000];
-        fgets(stupidBuffer, 1000, file);
-      }
-
-    }
-    fclose(file);
-
-    // For each vertex of each triangle
-    for( unsigned int i=0; i<vertexIndices.size(); i++ ){
-      if(!temp_vertices.empty()) {
-        unsigned int vertexIndex = vertexIndices[i];
-        glm::vec3 vertex = temp_vertices[vertexIndex - 1];
-        vertices.push_back(vertex);
-      }
-      if(!temp_uvs.empty()) {
-        unsigned int uvIndex = uvIndices[i];
-        glm::vec2 uv = temp_uvs[uvIndex - 1];
-        uvs.push_back(uv);
-      }
-      if(!temp_normals.empty()) {
-        unsigned int normalIndex = normalIndices[i];
-        glm::vec3 normal = temp_normals[normalIndex - 1];
-        normals.push_back(normal);
-      }
-    }
+    ObjFile file(filePath);
+    vertices = file.GetVertices();
+    uvs = file.GetUVs();
+    normals = file.GetNormals();
     return true;
+  }
+
+  OpenGLMesh::OpenGLMesh(const Ref<OpenGLMesh> &ms){
+    m_Name = ms->m_Name;
+    m_VertexBuffer = ms->m_VertexBuffer;
+    m_VertexArray = ms->m_VertexArray;
+    m_ShaderLibrary = ms->m_ShaderLibrary;
+    m_Texture = ms->m_Texture;
+    m_Position = ms->m_Position;
+    m_ShaderFileContent = ms->m_ShaderFileContent;
   }
 
 }

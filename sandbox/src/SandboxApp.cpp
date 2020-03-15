@@ -11,6 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <glm/gtc/type_ptr.hpp>
+#include "GameWorld.h"
 
 // camera
 //m_Texture = Engine::Texture2D::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/portal.png");
@@ -294,7 +295,8 @@ class Sandbox: public Engine::Application
     Sandbox()
     {
       PushLayer(new ExampleLayer());
-      PushLayer(new Engine::Level("Level 0-0"));
+      //PushLayer(new Engine::Level("Level 0-0"));
+      PushLayer(new GameWorld());
     }
 
     ~Sandbox() = default;
