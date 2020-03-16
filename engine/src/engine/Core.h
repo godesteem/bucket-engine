@@ -32,7 +32,7 @@ namespace Engine {
   using byte = unsigned char;
 
 #ifndef CONSTRUCT_FILE_PATH
-  const std::string rootDir = "/home/philipp/work/priv/bucket-engine/";
+  static std::string rootDir(getenv("ROOT_DIR"));
   #define CONSTRUCT_FILE_PATH(x) std::string(rootDir + x)
 #endif
 }

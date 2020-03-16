@@ -10,6 +10,8 @@ elseif(BE_PLATFORM_LINUX)
   add_compile_definitions(IMGUI_API)
 endif(BE_PLATFORM_WINDOWS)
 
+set(ENV{ROOT_DIR} ${CMAKE_SOURCE_DIR})
+
 set(CORE_DIR ${CMAKE_SOURCE_DIR}/engine/src/engine/core/)
 
 set(ENGINE_SOURCE_FILES

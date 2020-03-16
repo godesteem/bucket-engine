@@ -36,6 +36,9 @@ namespace Engine {
   {
   }
 
+  void X11Window::SetFullScreen() {
+
+  }
 
   void X11Window::Init(const WindowProps& props){
     m_Data.Title = props.Title;

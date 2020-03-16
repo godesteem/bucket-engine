@@ -48,19 +48,16 @@ void noise(vec3& vec){
 GameWorld::GameWorld()
 : Layer("World"){
   std::string shaderFile = "sandbox/assets/shaders/World.glsl";
-  const int rowCount = 1;
-  const int columnCount = 1;
+  const int rowCount = 10;
+  const int columnCount = 5;
   const int verticesForSquare = 6;
   const int vertexCount = verticesForSquare * rowCount * columnCount;
   const int indexCount = 5;
   float factor = 1.0f;
 
   float vertices[vertexCount * indexCount];
-  float _x[] = {-1.0f,  1.0f,  1.0f,  1.0f, -1.0f, -1.0f};
-  float _z[] = {-1.0f, -1.0f,  1.0f,  1.0f,  1.0f, -1.0f};
-  std::function<void (float*,size_t)> factorize = [](float* i, size_t size) { for(size_t q=0; q<size;++q){i[q]*=0.5f;}; };
-  factorize(_x, verticesForSquare);
-  factorize(_z, verticesForSquare);
+  float _x[verticesForSquare] = {0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f};
+  float _z[verticesForSquare] = {0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
   float textCoordX[] = {0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f};
   float textCoordY[] = {0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
 
@@ -72,8 +69,6 @@ GameWorld::GameWorld()
       for(int index = 0; index<verticesForSquare; index++){
         vec3 pos = {_x[index] + paddingX, 0.0f, _z[index] + paddingY};
         vec2 texture = {textCoordX[index], textCoordY[index]};
-
-        printf("i = %zu\n", currentIndex);
         vertices[currentIndex] = pos.x;
         vertices[currentIndex + 1] = pos.y;
         vertices[currentIndex + 2] = pos.z;
@@ -91,15 +86,7 @@ GameWorld::GameWorld()
     indices[i] = i;
   }
 
-  Engine::Ref<Engine::IndexBuffer> ia;
-  ia.reset(Engine::IndexBuffer::Create(indices, vertexCount));
-
-  Engine::Ref<Engine::VertexBuffer> vb;
-  vb.reset(Engine::VertexBuffer::Create(vertices, vertexCount * indexCount));
-  vb->SetLayout({
-      { Engine::ShaderDataType::Float3, "position" },
-      { Engine::ShaderDataType::Float2, "textCord" }
-  });
-  m_Mesh = Engine::Mesh::Create(vb, ia, shaderFile);
+  Engine::ObjFile::CreateObjFile(vertices, vertexCount, Engine::ObjFile::VertexCategory::VertexCategoryVertex | Engine::ObjFile::VertexCategory::VertexCategoryNormal, indexCount, indices, vertexCount, "sandbox/assets/models/World.obj");
+  m_Mesh = Engine::Mesh::Create("sandbox/assets/models/World.obj", shaderFile);
   m_Mesh->SetName("World");
 };
