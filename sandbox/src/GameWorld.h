@@ -42,34 +42,50 @@ GameWorld::GameWorld(Engine::Ref<Engine::VertexBuffer> vb, Engine::Ref<Engine::I
 }
 void noise(vec3& vec){
   vec.x = vec.x;
-  vec.y = sqrtf(vec.x);
+  vec.y = vec.y;
   vec.z = vec.z;
 }
 GameWorld::GameWorld()
 : Layer("World"){
   std::string shaderFile = "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/World.glsl";
-  const int vertexCount = 510;
-  const int coordinateCount = 5;
+  const int rowCount = 1;
+  const int columnCount = 1;
+  const int verticesForSquare = 6;
+  const int vertexCount = verticesForSquare * rowCount * columnCount;
+  const int indexCount = 5;
+  float factor = 1.0f;
 
-  float vertices[vertexCount * coordinateCount];
-  float _x[] = {-0.5f, 0.5f, 0.5f, 0.5f, -0.5f, -0.5f};
-  float _z[] = {-0.5f, -0.5f, 0.5f, 0.5f, 0.5f, -0.5f};
+  float vertices[vertexCount * indexCount];
+  float _x[] = {-1.0f,  1.0f,  1.0f,  1.0f, -1.0f, -1.0f};
+  float _z[] = {-1.0f, -1.0f,  1.0f,  1.0f,  1.0f, -1.0f};
+  std::function<void (float*,size_t)> factorize = [](float* i, size_t size) { for(size_t q=0; q<size;++q){i[q]*=0.5f;}; };
+  factorize(_x, verticesForSquare);
+  factorize(_z, verticesForSquare);
   float textCoordX[] = {0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f};
   float textCoordY[] = {0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
-  float padding = 1.0f;
-  float factor = 1.0f;
-  for(int index = 0; index < vertexCount * coordinateCount; index+=5){
-    int realIndex = index/5;
-    vec2 textCoord = {textCoordX[realIndex%6], textCoordY[realIndex%6]};
-    vec3 pos = {_x[realIndex%6] + padding, 0.0f, _z[realIndex%6]};
-    noise(pos);
-    vertices[index] = pos.x;
-    vertices[index + 1] = pos.y;
-    vertices[index + 2] = pos.z;
-    vertices[index + 3] = textCoord.x;
-    vertices[index + 4] = textCoord.y;
-    if(realIndex%6==0&&realIndex!=0) padding+=factor;
-  };
+
+  float paddingY = 0.0f;
+  size_t currentIndex = 0;
+  for(int row=0; row<rowCount; row++){
+    float paddingX = 0.0f;
+    for(int column=0; column<columnCount; column++){
+      for(int index = 0; index<verticesForSquare; index++){
+        vec3 pos = {_x[index] + paddingX, 0.0f, _z[index] + paddingY};
+        vec2 texture = {textCoordX[index], textCoordY[index]};
+
+        printf("i = %zu\n", currentIndex);
+        vertices[currentIndex] = pos.x;
+        vertices[currentIndex + 1] = pos.y;
+        vertices[currentIndex + 2] = pos.z;
+        vertices[currentIndex + 3] = texture.x;
+        vertices[currentIndex + 4] = texture.y;
+        currentIndex+=indexCount;
+      }
+      paddingX += factor;
+    }
+    paddingY += factor;
+  }
+
   uint32_t indices[vertexCount];
   for(int i=1; i<=vertexCount; ++i){
     indices[i] = i;
@@ -79,11 +95,11 @@ GameWorld::GameWorld()
   ia.reset(Engine::IndexBuffer::Create(indices, vertexCount));
 
   Engine::Ref<Engine::VertexBuffer> vb;
-  vb.reset(Engine::VertexBuffer::Create(vertices, vertexCount * coordinateCount));
+  vb.reset(Engine::VertexBuffer::Create(vertices, vertexCount * indexCount));
   vb->SetLayout({
       { Engine::ShaderDataType::Float3, "position" },
       { Engine::ShaderDataType::Float2, "textCord" }
   });
   m_Mesh = Engine::Mesh::Create(vb, ia, shaderFile);
   m_Mesh->SetName("World");
-}
+};

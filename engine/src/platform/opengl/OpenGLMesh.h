@@ -24,7 +24,7 @@ namespace Engine {
     virtual void OnUpdate(Timestep ts) override;
     virtual void OnImGuiRender() override;
     virtual void SetVertexArraySize(uint32_t size) override;
-    virtual void SetName(const std::string& name) override {m_Name = name;}
+    virtual void SetName(const std::string& name) override { m_Name = name; }
     virtual OpenGLMesh& operator=(const OpenGLMesh& msh);
 
   private:
