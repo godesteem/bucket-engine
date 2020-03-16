@@ -48,13 +48,12 @@ void noise(vec3& vec){
 GameWorld::GameWorld()
 : Layer("World"){
   std::string shaderFile = "sandbox/assets/shaders/World.glsl";
-  const int rowCount = 10;
-  const int columnCount = 5;
+  const int rowCount = 100;
+  const int columnCount = 100;
   const int verticesForSquare = 6;
   const int vertexCount = verticesForSquare * rowCount * columnCount;
   const int indexCount = 5;
   float factor = 1.0f;
-
   float vertices[vertexCount * indexCount];
   float _x[verticesForSquare] = {0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f};
   float _z[verticesForSquare] = {0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
@@ -63,11 +62,13 @@ GameWorld::GameWorld()
 
   float paddingY = 0.0f;
   size_t currentIndex = 0;
+
   for(int row=0; row<rowCount; row++){
     float paddingX = 0.0f;
     for(int column=0; column<columnCount; column++){
       for(int index = 0; index<verticesForSquare; index++){
         vec3 pos = {_x[index] + paddingX, 0.0f, _z[index] + paddingY};
+
         vec2 texture = {textCoordX[index], textCoordY[index]};
         vertices[currentIndex] = pos.x;
         vertices[currentIndex + 1] = pos.y;

@@ -64,6 +64,13 @@ namespace Engine {
     m_VertexArray->AddVertexBuffer(vertexBuffer);
     m_VertexArray->SetIndexBuffer(indexBuffer);
     m_ShaderLibrary.Load("Main", shaderFile);
+
+    auto last = shaderFile.find_last_of("/\\");
+    last = last == std::string::npos ? 0 : last + 1;
+    auto lastDot = shaderFile.rfind('.');
+
+    auto count = lastDot == std::string::npos ? shaderFile.size() - last : lastDot - last;
+    m_Name = shaderFile.substr(last, count);
     ExtractShaderFileContent(shaderFile);
   }
   void OpenGLMesh::Bind() const {
@@ -97,7 +104,7 @@ namespace Engine {
 //    ImGui::TextWrapped("%s", m_ShaderFileContent.c_str());
       ImGui::InputTextMultiline(std::string(m_Name + "Shader").c_str(), &m_ShaderFileContent[0], 10000);
       if (ImGui::Button("Save Shader", {80, 0})) {
-        std::string newShaderFileName = CONSTRUCT_FILE_PATH("sandbox/assets/shaders/" + m_Name + ".glsl");
+        std::string newShaderFileName = "sandbox/assets/shaders/" + m_Name + ".glsl";
         std::ofstream out(newShaderFileName.c_str());
         out << m_ShaderFileContent.c_str();
         out.close();
