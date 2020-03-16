@@ -13,10 +13,10 @@
 #include <imgui/imgui.h>
 #include "engine/renderer/Renderer.h"
 
-std::string DEFAULT_SHADER = "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Example.glsl";
 
 namespace Engine {
-  int shaderCount = 0;
+  std::string DEFAULT_SHADER = CONSTRUCT_FILE_PATH("sandbox/assets/shaders/Example.glsl");
+
   OpenGLMesh::OpenGLMesh(const std::string &objectFilePath, const std::string &shaderFilePath, const std::string &textureFilePath) {
     BE_CHECK_FILE(objectFilePath, ".obj");
     if(!shaderFilePath.empty()){
@@ -97,8 +97,7 @@ namespace Engine {
 //    ImGui::TextWrapped("%s", m_ShaderFileContent.c_str());
       ImGui::InputTextMultiline(std::string(m_Name + "Shader").c_str(), &m_ShaderFileContent[0], 10000);
       if (ImGui::Button("Save Shader", {80, 0})) {
-        std::string newShaderFileName =
-            "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/" + m_Name + ".glsl";
+        std::string newShaderFileName = CONSTRUCT_FILE_PATH("sandbox/assets/shaders/" + m_Name + ".glsl");
         std::ofstream out(newShaderFileName.c_str());
         out << m_ShaderFileContent.c_str();
         out.close();
@@ -154,7 +153,8 @@ namespace Engine {
   }
 
   bool OpenGLMesh::ExtractShaderFileContent(const std::string& shaderFilePath) {
-    std::ifstream shaderFile(shaderFilePath.empty() ? DEFAULT_SHADER.c_str() : shaderFilePath.c_str());
+    const std::string absoluteShaderFilePath = CONSTRUCT_FILE_PATH(shaderFilePath);
+    std::ifstream shaderFile(shaderFilePath.empty() ? CONSTRUCT_FILE_PATH(DEFAULT_SHADER).c_str() : absoluteShaderFilePath.c_str());
     BE_CORE_ASSERT(shaderFile.is_open(), "Impossible to open shader file!");
     std::string line;
     while ( getline (shaderFile,line) ) {

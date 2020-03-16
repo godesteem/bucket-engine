@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(bucket-rpg)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 if (WIN32 OR MSVC)
   add_compile_definitions(BE_PLATFORM_WINDOWS)

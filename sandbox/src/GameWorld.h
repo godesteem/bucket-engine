@@ -38,7 +38,7 @@ public:
 GameWorld::GameWorld(Engine::Ref<Engine::VertexBuffer> vb, Engine::Ref<Engine::IndexBuffer> ib, const std::string &name)
 : Layer(name)
 {
-  m_Mesh = Engine::Mesh::Create(vb, ib, "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/World.glsl");
+  m_Mesh = Engine::Mesh::Create(vb, ib, "sandbox/assets/shaders/World.glsl");
 }
 void noise(vec3& vec){
   vec.x = vec.x;
@@ -47,7 +47,7 @@ void noise(vec3& vec){
 }
 GameWorld::GameWorld()
 : Layer("World"){
-  std::string shaderFile = "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/World.glsl";
+  std::string shaderFile = "sandbox/assets/shaders/World.glsl";
   const int rowCount = 1;
   const int columnCount = 1;
   const int verticesForSquare = 6;

@@ -14,10 +14,10 @@
 #include "GameWorld.h"
 
 // camera
-//m_Texture = Engine::Texture2D::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/portal.png");
+//m_Texture = Engine::Texture2D::Create("sandbox/assets/portal.png");
 //const std::string textureSrc = "";
-const std::string textureSrc = "/home/phil/work/private/games/bucket-engine/sandbox/assets/Checkerboard.png";
-const std::string textureSrc2 = "/home/phil/work/private/games/bucket-engine/sandbox/assets/portal.png";
+const std::string textureSrc = "sandbox/assets/Checkerboard.png";
+const std::string textureSrc2 = "sandbox/assets/portal.png";
 
 class ExampleLayer: public Engine::Layer
 {
@@ -131,19 +131,19 @@ class ExampleLayer: public Engine::Layer
       squareIA.reset(Engine::IndexBuffer::Create(squareIndices, sizeof(squareIndices)));
       m_SquareVA->SetIndexBuffer(squareIA);
 
-      m_Shader = Engine::Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Default.glsl");
-      m_FlatColorShader = Engine::Shader::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/FlatColor.glsl");
-      auto textureShader = m_ShaderLibrary.Load("Texture", "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Texture.glsl");
+      m_Shader = Engine::Shader::Create("sandbox/assets/shaders/Default.glsl");
+      m_FlatColorShader = Engine::Shader::Create("sandbox/assets/shaders/FlatColor.glsl");
+      auto textureShader = m_ShaderLibrary.Load("Texture", "sandbox/assets/shaders/Texture.glsl");
 
       m_Texture = Engine::Texture2D::Create(textureSrc);
       m_PortalTexture = Engine::Texture2D::Create(textureSrc2);
       m_Suzanne = Engine::Mesh::Create(
-          "/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Suzanne.obj",
-          "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Suzanne.glsl");
-      m_Cube = Engine::Mesh::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Example.obj",
-                                    "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Example.glsl");
-      m_Models.push_back(Engine::Mesh::Create("/home/phil/work/private/games/bucket-engine/sandbox/assets/models/Light.obj",
-                                              "/home/phil/work/private/games/bucket-engine/sandbox/assets/shaders/Light.glsl"));
+          "sandbox/assets/models/Suzanne.obj",
+          "sandbox/assets/shaders/Suzanne.glsl");
+      m_Cube = Engine::Mesh::Create("sandbox/assets/models/Example.obj",
+                                    "sandbox/assets/shaders/Example.glsl");
+      m_Models.push_back(Engine::Mesh::Create("sandbox/assets/models/Light.obj",
+                                              "sandbox/assets/shaders/Light.glsl"));
       glm::mat4 model = glm::mat4(1.0f);
       model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 

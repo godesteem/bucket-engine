@@ -30,4 +30,9 @@ namespace Engine {
   using Ref = std::shared_ptr<T>;
 
   using byte = unsigned char;
+
+#ifndef CONSTRUCT_FILE_PATH
+  const std::string rootDir = "/home/philipp/work/priv/bucket-engine/";
+  #define CONSTRUCT_FILE_PATH(x) std::string(rootDir + x)
+#endif
 }

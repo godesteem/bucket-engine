@@ -121,6 +121,7 @@ set(ENGINE_HEADER_FILES
   ${imgui_root}/imstb_rectpack.h
   ${imgui_root}/imstb_textedit.h
   ${imgui_root}/imstb_truetype.h
+
 )
 
 set(MATH_DIR "${CMAKE_SOURCE_DIR}/engine/vendor/math")
@@ -145,7 +146,7 @@ set_target_properties(engine PROPERTIES SOVERSION 1)
 
 target_include_directories(engine PRIVATE engine/src)
 include_directories(
-  "${CMAKE_SOURCE_DIR}/engine/vendor/spdlog/include/spdlog"
+  "${CMAKE_SOURCE_DIR}/engine/vendor/spdlog/include"
   "${GLAD_DIR}/include"
   "${imgui_root}"
   "${CMAKE_SOURCE_DIR}/engine/vendor/stb_image"
@@ -155,6 +156,7 @@ add_library(stb_image STATIC
   ${CMAKE_SOURCE_DIR}/engine/vendor/stb_image/stb_image.cpp
   ${CMAKE_SOURCE_DIR}/engine/vendor/stb_image/stb_image.h
 )
+add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/spdlog)
 add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/glfw-3.3.2)
 add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/glm/glm)
 #add_library(glm SHARED ${CMAKE_SOURCE_DIR}/engine/vendor/glm/glm)
@@ -165,7 +167,7 @@ add_library(glad STATIC ${GLAD_DIR}/src/glad.c)
 # target_include_directories(glad PRIVATE "${GLAD_DIR}/include")
 
 find_package(OpenGL REQUIRED)
-target_link_libraries(engine PUBLIC OpenGL::GL glad glfw glm stb_image bucket_math)
+target_link_libraries(engine PUBLIC OpenGL::GL glad glfw glm stb_image bucket_math spdlog)
 
 # add_library("glad" "${GLAD_DIR}/src/glad.c")
 # target_include_directories(engine PRIVATE "${GLAD_DIR}/include")

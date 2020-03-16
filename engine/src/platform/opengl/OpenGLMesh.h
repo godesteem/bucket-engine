@@ -42,7 +42,7 @@ namespace Engine {
   struct ObjFile {
   public:
     explicit ObjFile(const std::string& fp)
-    :filePath(fp),
+    :filePath(CONSTRUCT_FILE_PATH(fp)),
     file(nullptr) {
     /*
      * Loads a .obj file with following layout
@@ -66,6 +66,7 @@ namespace Engine {
       Open("r");
       if (!IsOpen()) {
         // Do sth
+        BE_CORE_ASSERT(false, "File " + fp + " can not be opened.");
       }
       line_size = getline(&line_buf, &line_buf_size, file);
       std::regex txt_regex("[a-z]*");
@@ -178,7 +179,7 @@ namespace Engine {
 
   private:
     FILE* file;
-    const std::string& filePath;
+    std::string filePath;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> normals;
     std::vector<glm::vec2> uvs;
