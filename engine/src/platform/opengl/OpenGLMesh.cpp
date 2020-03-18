@@ -130,7 +130,7 @@ namespace Engine {
   }
 
   bool OpenGLMesh::ReadObjFile(const std::string& filePath, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs) {
-    /*
+    /**
      * Loads a .obj file with following layout
      * vertices    : v %f %f %f
      * uvs         : vt %f %f

@@ -3,6 +3,7 @@
 
 in vec4 v_coord;
 in vec3 u_Normal;
+in vec3 position;
 
 uniform mat4 model;
 uniform mat4 u_Transform;
@@ -16,6 +17,8 @@ void main()
     gl_Position = u_ViewProjection * model * u_Transform * gl_Vertex;
     FragPos = vec3(model * v_coord);
     Normal = u_Normal;
+    color.rgb = position;
+    color.a = 1.0;
 }
 
 
@@ -72,32 +75,5 @@ float fbm (in vec2 _st) {
 }
 
 void main() {
-    float u_time = 0.1;
-    vec2 st = vec2(1.0, 3.0);
-    // st += st * abs(sin(u_time*0.1)*3.0);
-    vec3 color = vec3(0.0);
-
-    vec2 q = vec2(0.);
-    q.x = fbm(st + 0.00*0.1);
-    q.y = fbm(st + vec2(1.0));
-
-    vec2 r = vec2(0.);
-    r.x = fbm(st + 1.0*q + vec2(1.7, 9.2)+ 0.15*u_time);
-    r.y = fbm(st + 1.0*q + vec2(8.3, 2.8)+ 0.126*u_time);
-
-    float f = fbm(st+r);
-
-    color = mix(vec3(0.101961, 0.619608, 0.666667),
-    vec3(0.666667, 0.666667, 0.498039),
-    clamp((f*f)*4.0, 0.0, 1.0));
-
-    color = mix(color,
-    vec3(0, 0, 0.164706),
-    clamp(length(q), 0.0, 1.0));
-
-    color = mix(color,
-    vec3(0.666667, 1, 1),
-    clamp(length(r.x), 0.0, 1.0));
-
-    gl_FragColor = vec4((f*f*f+.6*f*f+.5*f)*color, 1.);
+    gl_FragColor = color;
 }

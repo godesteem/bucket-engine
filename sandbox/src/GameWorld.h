@@ -7,6 +7,12 @@
 
 struct vec3 {
   float x, y, z;
+  vec3& operator=(const vec3& other){
+    this->x = other.x;
+    this->y = other.y;
+    this->z = other.z;
+    return *this;
+  }
 };
 
 struct vec2 {
@@ -31,6 +37,7 @@ public:
     }
     ImGui::End();
   }
+  static void GenerateVertices(const std::string &fileName);
 
   Engine::Ref<Engine::Mesh> m_Mesh;
 };
@@ -40,14 +47,7 @@ GameWorld::GameWorld(Engine::Ref<Engine::VertexBuffer> vb, Engine::Ref<Engine::I
 {
   m_Mesh = Engine::Mesh::Create(vb, ib, "sandbox/assets/shaders/World.glsl");
 }
-void noise(vec3& vec){
-  vec.x = vec.x;
-  vec.y = vec.y;
-  vec.z = vec.z;
-}
-GameWorld::GameWorld()
-: Layer("World"){
-  std::string shaderFile = "sandbox/assets/shaders/World.glsl";
+void GameWorld::GenerateVertices(const std::string &fileName) {
   const int rowCount = 100;
   const int columnCount = 100;
   const int verticesForSquare = 6;
@@ -64,14 +64,14 @@ GameWorld::GameWorld()
   size_t currentIndex = 0;
 
   for(int row=0; row<rowCount; row++){
-    float paddingX = 0.0f;
+    float paddingX = -(rowCount / 2.0f) * factor;
     for(int column=0; column<columnCount; column++){
       for(int index = 0; index<verticesForSquare; index++){
         vec3 pos = {_x[index] + paddingX, 0.0f, _z[index] + paddingY};
 
         vec2 texture = {textCoordX[index], textCoordY[index]};
         vertices[currentIndex] = pos.x;
-        vertices[currentIndex + 1] = pos.y;
+        vertices[currentIndex + 1] = 10.0f * sinf(10 * (pos.x*pos.x+pos.z*pos.z))/10;
         vertices[currentIndex + 2] = pos.z;
         vertices[currentIndex + 3] = texture.x;
         vertices[currentIndex + 4] = texture.y;
@@ -87,7 +87,14 @@ GameWorld::GameWorld()
     indices[i] = i;
   }
 
-  Engine::ObjFile::CreateObjFile(vertices, vertexCount, Engine::ObjFile::VertexCategory::VertexCategoryVertex | Engine::ObjFile::VertexCategory::VertexCategoryNormal, indexCount, indices, vertexCount, "sandbox/assets/models/World.obj");
-  m_Mesh = Engine::Mesh::Create("sandbox/assets/models/World.obj", shaderFile);
+  Engine::ObjFile::CreateObjFile(vertices, vertexCount, Engine::ObjFile::VertexCategory::VertexCategoryVertex | Engine::ObjFile::VertexCategory::VertexCategoryNormal, indexCount, indices, vertexCount, fileName);
+
+}
+GameWorld::GameWorld()
+: Layer("World"){
+  std::string shaderFile = "sandbox/assets/shaders/World.glsl";
+  std::string objFile = "sandbox/assets/models/World.obj";
+  GenerateVertices(objFile);
+  m_Mesh = Engine::Mesh::Create(objFile, shaderFile);
   m_Mesh->SetName("World");
 };

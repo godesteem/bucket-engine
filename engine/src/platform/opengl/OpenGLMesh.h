@@ -35,7 +35,7 @@ namespace Engine {
     Ref<VertexArray> m_VertexArray;
     ShaderLibrary m_ShaderLibrary;
     Ref<Texture2D> m_Texture;
-    glm::vec3 m_Position = {1.0f, 1.0f, 1.0f};
+    glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
     std::string m_ShaderFileContent;
   };
 }
