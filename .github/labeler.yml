@@ -1,0 +1,16 @@
+
+# Add 'sandbox' to any file changes within 'sandbox/' folder
+sandbox: sandbox/src/*
+# Add 'core' to any file changes within 'engine/' folder
+core: engine/*
+# Add 'vendors' to any file changes within 'engine/vendor' folder
+vendors: engine/vendor/*
+# Add 'engine' to any file changes within 'engine/src' folder
+engine: engine/src/*
+renderer: engine/src/engine/renderer/*
+imgui: engine/src/engine/imgui/*
+game: engine/src/engine/game/*
+events: engine/src/engine/events/*
+# Add 'engine' to any file changes within 'engine/src' folder
+platform-linux: engine/src/platform/linux/*
+platform-opengl: engine/src/platform/opengl/*
