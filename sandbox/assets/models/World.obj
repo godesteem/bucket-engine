@@ -1,5 +1,5 @@
 # auto generated file
-# sandbox\assets\models\World.obj
+# sandbox/assets/models/World.obj
 v -40 0.131007 0
 v -39 -0.999783 0
 v -39 0.850222 1
@@ -76799,7 +76799,7 @@ vn 40 0.610684
 vn 40 0.610684
 vn 39 -0.854416
 vn 39 -0.621227
-vn -1.07374e+08 1
+vn 1.06623e+15 4.59163e-41
 f 0 1 2
 f 3 4 5
 f 6 7 8
