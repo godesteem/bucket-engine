@@ -29,9 +29,11 @@ mkdir -p build/
 
 cd build
 
-cmake -Wdev -Wall -Wextra -Winvalid-pch --debug-output -DCMAKE_BUILD_TYPE=Debug ..
+export ROOT_DIR=/home/philipp/work/priv/bucket-engine/
+cmake --build . --target bucket-rpg -- -j 4
+
 #cmake --build .
-make -j4
+make
 
 #./engine/engine-test
 ./bucket-rpg

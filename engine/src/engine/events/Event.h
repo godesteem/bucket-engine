@@ -1,3 +1,11 @@
+/**
+ * Usage:
+ *  - define EventType
+ *  - define EventCategory
+ *  - inherit Event
+ *  - implement virtual's
+ *  - add EVENT_CLASS_TYPE, EVENT_CLASS_CATEGORY
+ */
 #pragma once
 
 #include "../Core.h"
@@ -12,7 +20,8 @@ namespace Engine {
     WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
     AppTick, AppUpdate, AppRender,
     KeyPressed, KeyReleased, KeyTyped,
-    MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
+    MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
+    BodyEntered, BodyExited
   };
 
   enum class EventCategory
@@ -23,6 +32,7 @@ namespace Engine {
     Keyboard = BIT(2),
     Mouse = BIT(3),
     MouseButton = BIT(4),
+    Collision = BIT(5)
   };
   ENABLE_BITMASK_OPERATORS(EventCategory)
 

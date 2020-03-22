@@ -41,6 +41,7 @@ set(ENGINE_SOURCE_FILES
 
   # game
   ${CMAKE_SOURCE_DIR}/engine/src/engine/game/Level.cpp
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/game/KineticBody.cpp
 
 
   #platform
@@ -87,6 +88,7 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/Event.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/KeyEvent.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/MouseEvent.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/events/CollisionEvent.h
 
   # input
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Input.h
@@ -105,6 +107,7 @@ set(ENGINE_HEADER_FILES
 
   # game
   ${CMAKE_SOURCE_DIR}/engine/src/engine/game/Level.h
+  ${CMAKE_SOURCE_DIR}/engine/src/engine/game/KineticBody.h
 
 
   ## Platform
