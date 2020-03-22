@@ -17,4 +17,8 @@ namespace Engine {
     m_Position = props.Position;
   }
 
+  void KineticBody::OnUpdate() const {
+
+  }
+
 }

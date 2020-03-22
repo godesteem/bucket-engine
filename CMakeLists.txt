@@ -18,8 +18,22 @@ elseif(BE_PLATFORM_LINUX)
   add_compile_definitions(IMGUI_API)
 endif(BE_PLATFORM_WINDOWS)
 
-file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.c ${CMAKE_SOURCE_DIR}/sandbox/src/*.cpp)
-file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.h ${CMAKE_SOURCE_DIR}/sandbox/src/*.hpp)
+file(GLOB_RECURSE SOURCE_FILES
+  ${CMAKE_SOURCE_DIR}/sandbox/src/*.c
+  ${CMAKE_SOURCE_DIR}/sandbox/src/*.cpp
+)
+file(GLOB_RECURSE HEADER_FILES
+  ${CMAKE_SOURCE_DIR}/sandbox/src/*.h
+  ${CMAKE_SOURCE_DIR}/sandbox/src/*.hpp
+)
+file(GLOB_RECURSE MINIMAL_SOURCE_FILES
+  ${CMAKE_SOURCE_DIR}/minimal/src/*.c
+  ${CMAKE_SOURCE_DIR}/minimal/src/*.cpp
+)
+file(GLOB_RECURSE MINIMAL_HEADER_FILES
+  ${CMAKE_SOURCE_DIR}/minimal/src/*.h
+  ${CMAKE_SOURCE_DIR}/minimal/src/*.hpp
+)
 
 set(TEST_SOURCES
   ${CMAKE_SOURCE_DIR}/engine/tests/main.cpp
@@ -98,6 +112,10 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 add_executable(bucket-rpg ${HEADER_FILES} ${SOURCE_FILES})
 
 target_link_libraries(bucket-rpg PRIVATE engine)
+
+add_executable(minimal ${MINIMAL_HEADER_FILES} ${MINIMAL_SOURCE_FILES})
+
+target_link_libraries(minimal PRIVATE engine)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 add_executable(engine-test ${TEST_HEADERS} ${TEST_SOURCES})

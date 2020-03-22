@@ -31,15 +31,19 @@ namespace Engine {
   class KineticBody {
   public:
     using EventCallbackFn = std::function<void(Event&)>;
-    KineticBody(const KineticBodyProps& props);
+    explicit KineticBody(const KineticBodyProps& props);
     ~KineticBody() = default;
 
-    void Init(const KineticBodyProps& props);
+    inline void SetEventCallback(const EventCallbackFn& callback) {m_Data.EventCallback = callback; };
+
+    void OnUpdate() const;
 
   private:
+    void Init(const KineticBodyProps& props);
+  private:
     CollisionShape m_Shape;
-    float m_Gravity = 9.81;
-    float m_Speed = 10.0f;
+    float m_Gravity;
+    float m_Speed;
     glm::vec3 m_Position;
 
     struct KinematicBodyData {

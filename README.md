@@ -25,6 +25,13 @@ Next step: Vulkan
 1) run `build.sh`
 
 
-## [Docs](https://godesteem.github.io/bucket-engine/index.html) ![Deploy to GitHub Pages](https://github.com/godesteem/bucket-engine/workflows/Deploy%20to%20GitHub%20Pages/badge.svg)
+## usage
+
+### Minimal setup see `/minimal/src/Minimal.cpp`
+- create child from `Application`
+- define `Engine::Application* Engine::CreateApplication()`
+
+
+## [Docs](https://codedocs.xyz/godesteem/bucket-engine/index.html)
 1) Install [doxygen](http://www.doxygen.nl/manual/install.html)
 1) Run `doxygen docs/doxygen.conf` to generate docs in `docs/`
