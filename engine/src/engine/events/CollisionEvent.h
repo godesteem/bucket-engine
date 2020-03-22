@@ -10,6 +10,8 @@
 namespace Engine {
   class CollisionEvent: public Event
   {
+  public:
+    explicit CollisionEvent(KineticBody body): m_Body(body){}
     KineticBody GetKineticBody() { return m_Body; }
 
     EVENT_CLASS_CATEGORY(EventCategory::Collision);
@@ -19,10 +21,14 @@ namespace Engine {
   };
   class BodyEnteredEvent: public CollisionEvent
   {
+  public:
+    explicit BodyEnteredEvent(KineticBody body): CollisionEvent(body){};
     EVENT_CLASS_TYPE(BodyEntered);
   };
   class BodyExitedEvent: public CollisionEvent
   {
+  public:
+    explicit BodyExitedEvent(KineticBody body): CollisionEvent(body){};
     EVENT_CLASS_TYPE(BodyExited);
   };
 }

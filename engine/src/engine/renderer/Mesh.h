@@ -22,8 +22,8 @@ namespace Engine {
     std::string name;
     const VertexBuffer& buffer;
 
-    ModelAttribute(std::string  n, const VertexBuffer& b)
-    : name(std::move(n)), buffer(b)
+    ModelAttribute(const std::string &n, const VertexBuffer& b)
+    : name(n), buffer(b)
     {}
   };
   class Mesh
