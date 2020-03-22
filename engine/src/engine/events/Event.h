@@ -11,6 +11,8 @@
  *  - inherit Event
  *  - implement virtual's
  *  - add EVENT_CLASS_TYPE, EVENT_CLASS_CATEGORY
+ *  - initialize event callback
+ *  -
  */
 #pragma once
 
