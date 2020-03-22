@@ -66,7 +66,8 @@ int getline_NERV(char **lineptr, size_t *n, FILE *stream);
 
 typedef unsigned short int ushort;
 typedef size_t ssize_t;
-#define getline getline_NERV
+#else
+#define getline_NERV getline
 #endif
 
 typedef ushort GLushort;
@@ -141,7 +142,7 @@ namespace Engine {
         BE_CORE_ASSERT(false, "File " + fp + " can not be opened.");
       }
 
-      line_size = getline(&line_buf, &line_buf_size, file);
+      line_size = getline_NERV(&line_buf, &line_buf_size, file);
       std::regex txt_regex("[a-z]*");
       while (line_size >= 0 && line_size != std::string::npos) {
         std::string line(line_buf);
@@ -215,7 +216,7 @@ namespace Engine {
             }
           }
         }
-        line_size = getline(&line_buf, &line_buf_size, file);
+        line_size = getline_NERV(&line_buf, &line_buf_size, file);
       }
       Close();
       int correction = 1;
