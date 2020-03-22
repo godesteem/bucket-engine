@@ -37,6 +37,7 @@ namespace Engine {
     ImGui::SliderFloat("z", &m_Camera.GetPosition().z, 0.0f, 10.0f, "%.0f");
     ImGui::SliderFloat("Yaw", &m_Camera.GetYaw(), -90.0f, 90.0f, "%.0f");
     ImGui::SliderFloat("Pitch", &m_Camera.GetPitch(), -90.0f, 90.0f, "%.0f");
+    ImGui::SliderFloat("Speed", &m_Camera.GetSpeed(), 10.0f, 20.0f, "%f");
     ImGui::PopItemWidth();
     ImGui::End();
   }

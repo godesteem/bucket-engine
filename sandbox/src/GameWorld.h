@@ -4,6 +4,7 @@
 #pragma once
 
 #include <engine.h>
+#include <glm/gtc/noise.hpp>
 
 struct vec3 {
   float x, y, z;
@@ -26,26 +27,31 @@ public:
   GameWorld(Engine::Ref<Engine::VertexBuffer> vb, Engine::Ref<Engine::IndexBuffer> ib, const std::string& name);
 
   virtual void OnUpdate(Engine::Timestep ts) override {
-    m_Mesh->OnUpdate(ts);
+    for(const auto& obj : m_Models){
+      obj->OnUpdate(ts);
+    }
   };
   virtual void OnImGuiRender() override {
     ImGui::Begin("World Mesh");
     ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_FittingPolicyDefault_ | ImGuiTabBarFlags_Reorderable;
     if (ImGui::BeginTabBar("##tabs", tab_bar_flags)) {
-      m_Mesh->OnImGuiRender();
+      for (const auto &obj : m_Models) {
+        obj->OnImGuiRender();
+      }
       ImGui::EndTabBar();
     }
     ImGui::End();
   }
-  static void GenerateVertices(const std::string &fileName);
+  void GenerateVertices(const std::string &fileName);
 
-  Engine::Ref<Engine::Mesh> m_Mesh;
+  std::vector<Engine::Ref<Engine::Mesh>> m_Models;
+  const int m_MeshCount = 45;
 };
 
 GameWorld::GameWorld(Engine::Ref<Engine::VertexBuffer> vb, Engine::Ref<Engine::IndexBuffer> ib, const std::string &name)
 : Layer(name)
 {
-  m_Mesh = Engine::Mesh::Create(vb, ib, "sandbox/assets/shaders/World.glsl");
+  m_Models.push_back(Engine::Mesh::Create(vb, ib, "sandbox/assets/shaders/World.glsl"));
 }
 void GameWorld::GenerateVertices(const std::string &fileName) {
   const int rowCount = 80;
@@ -54,47 +60,74 @@ void GameWorld::GenerateVertices(const std::string &fileName) {
   const int vertexCount = verticesForSquare * rowCount * columnCount;
   const int indexCount = 5;
   float factor = 1.0f;
-  float vertices[vertexCount * indexCount];
-  float _x[verticesForSquare] = {0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f};
-  float _z[verticesForSquare] = {0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
+  float vertices[m_MeshCount][vertexCount * indexCount];
+  float _x[verticesForSquare] = {0.0f, factor, factor, factor, 0.0f, 0.0f};
+  float _z[verticesForSquare] = {0.0f, 0.0f, factor, factor, factor, 0.0f};
   float textCoordX[] = {0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f};
   float textCoordY[] = {0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
 
-  float paddingY = 0.0f;
+  float paddingY = -(rowCount / 2.0f) * factor;
   size_t currentIndex = 0;
-
-  for(int row=0; row<rowCount; row++){
-    float paddingX = -(rowCount / 2.0f) * factor;
-    for(int column=0; column<columnCount; column++){
-      for(int index = 0; index<verticesForSquare; index++){
-        vec3 pos = {_x[index] + paddingX, 0.0f, _z[index] + paddingY};
-
-        vec2 texture = {textCoordX[index], textCoordY[index]};
-        vertices[currentIndex] = pos.x;
-        vertices[currentIndex + 1] = 10.0f * sinf(10 * (pos.x*pos.x+pos.z*pos.z))/10;
-        vertices[currentIndex + 2] = pos.z;
-        vertices[currentIndex + 3] = texture.x;
-        vertices[currentIndex + 4] = texture.y;
-        currentIndex+=indexCount;
+  /*
+   *
+  {0.0f, 0.05f, 0.05f, 0.05f, 0.0f, 0.0f};
+  {0.0f, 0.0f, 0.05f, 0.05f, 0.05f, 0.0f};
+   */
+  float waterDepth = 0.01f;
+  float waterWidth = 20.0f;
+  float mountainHeight = 0.2f;
+  float mountainWidth = 15.0f;
+  float smooth = 0.08f;
+  vec3 pos = {0, 0};
+  vec2 texture = {0, 0};
+  for(size_t meshIndex = 0; meshIndex < m_MeshCount; ++meshIndex){
+    currentIndex = 0;
+    for(int row=0; row<rowCount; row++){
+      float paddingX = -(rowCount / 2.0f) * factor;
+      for(int column=0; column<columnCount; column++){
+        for(int index = 0; index<verticesForSquare; index++){
+          pos = {_x[index] + paddingX, 0.0f, _z[index] + paddingY};
+          glm::vec2 xy = glm::vec2(pos.x, pos.z);
+          texture = {textCoordX[index], textCoordY[index]};
+          vertices[meshIndex][currentIndex] = pos.x;
+          vertices[meshIndex][currentIndex + 1] = smooth * (mountainWidth * glm::simplex(xy * mountainHeight) + waterWidth * glm::perlin(xy * waterDepth));
+          vertices[meshIndex][currentIndex + 2] = pos.z;
+          vertices[meshIndex][currentIndex + 3] = texture.x;
+          vertices[meshIndex][currentIndex + 4] = texture.y;
+          currentIndex+=indexCount;
+        }
+        paddingX += factor;
       }
-      paddingX += factor;
+      paddingY += factor;
     }
-    paddingY += factor;
   }
 
   uint32_t indices[vertexCount];
   for(int i=0; i<vertexCount; ++i){
     indices[i] = i;
   }
-
-  Engine::ObjFile::CreateObjFile(vertices, vertexCount, Engine::ObjFile::VertexCategory::VertexCategoryVertex | Engine::ObjFile::VertexCategory::VertexCategoryNormal, indexCount, indices, vertexCount, fileName);
-
+  std::string pathAndName = fileName.substr(0, fileName.find(".obj"));
+  for(size_t index = 0; index < m_MeshCount; ++index){
+    std::string meshFileName = pathAndName + char(index + int('1') - 1) + ".obj";
+    Engine::ObjFile::CreateObjFile(
+      vertices[index],
+      vertexCount,
+      Engine::ObjFile::VertexCategory::VertexCategoryVertex | Engine::ObjFile::VertexCategory::VertexCategoryNormal,
+      indexCount,
+      indices,
+      vertexCount,
+      meshFileName
+    );
+  }
 }
 GameWorld::GameWorld()
 : Layer("World"){
   std::string shaderFile = "sandbox/assets/shaders/World.glsl";
   std::string objFile = "sandbox/assets/models/World.obj";
   GenerateVertices(objFile);
-  m_Mesh = Engine::Mesh::Create(objFile, shaderFile);
-  m_Mesh->SetName("World");
+  std::string pathAndName = objFile.substr(0, objFile.find(".obj"));
+  for(size_t index = 0; index < m_MeshCount; ++index) {
+    std::string meshFileName = pathAndName + char(index + int('1') - 1) + ".obj";
+    m_Models.push_back(Engine::Mesh::Create(meshFileName, shaderFile));
+  }
 };

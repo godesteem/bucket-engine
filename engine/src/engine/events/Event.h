@@ -2,8 +2,15 @@
  * File              : Event.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 15.02.2020
- * Last Modified Date: 17.02.2020
+ * Last Modified Date: 22.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
+ *
+ * Usage:
+ *  - define EventType
+ *  - define EventCategory
+ *  - inherit Event
+ *  - implement virtual's
+ *  - add EVENT_CLASS_TYPE, EVENT_CLASS_CATEGORY
  */
 #pragma once
 
@@ -19,7 +26,8 @@ namespace Engine {
     WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
     AppTick, AppUpdate, AppRender,
     KeyPressed, KeyReleased, KeyTyped,
-    MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
+    MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
+    BodyEntered, BodyExited
   };
 
   enum EventCategory {
@@ -29,6 +37,7 @@ namespace Engine {
     EventCategoryKeyboard = BIT(2),
     EventCategoryMouse = BIT(3),
     EventCategoryMouseButton = BIT(4),
+    EventCategoryCollision = BIT(5),
   };
 
 #ifndef EVENT_CLASS_TYPE
