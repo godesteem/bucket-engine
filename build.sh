@@ -29,7 +29,7 @@ mkdir -p build/
 
 cd build
 
-export ROOT_DIR=/home/philipp/work/priv/bucket-engine/
+export ROOT_DIR=$PWD/
 cmake --build . --target bucket-rpg -- -j 4
 
 #cmake --build .
