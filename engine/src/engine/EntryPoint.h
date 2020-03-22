@@ -9,9 +9,9 @@
 
 #include "Application.h"
 
-#ifdef BE_PLATFORM_WINDOWS
+//#ifdef BE_PLATFORM_WINDOWS
 
-#else
+//#else
 
 extern Engine::Application* Engine::CreateApplication();
 
@@ -23,4 +23,4 @@ int main(int argc, char **argv){
   delete app;
 }
 
-#endif
+//#endif

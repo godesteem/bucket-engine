@@ -20,32 +20,35 @@ namespace Engine {
   };
   VertexBuffer* VertexBuffer::Create(const std::vector<glm::vec2> &vertices, uint32_t size) {
 //    BE_CORE_ASSERT(size % 3 == 0, "Wrong vector size for vertices");
-    float _vertices[size];
+    float* _vertices = new float[size];
     int ind = 0;
     for (auto i : vertices) {
       _vertices[ind] = i.x;
       _vertices[ind + 1] = i.y;
       ind += 2;
     }
-    return Create(_vertices, size);
+    auto a = Create(_vertices, size);
+	delete[] _vertices;
+	return a;
   }
   VertexBuffer* VertexBuffer::Create(const std::vector<glm::vec3> &vertices, uint32_t size){
 //    BE_CORE_ASSERT(size % 3 == 0, "Wrong vector size for vertices");
-    float _vertices[size];
-    int ind = 0;
+	  float* _vertices = new float[size];
+	  int ind = 0;
     for(auto i : vertices){
       _vertices[ind] = i.x;
       _vertices[ind+1] = i.y;
       _vertices[ind+2] = i.z;
       ind += 3;
     }
-    return Create(_vertices, size);
-
+	auto a = Create(_vertices, size);
+	delete[] _vertices;
+	return a;
   }
   VertexBuffer* VertexBuffer::Create(const std::vector<glm::vec4> &vertices, uint32_t size){
     //BE_CORE_ASSERT(size % 4 == 0, "Wrong vector size for vertices");
-    float _vertices[size];
-    int ind = 0;
+	  float* _vertices = new float[size];
+	  int ind = 0;
     for(auto i : vertices){
       _vertices[ind] = i.x;
       _vertices[ind+1] = i.y;
@@ -53,14 +56,18 @@ namespace Engine {
       _vertices[ind+3] = i.w;
       ind += 4;
     }
-    return Create(_vertices, size);
+	auto a = Create(_vertices, size);
+	delete[] _vertices;
+	return a;
   };
-  IndexBuffer* IndexBuffer::Create(std::vector<ushort> indices, uint32_t size){
-    uint32_t _indices[size];
+  IndexBuffer* IndexBuffer::Create(std::vector<unsigned short> indices, uint32_t size){
+	  uint32_t* _indices = new uint32_t[size];
     for(int i = 0; i<size; ++i){
       _indices[i] = indices[i];
     }
-    return Create(_indices, size);
+	auto a = Create(_indices, size);
+	delete[] _indices;
+	return a;
   }
   IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t size){
     switch(Renderer::GetAPI()){

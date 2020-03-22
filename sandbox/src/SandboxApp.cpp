@@ -46,28 +46,28 @@ class ExampleLayer: public Engine::Layer
          0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
         -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,
         -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
-        
+
         -0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
         -0.5f,  0.5f, -0.5f,  1.0f,  1.0f,
         -0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
         -0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
         -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
         -0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
-        
+
          0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
          0.5f,  0.5f, -0.5f,  1.0f,  1.0f,
          0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
          0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
          0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
          0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
-        
+
         -0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
          0.5f, -0.5f, -0.5f,  1.0f,  1.0f,
          0.5f, -0.5f,  0.5f,  1.0f,  0.0f,
          0.5f, -0.5f,  0.5f,  1.0f,  0.0f,
         -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
         -0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
-      
+
         -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,
          0.5f,  0.5f, -0.5f,  1.0f,  1.0f,
          0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
@@ -131,19 +131,19 @@ class ExampleLayer: public Engine::Layer
       squareIA.reset(Engine::IndexBuffer::Create(squareIndices, sizeof(squareIndices)));
       m_SquareVA->SetIndexBuffer(squareIA);
 
-      m_Shader = Engine::Shader::Create("sandbox/assets/shaders/Default.glsl");
-      m_FlatColorShader = Engine::Shader::Create("sandbox/assets/shaders/FlatColor.glsl");
-      auto textureShader = m_ShaderLibrary.Load("Texture", "sandbox/assets/shaders/Texture.glsl");
+      m_Shader = Engine::Shader::Create("sandbox\\assets\\shaders\\Default.glsl");
+      m_FlatColorShader = Engine::Shader::Create("sandbox\\assets\\shaders\\FlatColor.glsl");
+      auto textureShader = m_ShaderLibrary.Load("Texture", "sandbox\\assets\\shaders\\Texture.glsl");
 
       m_Texture = Engine::Texture2D::Create(textureSrc);
       m_PortalTexture = Engine::Texture2D::Create(textureSrc2);
       m_Suzanne = Engine::Mesh::Create(
-          "sandbox/assets/models/Suzanne.obj",
-          "sandbox/assets/shaders/Suzanne.glsl");
-      m_Cube = Engine::Mesh::Create("sandbox/assets/models/Example.obj",
-                                    "sandbox/assets/shaders/Example.glsl");
-      m_Models.push_back(Engine::Mesh::Create("sandbox/assets/models/Light.obj",
-                                              "sandbox/assets/shaders/Light.glsl"));
+          "sandbox\\assets\\models\\Suzanne.obj",
+          "sandbox\\assets\\shaders\\Suzanne.glsl");
+      m_Cube = Engine::Mesh::Create("sandbox\\assets\\models\\Example.obj",
+                                    "sandbox\\assets\\shaders\\Example.glsl");
+      m_Models.push_back(Engine::Mesh::Create("sandbox\\assets\\models\\Light.obj",
+                                              "sandbox\\assets\\shaders\\Light.glsl"));
       glm::mat4 model = glm::mat4(1.0f);
       model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
@@ -174,7 +174,7 @@ class ExampleLayer: public Engine::Layer
 
       m_FlatColorShader->Bind();
       m_FlatColorShader->UploadUniformFloat3("u_Color", m_SquareColor);
-      
+
       glm::mat4 model = glm::mat4(1.0f);
       m_Shader->Bind();
       m_Shader->UploadUniformMat4("model", model);
@@ -186,7 +186,7 @@ class ExampleLayer: public Engine::Layer
       //Engine::MaterialInstanceRef ml = new Engine::MaterialInstance(material);
       //ml->Set("u_Color", redColor);
       //squareMesh->SetMaterial(ml);
-     
+
 
       if(objects[Objects::Grid]) {
         // Grid

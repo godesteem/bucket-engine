@@ -8,6 +8,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 #ifdef BE_PLATFORM_WINDOWS
   #define BE_API
@@ -22,7 +23,7 @@
 #define BE_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
 namespace Engine {
-  
+
   template<typename T>
   using Scope = std::unique_ptr<T>;
 
@@ -32,7 +33,11 @@ namespace Engine {
   using byte = unsigned char;
 
 #ifndef CONSTRUCT_FILE_PATH
-  static std::string rootDir(getenv("ROOT_DIR"));
+  static std::string rootDir("D:\\Users\\Joshua\\git\\bucket-engine\\");
   #define CONSTRUCT_FILE_PATH(x) std::string(rootDir + x)
 #endif
 }
+
+
+
+

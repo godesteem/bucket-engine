@@ -12,7 +12,7 @@
 #include "spdlog/fmt/ostr.h"
 
 namespace Engine {
-  class BE_API Log 
+  class BE_API Log
   {
     public:
       static void Init();
@@ -56,12 +56,13 @@ namespace Engine {
   #define BE_TRACE
   #define BE_INFO
   #define BE_FATAL
-  
+
 
 #endif
 #ifndef BE_ENABLE_ASSERTS
-#define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
-#define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
+#include <WinBase.h>
+#define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
+#define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
 #define BE_CHECK_FILE(x, y, ... ) {auto l = x.find_last_of("/\\"); \
                                     l = l == std::string::npos ? 0 : l + 1; \
                                     auto lDot = x.rfind('.'); \

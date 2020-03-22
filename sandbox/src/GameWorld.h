@@ -45,11 +45,11 @@ public:
 GameWorld::GameWorld(Engine::Ref<Engine::VertexBuffer> vb, Engine::Ref<Engine::IndexBuffer> ib, const std::string &name)
 : Layer(name)
 {
-  m_Mesh = Engine::Mesh::Create(vb, ib, "sandbox/assets/shaders/World.glsl");
+  m_Mesh = Engine::Mesh::Create(vb, ib, "sandbox\\assets\\shaders\\World.glsl");
 }
 void GameWorld::GenerateVertices(const std::string &fileName) {
-  const int rowCount = 100;
-  const int columnCount = 100;
+  const int rowCount = 80;
+  const int columnCount = rowCount;
   const int verticesForSquare = 6;
   const int vertexCount = verticesForSquare * rowCount * columnCount;
   const int indexCount = 5;
@@ -83,7 +83,7 @@ void GameWorld::GenerateVertices(const std::string &fileName) {
   }
 
   uint32_t indices[vertexCount];
-  for(int i=1; i<=vertexCount; ++i){
+  for(int i=0; i<vertexCount; ++i){
     indices[i] = i;
   }
 
@@ -92,8 +92,8 @@ void GameWorld::GenerateVertices(const std::string &fileName) {
 }
 GameWorld::GameWorld()
 : Layer("World"){
-  std::string shaderFile = "sandbox/assets/shaders/World.glsl";
-  std::string objFile = "sandbox/assets/models/World.obj";
+  std::string shaderFile = "sandbox\\assets\\shaders\\World.glsl";
+  std::string objFile = "sandbox\\assets\\models\\World.obj";
   GenerateVertices(objFile);
   m_Mesh = Engine::Mesh::Create(objFile, shaderFile);
   m_Mesh->SetName("World");
