@@ -2,7 +2,7 @@
  * File              : Mesh.h
  * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
  * Date              : 01.03.2020
- * Last Modified Date: 09.03.2020
+ * Last Modified Date: 23.03.2020
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
@@ -128,8 +128,8 @@ namespace Engine {
     }
 
     static void CreateObjFile(float* vertices, size_t vertexCount, uint32_t vertexCategories, size_t vertexElementCount, uint32_t* indices, size_t indexCount, const std::string& fp);;
-    bool loadFromOBJfileOLD(std::string const& fileName);
-    bool loadFromOBJfile(std::string const& fileName);
+
+    bool LoadObjFile(std::string const& fileName);
 
   private:
     FILE* file;

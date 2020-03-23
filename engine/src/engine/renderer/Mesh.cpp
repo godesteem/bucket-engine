@@ -34,147 +34,7 @@ namespace Engine {
     : filePath(CONSTRUCT_FILE_PATH(fp))
     , file(nullptr)
   {
-    loadFromOBJfileOLD(this->filePath);
-    loadFromOBJfile(this->filePath);
-  }
-
-  bool ObjFile::loadFromOBJfileOLD(std::string const& fileName)
-  {
-    /*
-    * Loads a .obj file with following layout
-    * vertices    : v %f %f %f
-    * uvs         : vt %f %f
-    * normals     : vn %f %f %f
-    * figure faces:
-    * syntax: <v>/<vt>/<vn> || <v> || <v>//<vn>
-    * f %d %d %d
-    * f %d//%d %d//%d %d//%d
-    * f %d/%d/%d %d/%d/%d %d/%d/%d
-    */
-    std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
-    std::vector<glm::vec3> temp_vertices;
-    std::vector<glm::vec2> temp_uvs;
-    std::vector<glm::vec3> temp_normals;
-
-    char* line_buf = NULL;
-    size_t line_buf_size = 0;
-    ssize_t line_size;
-    Open("r");
-    if (!IsOpen()) {
-      // Do sth
-      BE_CORE_ASSERT(false, std::string() + __FUNCTION__ + " File " + fileName + " can not be opened.");
-      return false;
-    }
-
-    line_size = getline_NERV(&line_buf, &line_buf_size, file);
-    //  std::regex txt_regex("[a-z]*");
-    while (line_size >= 0 && line_size != std::string::npos) {
-      std::string line(line_buf);
-      std::string prefix;
-      std::stringstream ss(std::string() + line_buf);
-
-      ss >> prefix;
-      ss.ignore(1, ' ');
-      if (prefix == "v") {
-        glm::vec3 vertex;
-        ss >> vertex.x;
-        ss.ignore(1, ' ');
-        ss >> vertex.y;
-        ss.ignore(1, ' ');
-        ss >> vertex.z;
-        temp_vertices.push_back(vertex);
-      }
-      else if (prefix == "vt") {
-        // UVs
-        glm::vec2 uv;
-        ss >> uv.x;
-        ss.ignore(1, ' ');
-        ss >> uv.y;
-        uv.y = -uv.y; // Invert V coordinate since we will only use DDS texture, which are inverted. Remove if you want to use TGA or BMP loaders.
-        temp_uvs.push_back(uv);
-      }
-      else if (prefix == "vn") {
-        // Normals
-        glm::vec3 normal;
-        ss >> normal.x;
-        ss.ignore(1, ' ');
-        ss >> normal.y;
-        ss.ignore(1, ' ');
-        ss >> normal.z;
-        temp_normals.push_back(normal);
-      }
-      else if (prefix == "f") {
-        // Figure faces (combination of indices to construct the object)
-        std::string vertex1, vertex2, vertex3;
-        unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-        if (line.find("//") != std::string::npos) {
-          for (int i = 0; i < 3; ++i) {
-            ss >> vertexIndex[i];
-            ss.ignore(2, '/');
-            ss >> normalIndex[i];
-            if (i < 2) ss.ignore(1, ' ');
-          }
-          hasNormals = true;
-        }
-        else if (line.find('/') != std::string::npos) {
-          for (int i = 0; i < 3; ++i) {
-            ss >> vertexIndex[i];
-            ss.ignore(1, '/');
-            ss >> uvIndex[i];
-            ss.ignore(1, '/');
-            ss >> normalIndex[i];
-            if (i < 2) ss.ignore(1, ' ');
-          }
-          hasUVs = true;
-          hasNormals = true;
-        }
-        else if (line.find('/') == std::string::npos) {
-          for (int i = 0; i<3; ++i) {
-            ss >> vertexIndex[i];
-            if (i<2) ss.ignore(1, ' ');
-          }
-        }
-        for (int i = 0; i<3; ++i) {
-          vertexIndices.push_back(vertexIndex[i]);
-          if (hasUVs) {
-            uvIndices.push_back(uvIndex[i]);
-          }
-          if (hasNormals) {
-            normalIndices.push_back(normalIndex[i]);
-          }
-        }
-      }
-      line_size = getline_NERV(&line_buf, &line_buf_size, file);
-    }
-    Close();
-    int correction = 1;
-
-    // For each vertex of each triangle
-    for (unsigned int i = 0; i < vertexIndices.size(); i++) {
-      if (!temp_vertices.empty() && !vertexIndices.empty()) {
-        unsigned int vertexIndex = vertexIndices[i];
-        for (auto index : vertexIndices) {
-          if (index == 0)
-          {
-            correction = 0;
-            break;
-          }
-        }
-        glm::vec3 vertex = temp_vertices[vertexIndex - correction];
-        this->vertices.push_back(vertex);
-      }
-      if (!temp_uvs.empty() && !uvIndices.empty()) {
-        unsigned int uvIndex = uvIndices[i];
-        glm::vec2 uv = temp_uvs[uvIndex - correction];
-        this->uvs.push_back(uv);
-      }
-      if (!temp_normals.empty() && !normalIndices.empty()) {
-        unsigned int normalIndex = normalIndices[i];
-        glm::vec3 normal = temp_normals[normalIndex - correction];
-        this->normals.push_back(normal);
-      }
-    }
-    return true;
+    LoadObjFile(this->filePath);
   }
 
   void ObjFile::CreateObjFile(float * vertices, size_t vertexCount, uint32_t vertexCategories, size_t vertexElementCount, uint32_t * indices, size_t indexCount, const std::string & fp) {
@@ -234,7 +94,7 @@ namespace Engine {
     file.Close();
   }
 
-  bool ObjFile::loadFromOBJfile(std::string const& fileName)
+  bool ObjFile::LoadObjFile(std::string const& fileName)
   {
   /* */
     std::ifstream fin(fileName);
@@ -245,18 +105,11 @@ namespace Engine {
       fin.close();
       return false;
     }
-    //    std::streampos p = fin.tellg();
-    //    std::stringstream ss;
-    //    ss << fin.rdbuf();
-    //    fin.seekg(p);
+    std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
+    std::vector<glm::vec3> temp_vertices;
+    std::vector<glm::vec2> temp_uvs;
+    std::vector<glm::vec3> temp_normals;
 
-    std::vector<glm::vec3> vertices;
-    vertices.push_back(glm::vec3()); // offset as file is 1-indexed
-
-    std::vector<glm::vec2> verticesTexture;
-    verticesTexture.push_back(glm::vec2()); // offset
-
-                                                    // test
     while(!fin.eof())
     {
       std::string currentLine;
@@ -293,6 +146,7 @@ namespace Engine {
         switch (vertexKind)
         {
         case ' ':
+        case 'n':
           // geometric vertex
         {
           float x = 0, y = 0, z = 0;
@@ -313,7 +167,11 @@ namespace Engine {
           }catch (...) { }
 
           glm::vec3 v(x, y, z);
-          vertices.push_back(v);
+          if(vertexKind == 'n'){
+            temp_normals.push_back(v);
+          } else {
+            temp_vertices.push_back(v);
+          }
           break;
         }
         case 't':
@@ -332,9 +190,12 @@ namespace Engine {
           }catch (...) { }
 
           glm::vec2 v(x, y);
-          verticesTexture.push_back(v);
+          temp_uvs.push_back(v);
           break;
         }
+          {
+            break;
+          }
         default: // dont handle anything else
           break;
         }
@@ -344,63 +205,106 @@ namespace Engine {
       {
         currentLine.erase(0, 1);
 
+        size_t nSlashes = std::count(currentLine.begin(), currentLine.end(), '/');
+        size_t nDoubleSlashes = std::count(currentLine.begin(), currentLine.end(), '//');
+
+        hasUVs = nDoubleSlashes == 0 && nSlashes > 0;
+        hasNormals = nSlashes > 0;
+
         size_t start0 = currentLine.find_first_of(' ');
-        size_t end0   = currentLine.find_first_of(' ', start0+1);
+        size_t end0 = currentLine.find_first_of(' ', start0+1);
         size_t start1 = currentLine.find_first_of(' ', end0);
         size_t end1   = currentLine.find_first_of(' ', start1+1);
         size_t start2 = currentLine.find_first_of(' ', end1);
-        size_t end2   = currentLine.find_first_of(' ', start2+1);
+        size_t end2   = currentLine.size();
 
-        int p1 = 0, p2 = 0, p3 = 0;
-
-        size_t nSlashes = std::count(currentLine.begin(), currentLine.end(), '/');
-        bool hasTexture = nSlashes > 0;
+        int  v1 = 0,  v2 = 0,  v3 = 0, \
+            vn1 = 0, vn2 = 0, vn3 = 0, \
+            vt1 = 0, vt2 = 0, vt3 = 0;
 
         if(start0 != std::string::npos && start0 < currentLine.size())
           try {
-          std::string sub = currentLine.substr(start0, end0 - start0);
-          if (!hasTexture)
+            std::string sub = currentLine.substr(start0, end0 - start0);
+          if (!hasNormals)
           {
-            p1 = stoi(sub);
+            v1 = stoi(sub);
           }
           else
           {
-            //                    currentLine.count
-            auto a = currentLine.find_first_of('/');
-            std::string first = currentLine.substr();
-
+            int endVal = sub.find_first_of('/');
+            std::string val = sub.substr(0, endVal);
+            v1 = stoi(val);
+            int endVal2 = sub.find_first_of('/', endVal);
+            if(hasUVs){
+              val = sub.substr(endVal + 1, endVal2);
+              vt1 = stoi(val);
+            }
+            int endVal3 = sub.find_first_of('/', endVal2);
+            val = sub.substr(endVal2 + 1, endVal3);
+            vn1 = stoi(val);
           }
         } catch (...) { }
 
         if (start1 != std::string::npos && start1 < currentLine.size())
           try {
           std::string sub = currentLine.substr(start1, end1 - start1);
-          if (!hasTexture)
+          if (!hasNormals)
           {
-            p2 = stoi(sub);
+            v2 = stoi(sub);
           }
           else
           {
+            int endVal = sub.find_first_of('/');
+            std::string val = sub.substr(0, endVal);
+            v2 = stoi(val);
+            int endVal2 = sub.find_first_of('/', endVal);
+            if(hasUVs){
+              val = sub.substr(endVal + 1, endVal2);
+              vt2 = stoi(val);
+            }
+            int endVal3 = sub.find_first_of('/', endVal2);
+            val = sub.substr(endVal2 + 1, endVal3);
+            vn2 = stoi(val);
           }
         }catch (...) { }
 
         if (start2 != std::string::npos && start2 < currentLine.size())
           try {
           std::string sub = currentLine.substr(start2, end2 - start2);
-          if (!hasTexture)
+          if (!hasNormals)
           {
-            p3 = stoi(sub);
+            v3 = stoi(sub);
           }
           else
           {
+            int endVal = sub.find_first_of('/');
+            std::string val = sub.substr(0, endVal);
+            v3 = stoi(val);
+            int endVal2 = sub.find_first_of('/', endVal);
+            if(hasUVs){
+              val = sub.substr(endVal + 1, endVal2);
+              vt3 = stoi(val);
+            }
+            int endVal3 = sub.find_first_of('/', endVal2);
+            val = sub.substr(endVal2 + 1, endVal3);
+            vn3 = stoi(val);
           }
         }catch (...) { }
 
-        //glm::vec3 triangle(
-        //  vertices[p1],
-        //  vertices[p2],
-        //  vertices[p3]
-        //);
+        vertexIndices.push_back(v1);
+        vertexIndices.push_back(v2);
+        vertexIndices.push_back(v3);
+        if (hasUVs) {
+          uvIndices.push_back(vt1);
+          uvIndices.push_back(vt2);
+          uvIndices.push_back(vt3);
+        }
+        if (hasNormals) {
+          normalIndices.push_back(vn1);
+          normalIndices.push_back(vn2);
+          normalIndices.push_back(vn3);
+        }
+
 
 //        _mesh.tris.push_back(triangle);
         break;
@@ -411,6 +315,34 @@ namespace Engine {
     }
     fin.close();
 
+    int correction = 1;
+    for (auto index : vertexIndices) {
+      if (index == 0)
+      {
+        correction = 0;
+        break;
+      }
+    }
+
+    // For each vertex of each triangle
+    for (unsigned int i = 0; i < vertexIndices.size(); i++)
+    {
+      if (!temp_vertices.empty() && !vertexIndices.empty()) {
+        unsigned int vertexIndex = vertexIndices[i];
+        glm::vec3 vertex = temp_vertices[vertexIndex - correction];
+        this->vertices.push_back(vertex);
+      }
+      if (!temp_uvs.empty() && !uvIndices.empty()) {
+        unsigned int uvIndex = uvIndices[i];
+        glm::vec2 uv = temp_uvs[uvIndex - correction];
+        this->uvs.push_back(uv);
+      }
+      if (!temp_normals.empty() && !normalIndices.empty()) {
+        unsigned int normalIndex = normalIndices[i];
+        glm::vec3 normal = temp_normals[normalIndex - correction];
+        this->normals.push_back(normal);
+      }
+    }
     /**/
     return true;
   }
