@@ -193,9 +193,6 @@ namespace Engine {
           temp_uvs.push_back(v);
           break;
         }
-          {
-            break;
-          }
         default: // dont handle anything else
           break;
         }
@@ -305,8 +302,6 @@ namespace Engine {
           normalIndices.push_back(vn3);
         }
 
-
-//        _mesh.tris.push_back(triangle);
         break;
       }
       default:
@@ -339,7 +334,7 @@ namespace Engine {
       }
       if (!temp_normals.empty() && !normalIndices.empty()) {
         unsigned int normalIndex = normalIndices[i];
-        glm::vec3 normal = temp_normals[normalIndex - correction];
+        glm::vec3 normal = temp_normals.at(normalIndex - correction); // jnl: lief bei mir out of range, habs zu at() geaendert, damit es dann bei dir meckert
         this->normals.push_back(normal);
       }
     }
