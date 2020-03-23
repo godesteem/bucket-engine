@@ -8,3 +8,8 @@ build/
 Makefile
 CMakeLists.txt.bak
 
+
+# Project specific
+*.obj
+*\.obj
+"sandbox/assets/models/World\\.obj"

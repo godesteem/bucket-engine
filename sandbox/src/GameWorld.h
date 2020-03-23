@@ -54,7 +54,7 @@ GameWorld::GameWorld(Engine::Ref<Engine::VertexBuffer> vb, Engine::Ref<Engine::I
   m_Models.push_back(Engine::Mesh::Create(vb, ib, "sandbox/assets/shaders/World.glsl"));
 }
 void GameWorld::GenerateVertices(const std::string &fileName) {
-  const int rowCount = 80;
+  const int rowCount = 25;
   const int columnCount = rowCount;
   const int verticesForSquare = 6;
   const int vertexCount = verticesForSquare * rowCount * columnCount;
@@ -78,17 +78,15 @@ void GameWorld::GenerateVertices(const std::string &fileName) {
   float mountainHeight = 0.2f;
   float mountainWidth = 15.0f;
   float smooth = 0.08f;
-  vec3 pos = {0, 0};
-  vec2 texture = {0, 0};
   for(size_t meshIndex = 0; meshIndex < m_MeshCount; ++meshIndex){
     currentIndex = 0;
     for(int row=0; row<rowCount; row++){
       float paddingX = -(rowCount / 2.0f) * factor;
       for(int column=0; column<columnCount; column++){
         for(int index = 0; index<verticesForSquare; index++){
-          pos = {_x[index] + paddingX, 0.0f, _z[index] + paddingY};
+          vec3 pos = {_x[index] + paddingX, 0.0f, _z[index] + paddingY};
           glm::vec2 xy = glm::vec2(pos.x, pos.z);
-          texture = {textCoordX[index], textCoordY[index]};
+          vec2 texture = {textCoordX[index], textCoordY[index]};
           vertices[meshIndex][currentIndex] = pos.x;
           vertices[meshIndex][currentIndex + 1] = smooth * (mountainWidth * glm::simplex(xy * mountainHeight) + waterWidth * glm::perlin(xy * waterDepth));
           vertices[meshIndex][currentIndex + 2] = pos.z;
