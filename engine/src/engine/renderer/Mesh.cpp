@@ -416,6 +416,7 @@ namespace Engine {
   }
 }
 
+#ifdef BE_PLATFORM_WINDOWS
 int getline_NERV(char ** lineptr, size_t * n, FILE * stream)
 {
 	static char line[256];
@@ -454,3 +455,4 @@ int getline_NERV(char ** lineptr, size_t * n, FILE * stream)
 	strcpy(*lineptr, line);
 	return(len);
 }
+#endif
