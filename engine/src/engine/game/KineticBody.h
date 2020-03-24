@@ -7,9 +7,9 @@
 #include "bepch.h"
 
 #include "engine/events/Event.h"
-#include "engine/renderer/Mesh.h"
-#include "engine/renderer/OrthographicCameraController.h"
-#include "engine/Core.h"
+#include "engine/renderer/mesh/Mesh.h"
+#include "engine/renderer/camera/OrthographicCameraController.h"
+#include "engine/core/Core.h"
 #include <glm/glm.hpp>
 
 namespace Engine {

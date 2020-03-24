@@ -10,7 +10,7 @@
 //
 #pragma once
 
-#include "engine/Core.h"
+#include "engine/core/Core.h"
 #include <string>
 #include <unordered_map>
 #include <glm/glm.hpp>

@@ -7,8 +7,8 @@
  */
 #pragma once
 
-#include "engine/renderer/Mesh.h"
-#include "engine/renderer/Texture.h"
+#include "engine/renderer/mesh/Mesh.h"
+#include "engine/renderer/mesh/Texture.h"
 
 namespace Engine {
   class OpenGLMesh: public Mesh

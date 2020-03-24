@@ -11,7 +11,7 @@
 #pragma once
 
 #include "bepch.h"
-#include "engine/Core.h"
+#include "engine/core/Core.h"
 
 namespace Engine {
 

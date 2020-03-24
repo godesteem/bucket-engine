@@ -7,7 +7,7 @@
  */
 #pragma once
 #include <string>
-#include "engine/Core.h"
+#include "engine/core/Core.h"
 
 namespace Engine {
   class Texture

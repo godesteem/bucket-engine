@@ -7,11 +7,11 @@
  */
 #pragma once
 
-#include "Core.h"
+#include "engine/core/Core.h"
 #include "engine/core/Timestep.h"
 #include "events/Event.h"
 #include "events/ApplicationEvent.h"
-#include "Window.h"
+#include "engine/core/Window.h"
 
 #include "engine/renderer/Shader.h"
 #include "engine/renderer/Buffer.h"
@@ -19,9 +19,9 @@
 
 
 #include "imgui/ImGuiLayer.h"
-#include "LayerStack.h"
+#include "engine/core/LayerStack.h"
 
-#include "engine/renderer/OrthographicCamera.h"
+#include "engine/renderer/camera/OrthographicCamera.h"
 
 namespace Engine {
 

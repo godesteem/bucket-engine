@@ -6,13 +6,13 @@
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
-#include "engine/Log.h"
+#include "engine/core/io/Log.h"
 #include "engine/core/Timestep.h"
 #include <glm/glm.hpp>
 #include <iterator>
-#include "engine/KeyCodes.h"
-#include "engine/MouseButtonCodes.h"
-#include "RenderCommand.h"
+#include "engine/core/io/KeyCodes.h"
+#include "engine/core/io/MouseButtonCodes.h"
+#include "engine/renderer/RenderCommand.h"
 
 namespace Engine {
   const float YAW = -90.0f;

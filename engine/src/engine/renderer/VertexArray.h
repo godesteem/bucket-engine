@@ -7,7 +7,7 @@
  */
 #pragma once
 #include <memory>
-#include "engine/Core.h"
+#include "engine/core/Core.h"
 #include "Buffer.h"
 
 namespace Engine {
