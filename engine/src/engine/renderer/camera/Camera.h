@@ -10,6 +10,9 @@
 #include "engine/renderer/RenderCommand.h"
 
 namespace Engine {
+  enum class CameraType{
+    None = 0, Orthographic = 1, ThirdPerson = 2, Default = 2
+  };
   class Camera
   {
     struct CameraStack

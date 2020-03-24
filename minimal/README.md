@@ -32,7 +32,7 @@ class ExampleLayer: public Engine::Layer
     ExampleLayer():Layer("Example"){}
     void OnUpdate(Engine::Timestep ts) override;
   private:
-    Engine::OrthographicCameraController cameraLayer;
+    Engine::CameraController cameraLayer;
 };
 ```
 
@@ -68,7 +68,7 @@ class ExampleLayer: public Engine::Layer
     ExampleLayer();
     void OnUpdate(Engine::Timestep ts) override;
   private:
-    Engine::OrthographicCameraController cameraLayer;
+    Engine::CameraController cameraLayer;
     std::vector<Engine::Ref<Engine::Mesh>> models;
     Engine::Ref<Engine::Mesh> mesh;
 
