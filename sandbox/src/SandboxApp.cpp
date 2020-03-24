@@ -15,7 +15,8 @@ class ExampleLayer: public Engine::Layer
 
   public:
     ExampleLayer()
-      :Layer("Example")
+      :Layer("Example"),
+      m_Player()
     {
     }
 
@@ -25,15 +26,11 @@ class ExampleLayer: public Engine::Layer
       Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1});
       Engine::RenderCommand::Clear();
 
-      m_PlayerCameraLayer.OnUpdate(ts);
-
+      m_Player->OnUpdate(ts);
       Engine::Renderer::EndScene();
     }
     void OnEvent(Engine::Event& event) override {
-      Engine::EventDispatcher dispatcher(event);
 
-      dispatcher.Dispatch<Engine::KeyPressedEvent>(BE_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
-      m_PlayerCameraLayer.OnEvent(event);
     }
     bool OnKeyPressedEvent(Engine::KeyPressedEvent& event){
       return false;
@@ -50,6 +47,7 @@ class ExampleLayer: public Engine::Layer
     }
   private:
     Engine::OrthographicCameraController m_PlayerCameraLayer;
+    Engine::Ref<Engine::KineticBody> m_Player;
 };
 
 class Sandbox: public Engine::Application

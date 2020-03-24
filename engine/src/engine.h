@@ -45,6 +45,7 @@
 // -----------------
 
 #include "engine/game/Level.h"
+#include "engine/game/KineticBody.h"
 
 // --- Entry point ---
 // -------------------
