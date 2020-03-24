@@ -15,10 +15,14 @@ namespace Engine {
     m_Speed = props.Speed;
     m_Gravity = props.Gravity;
     m_Position = props.Position;
+
+    if(props.hasMesh){
+      m_Mesh = Mesh::Create(props.meshFileName, "sandbox/assets/shaders/Example.glsl");
+    }
   }
 
-  void KineticBody::OnUpdate() const {
-
+  void KineticBody::OnUpdate(Timestep ts) const {
+    BE_CORE_TRACE("KineticBody::OnUpdate");
   }
 
 }
