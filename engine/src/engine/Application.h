@@ -25,30 +25,42 @@
 
 namespace Engine {
 
+  struct ApplicationSettings {
+    ApplicationSettings()
+    : m_WindowProps()
+    {}
+
+    WindowProps m_WindowProps;
+
+  };
+
   class BE_API Application
   {
-    public:
-      Application();
-      virtual ~Application();
-      
-      void Run();
+  public:
+    Application();
+    virtual ~Application();
 
-      void OnEvent(Event& e);
 
-      void PushLayer(Layer* layer);
-      void PushOverlay(Layer* overlay);
-     
-      bool IsRunning() const { return m_Running; } 
-      inline static Application& Get() { return *s_Instance; };
-      inline Window& GetWindow() { return *m_Window; };
-    private:
-      bool OnWindowClose(WindowCloseEvent&);
-      Scope<Window> m_Window;
-      ImGUILayer* m_ImGuiLayer;
-      bool m_Running = true;
-      LayerStack m_LayerStack;
-      float m_FrameLastTime = 0.0f;
-      static Application* s_Instance;
+    void Run();
+    void PushLayer(Layer* layer);
+    void PushOverlay(Layer* overlay);
+
+    bool IsRunning() const { return m_Running; }
+    inline static Application& Get() { return *s_Instance; };
+    inline Window& GetWindow() { return *m_Window; };
+
+    void OnEvent(Event& e);
+  private:
+    bool OnWindowClose(WindowCloseEvent&);
+    bool OnWindowResize(WindowResizeEvent &e);
+
+    Scope<Window> m_Window;
+    ImGUILayer* m_ImGuiLayer;
+    bool m_Running = true;
+    LayerStack m_LayerStack;
+    float m_FrameLastTime = 0.0f;
+    ApplicationSettings m_Settings;
+    static Application* s_Instance;
   };
   
   // TODO: by client

@@ -25,6 +25,7 @@ namespace Engine {
 
       inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; };
       virtual void SetFullScreen() override;
+      virtual void Resize(WindowProps props) override;
       void SetVSync(bool enabled) override;
       bool IsVSync() const override;
 
