@@ -21,7 +21,7 @@ namespace Engine {
       m_Mesh = Mesh::Create(props.meshFileName, "sandbox/assets/shaders/Example.glsl");
     }
     if(hasCamera){
-      m_CameraLayer.reset(new OrthographicCameraController());
+      m_CameraLayer.reset(new CameraController());
     }
   }
 

@@ -6,25 +6,25 @@
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
-#include "OrthographicCameraController.h"
+#include "CameraController.h"
 #include "engine/core/io/Input.h"
 #include <imgui/imgui.h>
 
 namespace Engine {
-  OrthographicCameraController::OrthographicCameraController(const std::string& name)
+  CameraController::CameraController(const std::string& name)
   : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f),
     m_Name(name)
   {}
 
-  void OrthographicCameraController::OnAttach(){}
-  void OrthographicCameraController::OnDetach(){}
+  void CameraController::OnAttach(){}
+  void CameraController::OnDetach(){}
 
-  void OrthographicCameraController::OnUpdate(Timestep ts){
+  void CameraController::OnUpdate(Timestep ts){
     m_Camera.OnUpdate(ts);
   }
 
-  void OrthographicCameraController::OnEvent(Event& event){}
-  void OrthographicCameraController::OnImGuiRender(){
+  void CameraController::OnEvent(Event& event){}
+  void CameraController::OnImGuiRender(){
     ImGui::Begin("Camera");
     ImGui::Text("Camera Position (%d, %d, %d)", (int) m_Camera.GetPosition().x, (int) m_Camera.GetPosition().y,
                 (int) m_Camera.GetPosition().z);
