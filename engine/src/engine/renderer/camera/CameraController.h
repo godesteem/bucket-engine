@@ -8,7 +8,7 @@ namespace Engine {
   class CameraController
   {
   public:
-    CameraController(const std::string& name = "Camera");
+    CameraController(const std::string& name = "Camera", CameraType type = CameraType::Default);
     ~CameraController() = default;
 
     void OnAttach();
@@ -19,7 +19,7 @@ namespace Engine {
 
     inline Camera& GetCamera() { return m_Camera; };
   private:
-    ThirdPersonCamera m_Camera;
+    Camera m_Camera;
 
     std::string m_Name;
   };

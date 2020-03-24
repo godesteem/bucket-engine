@@ -4,10 +4,17 @@
 #include <imgui/imgui.h>
 
 namespace Engine {
-  CameraController::CameraController(const std::string& name)
-  : m_Camera(-1.6f, 1.6f, -0.9f, 0.9f),
-    m_Name(name)
-  {}
+  CameraController::CameraController(const std::string& name, CameraType type)
+  : m_Name(name)
+  {
+    switch(type){
+      case CameraType::ThirdPerson:
+        m_Camera = ThirdPersonCamera(-1.6f, 1.6f, -0.9f, 0.9f);
+        break;
+      default:
+        break;
+    }
+  }
 
   void CameraController::OnAttach(){}
   void CameraController::OnDetach(){}

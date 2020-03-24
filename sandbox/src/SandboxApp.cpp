@@ -13,7 +13,7 @@ class ExampleLayer: public Engine::Layer
     }
 
     void OnUpdate(Engine::Timestep ts) override {
-      Engine::Renderer::BeginScene(m_PlayerCameraLayer.GetCamera());
+      Engine::Renderer::BeginScene(*Engine::Camera::camStack->GetActiveCamera());
 
       Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1});
       Engine::RenderCommand::Clear();
@@ -24,9 +24,7 @@ class ExampleLayer: public Engine::Layer
     void OnEvent(Engine::Event& event) override {
 
     }
-    bool OnKeyPressedEvent(Engine::KeyPressedEvent& event){
-      return false;
-    }
+
 
     virtual void OnImGuiRender() override {
       {
@@ -38,7 +36,7 @@ class ExampleLayer: public Engine::Layer
       m_PlayerCameraLayer.OnImGuiRender();
     }
   private:
-    Engine::OrthographicCameraController m_PlayerCameraLayer;
+    Engine::CameraController m_PlayerCameraLayer;
     Engine::Ref<Engine::KineticBody> m_Player;
 };
 
