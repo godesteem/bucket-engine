@@ -114,9 +114,14 @@ namespace Engine {
 
       while(!fin.eof())
       {
-        std::string currentLine;
-        std::getline(fin, currentLine);
-        switch (currentLine[0])
+        //std::getline(fin, currentLine);
+        const size_t bufSize = 1024;
+        char buf[bufSize];
+
+        fin.get(buf, bufSize, '\n');
+        fin.ignore(); // remove the '\n' from the file
+        if(buf[0] == '\0') continue;
+        switch (buf[0])
         {
         case '#':
           // comment, ignore line
@@ -125,8 +130,7 @@ namespace Engine {
         case 'v':
           // line may contain a vertex
         {
-          currentLine.erase(0, 1);
-          char vertexKind = currentLine[0];
+          const char vertexKind = buf[1];
           if ( vertexKind != ' ' // geometric
             && vertexKind != 't' // texture
             && vertexKind != 'n' // normal
@@ -138,6 +142,7 @@ namespace Engine {
           }
           //            currentLine.erase(0, 1);
 
+          std::string currentLine(buf +1);
           size_t start0 = currentLine.find_first_of(' ');
           size_t end0   = currentLine.find_first_of(' ', start0+1);
           size_t start1 = currentLine.find_first_of(' ', end0);
@@ -155,27 +160,21 @@ namespace Engine {
             if(start0 != std::string::npos && start0 < currentLine.size())
             try {
               // jnl: read https://stackoverflow.com/a/57865805/10314791 atof is way faster, accepting the caveats
-              x = stof(currentLine.substr(start0, end0 - start0));
-              float foo = atof(currentLine.c_str() + start0);
-              if(x != foo) BE_CORE_ASSERT(false, std::string() + __FUNCTION__  "@" + std::to_string(__LINE__ ) + ": the values are not identical!");
+              x = atof(currentLine.c_str() + start0);
             } catch (...) { }
 
             if (start1 != std::string::npos && start1 < currentLine.size())
             try {
-              y = stof(currentLine.substr(start1, end1 - start1));
-              float foo = atof(currentLine.c_str() + start1);
-              if(y != foo) BE_CORE_ASSERT(false, std::string() + __FUNCTION__  "@" + std::to_string(__LINE__ ) + ": the values are not identical!");
+              y = atof(currentLine.c_str() + start1);
             }catch (...) { }
 
             if (start2 != std::string::npos && start2 < currentLine.size())
             try {
-              z = stof(currentLine.substr(start2, end2 - start2));
-              float foo = atof(currentLine.c_str() + start2);
-              if(z != foo) BE_CORE_ASSERT(false, std::string() + __FUNCTION__  "@" + std::to_string(__LINE__ ) + ": the values are not identical!");
+              z = atof(currentLine.c_str() + start2);
             }catch (...) { }
 
             glm::vec3 v(x, y, z);
-            if(vertexKind == 'n') {
+            if(vertexKind == 'n') { //jnl switch(vertexKind) case 'n':, warum also dieses if?
               temp_normals.push_back(v);
             } else {
               temp_vertices.push_back(v);
@@ -189,12 +188,12 @@ namespace Engine {
 
             if(start0 != std::string::npos && start0 < currentLine.size())
             try {
-              x = stof(currentLine.substr(start0, end0 - start0));
+              x = atof(currentLine.c_str() + start0);
             } catch (...) { }
 
             if (start1 != std::string::npos && start1 < currentLine.size())
             try {
-              y = stof(currentLine.substr(start1, end1 - start1));
+              y = atof(currentLine.c_str() + start1);
             }catch (...) { }
 
             glm::vec2 v(x, y);
@@ -208,8 +207,7 @@ namespace Engine {
         }
         case 'f': // face definition
         {
-          currentLine.erase(0, 1);
-
+          std::string currentLine(buf+1);
           size_t nSlashes = std::count(currentLine.begin(), currentLine.end(), '/');
           size_t nDoubleSlashes = std::count(currentLine.begin(), currentLine.end(), '//');
 
@@ -217,7 +215,7 @@ namespace Engine {
           hasNormals = nSlashes > 0;
 
           size_t start0 = currentLine.find_first_of(' ');
-          size_t end0 = currentLine.find_first_of(' ', start0+1);
+          size_t end0   = currentLine.find_first_of(' ', start0+1);
           size_t start1 = currentLine.find_first_of(' ', end0);
           size_t end1   = currentLine.find_first_of(' ', start1+1);
           size_t start2 = currentLine.find_first_of(' ', end1);
