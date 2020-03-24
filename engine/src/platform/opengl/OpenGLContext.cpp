@@ -19,9 +19,9 @@ namespace Engine {
     BE_CORE_ASSERT(status, "Failed to initialize GLAD!");
 
     BE_CORE_INFO("OpenGL Info:");
-    BE_CORE_INFO("\tVendor: {0}", glGetString(GL_VENDOR));
-    BE_CORE_INFO("\tRenderer: {0}", glGetString(GL_RENDERER));
-    BE_CORE_INFO("\tVersion: {0}", glGetString(GL_VERSION));
+    BE_CORE_INFO("\t\tVendor: {0}", glGetString(GL_VENDOR));
+    BE_CORE_INFO("\t\tRenderer: {0}", glGetString(GL_RENDERER));
+    BE_CORE_INFO("\t\tVersion: {0}", glGetString(GL_VERSION));
   }
 
   void OpenGLContext::SwapBuffers() {
