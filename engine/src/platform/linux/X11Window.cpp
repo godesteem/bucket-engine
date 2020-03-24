@@ -6,6 +6,7 @@
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 
+#include <GL/freeglut.h>
 #include "bepch.h"
 #include "platform/opengl/OpenGLContext.h"
 #include "X11Window.h"
@@ -37,7 +38,7 @@ namespace Engine {
   }
 
   void X11Window::SetFullScreen() {
-
+    glutFullScreen();
   }
 
   void X11Window::Init(const WindowProps& props){
