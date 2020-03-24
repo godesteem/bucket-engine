@@ -1,14 +1,15 @@
 #pragma once
 
 #include "engine/core/Layer.h"
+#include "ThirdPersonCamera.h"
 #include "OrthographicCamera.h"
 
 namespace Engine {
-  class OrthographicCameraController
+  class CameraController
   {
   public:
-    OrthographicCameraController(const std::string& name = "Camera");
-    ~OrthographicCameraController() = default;
+    CameraController(const std::string& name = "Camera");
+    ~CameraController() = default;
 
     void OnAttach();
     void OnDetach();

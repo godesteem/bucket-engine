@@ -36,8 +36,10 @@ set(ENGINE_SOURCE_FILES
   ${RENDERER_DIR}RendererAPI.cpp
   ${RENDERER_DIR}VertexArray.cpp
 
+  ${RENDERER_DIR}camera/Camera.cpp
   ${RENDERER_DIR}camera/OrthographicCamera.cpp
-  ${RENDERER_DIR}camera/OrthographicCameraController.cpp
+  ${RENDERER_DIR}camera/ThirdPersonCamera.cpp
+  ${RENDERER_DIR}camera/CameraController.cpp
 
   ${RENDERER_DIR}mesh/Texture.cpp
   ${RENDERER_DIR}mesh/Mesh.cpp
@@ -107,8 +109,10 @@ set(ENGINE_HEADER_FILES
   ${RENDERER_DIR}RenderCommand.h
   ${RENDERER_DIR}VertexArray.h
 
+  ${RENDERER_DIR}camera/Camera.h
   ${RENDERER_DIR}camera/OrthographicCamera.h
-  ${RENDERER_DIR}camera/OrthographicCameraController.h
+  ${RENDERER_DIR}camera/ThirdPersonCamera.h
+  ${RENDERER_DIR}camera/CameraController.h
 
   ${RENDERER_DIR}mesh/Texture.h
   ${RENDERER_DIR}mesh/Mesh.h

@@ -29,7 +29,8 @@
 #include "engine/renderer/VertexArray.h"
 
 #include "engine/renderer/camera/OrthographicCamera.h"
-#include "engine/renderer/camera/OrthographicCameraController.h"
+#include "engine/renderer/camera/ThirdPersonCamera.h"
+#include "engine/renderer/camera/CameraController.h"
 
 
 // --- 3D ----------

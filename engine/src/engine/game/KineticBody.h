@@ -8,7 +8,7 @@
 
 #include "engine/events/Event.h"
 #include "engine/renderer/mesh/Mesh.h"
-#include "engine/renderer/camera/OrthographicCameraController.h"
+#include "engine/renderer/camera/CameraController.h"
 #include "engine/core/Core.h"
 #include <glm/glm.hpp>
 
@@ -71,7 +71,7 @@ namespace Engine {
     float m_Speed;
     glm::vec3 m_Position;
     bool hasCamera = false;
-    Ref<OrthographicCameraController> m_CameraLayer;
+    Ref<CameraController> m_CameraLayer;
 
     struct KinematicBodyData {
       std::string Name;
