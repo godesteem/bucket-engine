@@ -45,12 +45,8 @@ namespace Engine {
     std::vector<glm::vec2> temp_uvs;
     std::vector<glm::vec3> temp_normals;
 
-    char *line_buf = NULL;
-    size_t line_buf_size = 0;
-    ssize_t line_size;
     file.Open("w");
     if (!file.IsOpen()) {
-      // Do sth
       BE_CORE_ASSERT(false, "File " + fp + " can not be opened.");
     }
     std::ostringstream vertexStream, uvStream, normalStream, faceStream;
@@ -231,12 +227,12 @@ namespace Engine {
             int endVal = sub.find_first_of('/');
             std::string val = sub.substr(0, endVal);
             v1 = stoi(val);
-            int endVal2 = sub.find_first_of('/', endVal);
+            int endVal2 = sub.find_first_of('/', endVal + 1);
             if(hasUVs){
               val = sub.substr(endVal + 1, endVal2);
               vt1 = stoi(val);
             }
-            int endVal3 = sub.find_first_of('/', endVal2);
+            int endVal3 = sub.find_first_of('/', endVal2 + 1);
             val = sub.substr(endVal2 + 1, endVal3);
             vn1 = stoi(val);
           }
@@ -254,12 +250,12 @@ namespace Engine {
             int endVal = sub.find_first_of('/');
             std::string val = sub.substr(0, endVal);
             v2 = stoi(val);
-            int endVal2 = sub.find_first_of('/', endVal);
+            int endVal2 = sub.find_first_of('/', endVal + 1);
             if(hasUVs){
               val = sub.substr(endVal + 1, endVal2);
               vt2 = stoi(val);
             }
-            int endVal3 = sub.find_first_of('/', endVal2);
+            int endVal3 = sub.find_first_of('/', endVal2 + 1);
             val = sub.substr(endVal2 + 1, endVal3);
             vn2 = stoi(val);
           }
@@ -277,12 +273,12 @@ namespace Engine {
             int endVal = sub.find_first_of('/');
             std::string val = sub.substr(0, endVal);
             v3 = stoi(val);
-            int endVal2 = sub.find_first_of('/', endVal);
+            int endVal2 = sub.find_first_of('/', endVal + 1);
             if(hasUVs){
               val = sub.substr(endVal + 1, endVal2);
               vt3 = stoi(val);
             }
-            int endVal3 = sub.find_first_of('/', endVal2);
+            int endVal3 = sub.find_first_of('/', endVal2 + 1);
             val = sub.substr(endVal2 + 1, endVal3);
             vn3 = stoi(val);
           }
@@ -319,7 +315,6 @@ namespace Engine {
       }
     }
 
-    // For each vertex of each triangle
     for (unsigned int i = 0; i < vertexIndices.size(); i++)
     {
       if (!temp_vertices.empty() && !vertexIndices.empty()) {
@@ -334,11 +329,10 @@ namespace Engine {
       }
       if (!temp_normals.empty() && !normalIndices.empty()) {
         unsigned int normalIndex = normalIndices[i];
-        glm::vec3 normal = temp_normals.at(normalIndex - correction); // jnl: lief bei mir out of range, habs zu at() geaendert, damit es dann bei dir meckert
+        glm::vec3 normal = temp_normals[normalIndex - correction];
         this->normals.push_back(normal);
       }
     }
-    /**/
     return true;
   }
 }
