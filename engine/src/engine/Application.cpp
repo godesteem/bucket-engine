@@ -17,7 +17,7 @@ namespace Engine {
     BE_ASSERT(!s_Instance, "Application already exists.");
     s_Instance = this;
 
-    m_Window = Scope<Window>(Window::Create());
+    m_Window = Scope<Window>(Window::Create(m_Settings.m_WindowProps));
     m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
     Renderer::Init();
@@ -35,6 +35,7 @@ namespace Engine {
 
     EventDispatcher dispatcher(e);
     dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+    dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
 
     for(auto it=m_LayerStack.end(); it != m_LayerStack.begin();){
       (*--it)->OnEvent(e);
@@ -46,6 +47,12 @@ namespace Engine {
 
   bool Application::OnWindowClose(WindowCloseEvent& e){
     m_Running = false;
+    return true;
+  }
+  bool Application::OnWindowResize(WindowResizeEvent& e){
+    m_Settings.m_WindowProps.Height = e.GetHeight();
+    m_Settings.m_WindowProps.Width = e.GetWidth();
+    m_Window->Resize(m_Settings.m_WindowProps);
     return true;
   }
 

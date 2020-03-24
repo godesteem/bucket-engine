@@ -18,6 +18,16 @@
 #include "engine/core/Timestep.h"
 
 namespace Engine {
+
+  struct ApplicationSettings {
+    ApplicationSettings()
+    : m_WindowProps()
+    {}
+
+    WindowProps m_WindowProps;
+
+  };
+
   /**
    * Main entry point
    */
@@ -25,10 +35,10 @@ namespace Engine {
   {
     public:
 
-      /**
-       * Constructor.
-       */
-      Application();
+    /**
+     * Constructor.
+     */
+    Application();
       virtual ~Application();
 
       void Run();
@@ -41,14 +51,17 @@ namespace Engine {
       bool IsRunning() const { return m_Running; }
       inline static Application& Get() { return *s_Instance; };
       inline Window& GetWindow() { return *m_Window; };
-    private:
+  private:
       bool OnWindowClose(WindowCloseEvent&);
+      bool OnWindowResize(WindowResizeEvent &e);
+
       Scope<Window> m_Window;
       ImGUILayer* m_ImGuiLayer;
       bool m_Running = true;
       LayerStack m_LayerStack;
       Timestep m_FrameLastTime{0.f};
       static Application* s_Instance;
+      ApplicationSettings m_Settings;
   };
 
   // TODO: by client
