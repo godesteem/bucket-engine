@@ -46,28 +46,28 @@ class ExampleLayer: public Engine::Layer
          0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
         -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,
         -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
-        
+
         -0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
         -0.5f,  0.5f, -0.5f,  1.0f,  1.0f,
         -0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
         -0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
         -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
         -0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
-        
+
          0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
          0.5f,  0.5f, -0.5f,  1.0f,  1.0f,
          0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
          0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
          0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
          0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
-        
+
         -0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
          0.5f, -0.5f, -0.5f,  1.0f,  1.0f,
          0.5f, -0.5f,  0.5f,  1.0f,  0.0f,
          0.5f, -0.5f,  0.5f,  1.0f,  0.0f,
         -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
         -0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
-      
+
         -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,
          0.5f,  0.5f, -0.5f,  1.0f,  1.0f,
          0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
@@ -174,7 +174,7 @@ class ExampleLayer: public Engine::Layer
 
       m_FlatColorShader->Bind();
       m_FlatColorShader->UploadUniformFloat3("u_Color", m_SquareColor);
-      
+
       glm::mat4 model = glm::mat4(1.0f);
       m_Shader->Bind();
       m_Shader->UploadUniformMat4("model", model);
@@ -186,7 +186,7 @@ class ExampleLayer: public Engine::Layer
       //Engine::MaterialInstanceRef ml = new Engine::MaterialInstance(material);
       //ml->Set("u_Color", redColor);
       //squareMesh->SetMaterial(ml);
-     
+
 
       if(objects[Objects::Grid]) {
         // Grid

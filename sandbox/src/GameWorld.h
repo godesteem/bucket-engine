@@ -48,8 +48,8 @@ GameWorld::GameWorld(Engine::Ref<Engine::VertexBuffer> vb, Engine::Ref<Engine::I
   m_Mesh = Engine::Mesh::Create(vb, ib, "sandbox/assets/shaders/World.glsl");
 }
 void GameWorld::GenerateVertices(const std::string &fileName) {
-  const int rowCount = 100;
-  const int columnCount = 100;
+  const int rowCount = 80;
+  const int columnCount = rowCount;
   const int verticesForSquare = 6;
   const int vertexCount = verticesForSquare * rowCount * columnCount;
   const int indexCount = 5;
@@ -83,7 +83,7 @@ void GameWorld::GenerateVertices(const std::string &fileName) {
   }
 
   uint32_t indices[vertexCount];
-  for(int i=1; i<=vertexCount; ++i){
+  for(int i=0; i<vertexCount; ++i){
     indices[i] = i;
   }
 

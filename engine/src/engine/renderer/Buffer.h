@@ -47,7 +47,7 @@ namespace Engine {
 
     BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
       : Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
-    { 
+    {
     };
 
     uint32_t GetComponentCount() const
@@ -125,13 +125,13 @@ namespace Engine {
   class IndexBuffer {
   public:
     virtual ~IndexBuffer() {};
-    
+
     virtual void Bind() const = 0;
     virtual void Unbind() const = 0;
 
     virtual uint32_t GetCount() const = 0;
 
     static IndexBuffer* Create(uint32_t* indices, uint32_t count);
-    static IndexBuffer* Create(std::vector<ushort> indices, uint32_t count);
+    static IndexBuffer* Create(std::vector<unsigned short> indices, uint32_t count);
   };
 }
