@@ -8,6 +8,7 @@
 
 #include "engine/events/Event.h"
 #include "engine/renderer/Mesh.h"
+#include "engine/renderer/OrthographicCameraController.h"
 #include "engine/Core.h"
 #include <glm/glm.hpp>
 
@@ -24,16 +25,24 @@ namespace Engine {
 
   };
   struct KineticBodyProps {
+    // Utils
     std::string Name;
+
+    // Mesh
+    std::string meshFileName;
+    bool hasMesh = false;
+
+    // Collision
+    bool hasCollisionShape = false;
+
+    // Movement
     glm::vec3 Position;
     float Gravity = 9.81f;
     float Speed = 10.0f;
-    bool hasMesh = false;
-    bool hasCollisionShape = false;
-    std::string meshFileName;
+    bool hasCamera = false;
 
-    KineticBodyProps(const std::string& name, glm::vec3 pos, const std::string& meshFile = "")
-    : Name(name), Position(pos)
+    KineticBodyProps(const std::string& name, glm::vec3 pos, const std::string& meshFile = "", bool hasCam = true)
+    : Name(name), Position(pos), hasCamera(hasCam)
     {
       if(!meshFile.empty()){
         meshFileName = meshFile;
@@ -49,7 +58,9 @@ namespace Engine {
 
     inline void SetEventCallback(const EventCallbackFn& callback) {m_Data.EventCallback = callback; };
 
-    void OnUpdate(Timestep ts) const;
+    void OnUpdate(Timestep ts);
+    void OnEvent(Event& event);
+    void UpdatePosition(Timestep ts);
 
   private:
     void Init(const KineticBodyProps& props);
@@ -59,6 +70,8 @@ namespace Engine {
     float m_Gravity;
     float m_Speed;
     glm::vec3 m_Position;
+    bool hasCamera = false;
+    Ref<OrthographicCameraController> m_CameraLayer;
 
     struct KinematicBodyData {
       std::string Name;
@@ -66,5 +79,6 @@ namespace Engine {
       EventCallbackFn EventCallback;
     };
     KinematicBodyData m_Data;
+
   };
 }
