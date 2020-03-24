@@ -1,6 +1,6 @@
 #pragma once
 
-#include "engine/Window.h"
+#include "engine/core/Window.h"
 #include "engine/renderer/GraphicsContext.h"
 
 namespace Engine {

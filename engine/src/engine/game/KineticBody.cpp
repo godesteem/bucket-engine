@@ -27,7 +27,7 @@ namespace Engine {
 
   void KineticBody::OnUpdate(Timestep ts) {
     BE_CORE_TRACE("KineticBody::OnUpdate");
-    if(hasCamera){
+    if(this->hasCamera){
       m_CameraLayer->OnUpdate(ts);
       m_Position = m_CameraLayer->GetCamera().GetPosition();
     } else {

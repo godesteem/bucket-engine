@@ -13,31 +13,37 @@ endif(BE_PLATFORM_WINDOWS)
 set(ENV{ROOT_DIR} ${CMAKE_SOURCE_DIR})
 
 set(CORE_DIR ${CMAKE_SOURCE_DIR}/engine/src/engine/core/)
+set(RENDERER_DIR ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/)
+set(PLATFORM_DIR ${CMAKE_SOURCE_DIR}/engine/src/platform/)
 set(MATH_DIR "${CMAKE_SOURCE_DIR}/engine/lib/math")
 
 set(NOISE_DIR "${CMAKE_SOURCE_DIR}/engine/lib/noise")
 set(ENGINE_SOURCE_FILES
   # sources
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Application.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/Log.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/Layer.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/LayerStack.cpp
+  ${CORE_DIR}Layer.cpp
+  ${CORE_DIR}LayerStack.cpp
 
   #GUI
   ${CMAKE_SOURCE_DIR}/engine/src/engine/imgui/ImGuiLayer.cpp
   ${CMAKE_SOURCE_DIR}/engine/src/engine/imgui/ImGUIBuild.cpp
 
   # renderer
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Shader.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Buffer.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Renderer.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/RenderCommand.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/RendererAPI.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/VertexArray.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCamera.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCameraController.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Texture.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Mesh.cpp
+  ${RENDERER_DIR}Shader.cpp
+  ${RENDERER_DIR}Buffer.cpp
+  ${RENDERER_DIR}Renderer.cpp
+  ${RENDERER_DIR}RenderCommand.cpp
+  ${RENDERER_DIR}RendererAPI.cpp
+  ${RENDERER_DIR}VertexArray.cpp
+
+  ${RENDERER_DIR}camera/OrthographicCamera.cpp
+  ${RENDERER_DIR}camera/OrthographicCameraController.cpp
+
+  ${RENDERER_DIR}mesh/Texture.cpp
+  ${RENDERER_DIR}mesh/Mesh.cpp
+
+  # i/o
+  ${CORE_DIR}io/Log.cpp
 
   # game
   ${CMAKE_SOURCE_DIR}/engine/src/engine/game/Level.cpp
@@ -45,17 +51,17 @@ set(ENGINE_SOURCE_FILES
 
 
   #platform
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/LinuxInput.cpp
+  ${PLATFORM_DIR}linux/X11Window.cpp
+  ${PLATFORM_DIR}linux/LinuxInput.cpp
 
   # renderer
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLContext.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLBuffer.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLRendererAPI.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLVertexArray.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLShader.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLTexture.cpp
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLMesh.cpp
+  ${PLATFORM_DIR}opengl/OpenGLContext.cpp
+  ${PLATFORM_DIR}opengl/OpenGLBuffer.cpp
+  ${PLATFORM_DIR}opengl/OpenGLRendererAPI.cpp
+  ${PLATFORM_DIR}opengl/OpenGLVertexArray.cpp
+  ${PLATFORM_DIR}opengl/OpenGLShader.cpp
+  ${PLATFORM_DIR}opengl/OpenGLTexture.cpp
+  ${PLATFORM_DIR}opengl/OpenGLMesh.cpp
 
   #3rd party
   ${imgui_root}/imgui.cpp
@@ -70,14 +76,11 @@ set(ENGINE_HEADER_FILES
   # sources
   ${CMAKE_SOURCE_DIR}/engine/src/engine.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Application.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/Core.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/EntryPoint.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/Log.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/Layer.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/LayerStack.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/Window.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/KeyCodes.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/MouseButtonCodes.h
+  ${CORE_DIR}Core.h
+  ${CORE_DIR}EntryPoint.h
+  ${CORE_DIR}Layer.h
+  ${CORE_DIR}LayerStack.h
+  ${CORE_DIR}Window.h
   ${CORE_DIR}Timestep.h
 
   #GUI
@@ -90,20 +93,25 @@ set(ENGINE_HEADER_FILES
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/MouseEvent.h
   ${CMAKE_SOURCE_DIR}/engine/src/engine/events/CollisionEvent.h
 
-  # input
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/Input.h
+  # input/output
+  ${CORE_DIR}io/Log.h
+  ${CORE_DIR}io/KeyCodes.h
+  ${CORE_DIR}io/MouseButtonCodes.h
+  ${CORE_DIR}io/Input.h
 
   # renderer
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/GraphicsContext.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Buffer.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Shader.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Renderer.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/RenderCommand.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/VertexArray.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCamera.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/OrthographicCameraController.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Texture.h
-  ${CMAKE_SOURCE_DIR}/engine/src/engine/renderer/Mesh.h
+  ${RENDERER_DIR}GraphicsContext.h
+  ${RENDERER_DIR}Buffer.h
+  ${RENDERER_DIR}Shader.h
+  ${RENDERER_DIR}Renderer.h
+  ${RENDERER_DIR}RenderCommand.h
+  ${RENDERER_DIR}VertexArray.h
+
+  ${RENDERER_DIR}camera/OrthographicCamera.h
+  ${RENDERER_DIR}camera/OrthographicCameraController.h
+
+  ${RENDERER_DIR}mesh/Texture.h
+  ${RENDERER_DIR}mesh/Mesh.h
 
   # game
   ${CMAKE_SOURCE_DIR}/engine/src/engine/game/Level.h
@@ -112,17 +120,17 @@ set(ENGINE_HEADER_FILES
 
   ## Platform
   # windows
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/X11Window.h
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/linux/LinuxInput.h
+  ${PLATFORM_DIR}linux/X11Window.h
+  ${PLATFORM_DIR}linux/LinuxInput.h
 
   # renderer
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLContext.h
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLRendererAPI.h
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLBuffer.h
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLVertexArray.h
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLShader.h
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLTexture.h
-  ${CMAKE_SOURCE_DIR}/engine/src/platform/opengl/OpenGLMesh.h
+  ${PLATFORM_DIR}opengl/OpenGLContext.h
+  ${PLATFORM_DIR}opengl/OpenGLRendererAPI.h
+  ${PLATFORM_DIR}opengl/OpenGLBuffer.h
+  ${PLATFORM_DIR}opengl/OpenGLVertexArray.h
+  ${PLATFORM_DIR}opengl/OpenGLShader.h
+  ${PLATFORM_DIR}opengl/OpenGLTexture.h
+  ${PLATFORM_DIR}opengl/OpenGLMesh.h
 
   #3rd party
   ${imgui_root}/imconfig.h

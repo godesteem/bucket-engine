@@ -2,8 +2,8 @@
 #include "Application.h"
 #include "engine/renderer/Renderer.h"
 
-#include "Log.h"
-#include "Input.h"
+#include "engine/core/io/Log.h"
+#include "engine/core/io/Input.h"
 #include <chrono>
 namespace Engine {
 

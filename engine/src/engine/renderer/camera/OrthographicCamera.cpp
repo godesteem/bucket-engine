@@ -3,8 +3,8 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <GLFW/glfw3.h>
-#include <engine/KeyCodes.h>
-#include <engine/Input.h>
+#include <engine/core/io/KeyCodes.h>
+#include <engine/core/io/Input.h>
 
 namespace Engine {
 

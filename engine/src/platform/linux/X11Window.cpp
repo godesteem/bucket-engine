@@ -30,6 +30,7 @@ namespace Engine {
   }
 
   void X11Window::SetFullScreen() {
+    //TODO:
   }
 
   void X11Window::Init(const WindowProps& props){

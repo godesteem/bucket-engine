@@ -10,7 +10,7 @@
  */
 #pragma once
 
-#include "../Core.h"
+#include "engine/core/Core.h"
 #include "bepch.h"
 
 namespace Engine {

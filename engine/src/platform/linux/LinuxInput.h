@@ -3,9 +3,9 @@
 //
 #pragma once
 
-#include "engine/Core.h"
+#include "engine/core/Core.h"
 
-#include "engine/Input.h"
+#include "engine/core/io/Input.h"
 namespace Engine {
 
   class LinuxInput: public  Input

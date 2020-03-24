@@ -1,6 +1,6 @@
 #pragma once
 
-#include "engine/renderer/Texture.h"
+#include "engine/renderer/mesh/Texture.h"
 
 namespace Engine {
 

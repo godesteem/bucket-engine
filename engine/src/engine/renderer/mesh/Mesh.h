@@ -1,14 +1,14 @@
 #pragma once
-#include "engine/Core.h"
+#include "engine/core/Core.h"
 #include <glm/glm.hpp>
 #include <utility>
 #include <vector>
 #include <regex>
-#include "Buffer.h"
-#include "VertexArray.h"
+#include "engine/renderer/Buffer.h"
+#include "engine/renderer/VertexArray.h"
 #include "engine/core/Timestep.h"
-#include "Shader.h"
-#include "OrthographicCamera.h"
+#include "engine/renderer/Shader.h"
+#include "engine/renderer/camera/OrthographicCamera.h"
 
 #ifdef BE_PLATFORM_WINDOWS
   typedef unsigned short int ushort;

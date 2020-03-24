@@ -1,6 +1,6 @@
 #pragma once
 #include "RenderCommand.h"
-#include "OrthographicCamera.h"
+#include "engine/renderer/camera/OrthographicCamera.h"
 #include "Shader.h"
 
 namespace Engine {

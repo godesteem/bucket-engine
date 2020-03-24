@@ -1,7 +1,7 @@
  #pragma once
 #include "engine/Application.h"
-#include "engine/Log.h"
-#include "engine/Layer.h"
+#include "engine/core/io/Log.h"
+#include "engine/core/Layer.h"
 #include "engine/core/Timestep.h"
 
 #include "engine/imgui/ImGuiLayer.h"
@@ -10,9 +10,9 @@
 // -------------
 // -------------
 
-#include "engine/Input.h"
-#include "engine/MouseButtonCodes.h"
-#include "engine/KeyCodes.h"
+#include "engine/core/io/Input.h"
+#include "engine/core/io/MouseButtonCodes.h"
+#include "engine/core/io/KeyCodes.h"
 
 
 // --- Rendering ---
@@ -24,12 +24,12 @@
 
 #include "engine/renderer/Buffer.h"
 #include "engine/renderer/Shader.h"
-#include "engine/renderer/Texture.h"
-#include "engine/renderer/Mesh.h"
+#include "engine/renderer/mesh/Texture.h"
+#include "engine/renderer/mesh/Mesh.h"
 #include "engine/renderer/VertexArray.h"
 
-#include "engine/renderer/OrthographicCamera.h"
-#include "engine/renderer/OrthographicCameraController.h"
+#include "engine/renderer/camera/OrthographicCamera.h"
+#include "engine/renderer/camera/OrthographicCameraController.h"
 
 
 // --- 3D ----------
@@ -43,4 +43,4 @@
 // -------------------
 // -------------------
 
-#include "engine/EntryPoint.h"
+#include "engine/core/EntryPoint.h"
