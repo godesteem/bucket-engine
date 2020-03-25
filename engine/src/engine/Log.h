@@ -29,55 +29,84 @@ namespace Engine {
 }
 
 #ifdef BE_DEBUG
-  // CORE LOG MACROS
-  #define BE_CORE_ERROR(...) ::Engine::Log::GetCoreLogger()->error(__VA_ARGS__)
-  #define BE_CORE_WARN(...) ::Engine::Log::GetCoreLogger()->warn(__VA_ARGS__)
-  #define BE_CORE_TRACE(...) ::Engine::Log::GetCoreLogger()->trace(__VA_ARGS__)
-  #define BE_CORE_INFO(...) ::Engine::Log::GetCoreLogger()->info(__VA_ARGS__)
-  #define BE_CORE_FATAL(...) ::Engine::Log::GetCoreLogger()->fatal(__VA_ARGS__)
+  // CORE LOG FUNCTIONS
+  template <typename T, typename ... P>
+  void BE_CORE_ERROR(const T& t, const P& ... p)
+  { Engine::Log::GetCoreLogger()->error(t, p...); }
+  template <typename T, typename ... P>
+  void BE_CORE_WARN(const T& t, const P& ... p)
+  { Engine::Log::GetCoreLogger()->warn(t, p...); }
+  template <typename T, typename ... P>
+  void BE_CORE_TRACE(const T& t, const P& ... p)
+  { Engine::Log::GetCoreLogger()->trace(t, p...); }
+  template <typename T, typename ... P>
+  void BE_CORE_INFO(const T& t, const P& ... p)
+  { Engine::Log::GetCoreLogger()->info(t, p...); }
+  template <typename T, typename ... P>
+  void BE_CORE_FATAL(const T& t, const P& ... p)
+  { Engine::Log::GetCoreLogger()->fatal(t, p...); }
 
-  // CLIENT LOG MACROS
-  #define BE_ERROR(...) ::Engine::Log::GetClientLogger()->error(__VA_ARGS__)
-  #define BE_WARN(...) ::Engine::Log::GetClientLogger()->warn(__VA_ARGS__)
-  #define BE_TRACE(...) ::Engine::Log::GetClientLogger()->trace(__VA_ARGS__)
-  #define BE_INFO(...) ::Engine::Log::GetClientLogger()->info(__VA_ARGS__)
-  #define BE_FATAL(...) ::Engine::Log::GetClientLogger()->fatal(__VA_ARGS__)
+  // CLIENT LOG FUNCTIONS
+  template <typename T, typename ... P>
+  void BE_ERROR(const T& t, const P& ... p)
+  { Engine::Log::GetClientLogger()->error(t, p...); }
+  template <typename T, typename ... P>
+  void BE_WARN(const T& t, const P& ... p)
+  { Engine::Log::GetClientLogger()->warn(t, p...); }
+  template <typename T, typename ... P>
+  void BE_TRACE(const T& t, const P& ... p)
+  { Engine::Log::GetClientLogger()->trace(t, p...); }
+  template <typename T, typename ... P>
+  void BE_INFO(const T& t, const P& ... p)
+  { Engine::Log::GetClientLogger()->info(t, p...); }
+  template <typename T, typename ... P>
+  void BE_FATAL(const T& t, const P& ... p)
+  { Engine::Log::GetClientLogger()->fatal(t, p...); }
 #else
-  // CORE LOG MACROS
-  #define BE_CORE_ERROR
-  #define BE_CORE_WARN
-  #define BE_CORE_TRACE
-  #define BE_CORE_INFO
-  #define BE_CORE_FATAL
+  // CORE LOG FUNCTIONS
+  template <typename T, typename ... P>
+  void BE_CORE_ERROR(const T& t, const P& ... p) { }
+  template <typename T, typename ... P>
+  void BE_CORE_WARN(const T& t, const P& ... p) { }
+  template <typename T, typename ... P>
+  void BE_CORE_TRACE(const T& t, const P& ... p) { }
+  template <typename T, typename ... P>
+  void BE_CORE_INFO(const T& t, const P& ... p) { }
+  template <typename T, typename ... P>
+  void BE_CORE_FATAL(const T& t, const P& ... p) { }
 
-  // CLIENT LOG MACROS
-  #define BE_ERROR
-  #define BE_WARN
-  #define BE_TRACE
-  #define BE_INFO
-  #define BE_FATAL
-
-
+  // CLIENT LOG FUNCTIONS
+  template <typename T, typename ... P>
+  void BE_ERROR(const T& t, const P& ... p) { }
+  template <typename T, typename ... P>
+  void BE_WARN(const T& t, const P& ... p) { }
+  template <typename T, typename ... P>
+  void BE_TRACE(const T& t, const P& ... p) { }
+  template <typename T, typename ... P>
+  void BE_INFO(const T& t, const P& ... p) { }
+  template <typename T, typename ... P>
+  void BE_FATAL(const T& t, const P& ... p) { }
 #endif
+
 #ifndef BE_ENABLE_ASSERTS
-#ifdef BE_PLATFORM_WINDOWS
-#include <WinBase.h>
-#define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
-#define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
+  #ifdef BE_PLATFORM_WINDOWS
+    #include <WinBase.h>
+    #define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
+    #define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
 #elif BE_PLATFORM_LINUX
-#define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
-#define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
-#endif
-#define BE_CHECK_FILE(x, y, ... ) {auto l = x.find_last_of("/\\"); \
-                                    l = l == std::string::npos ? 0 : l + 1; \
-                                    auto lDot = x.rfind('.'); \
-                                    std::ostringstream stringStream; \
-                                    stringStream << "Wrong file extension \"" << \
-                                    x.substr(lDot, x.size()) << "\". Need " << y << "!"; \
-                                    std::string copyOfStr = stringStream.str(); \
-                                    BE_CORE_ASSERT(x.substr(lDot, x.size()) == y, copyOfStr); }
+    #define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
+    #define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
+  #endif
+  #define BE_CHECK_FILE(x, y, ... ) {auto l = x.find_last_of("/\\"); \
+                                      l = l == std::string::npos ? 0 : l + 1; \
+                                      auto lDot = x.rfind('.'); \
+                                      std::ostringstream stringStream; \
+                                      stringStream << "Wrong file extension \"" << \
+                                      x.substr(lDot, x.size()) << "\". Need " << y << "!"; \
+                                      std::string copyOfStr = stringStream.str(); \
+                                      BE_CORE_ASSERT(x.substr(lDot, x.size()) == y, copyOfStr); }
 #else
-#define BE_ASSERT(x, ... )
-#define BE_CORE_ASSERT(x, ... )
+  #define BE_ASSERT(x, ... )
+  #define BE_CORE_ASSERT(x, ... )
 #endif
 
