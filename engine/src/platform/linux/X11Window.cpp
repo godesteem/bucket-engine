@@ -37,7 +37,7 @@ namespace Engine {
   }
 
   void X11Window::SetFullScreen() {
-
+    //TODO:
   }
 
   void X11Window::Init(const WindowProps& props){
@@ -58,6 +58,7 @@ namespace Engine {
     m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
     m_Context = new OpenGLContext(m_Window);
     m_Context->Init();
+    glViewport(0, 0, props.Width, props.Height);
     glfwSetWindowUserPointer(m_Window, &m_Data);
     SetVSync(true);
 
@@ -152,5 +153,10 @@ namespace Engine {
   }
   bool X11Window::IsVSync() const {
     return m_Data.VSync;
+  }
+
+  void X11Window::Resize(WindowProps props) {
+    BE_CORE_INFO("Window::Resize {0} x {1}", props.Width, props.Height);
+    glViewport(0, 0, props.Width, props.Height);
   }
 }

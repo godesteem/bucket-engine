@@ -1,27 +1,18 @@
-/**
- * File              : OrthographicCamera.h
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 23.02.2020
- * Last Modified Date: 09.03.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
+//
+// Created by phil on 24.03.20.
+//
 #pragma once
-#include "engine/Log.h"
+#include "engine/core/io/Log.h"
 #include "engine/core/Timestep.h"
-#include <glm/glm.hpp>
 #include <iterator>
-#include "engine/KeyCodes.h"
-#include "engine/MouseButtonCodes.h"
-#include "RenderCommand.h"
+#include "engine/core/io/KeyCodes.h"
+#include "engine/core/io/MouseButtonCodes.h"
+#include "engine/renderer/RenderCommand.h"
 
 namespace Engine {
-  const float YAW = -90.0f;
-  const float PITCH = 0.0f;
-  const float SPEED = 2.5f;
-  const float SENSITIFITY = 0.05f;
-  const float ZOOM = 45.0f;
-  
-
+  enum class CameraType{
+    None = 0, Orthographic = 1, ThirdPerson = 2, Default = 2
+  };
   class Camera
   {
     struct CameraStack
@@ -52,7 +43,9 @@ namespace Engine {
     virtual void OnUpdate(Timestep &ts) = 0;
     glm::vec3& GetPosition() {return m_Position; };
     glm::vec2 GetRotation() const { return m_Rotation; };
-    
+    virtual glm::vec3& GetDirection() = 0;
+    float& GetSpeed() { return m_Speed; }
+
     const glm::mat4& GetProjectionMatrix() { return m_ProjectionMatrix; };
     const glm::mat4& GetViewMatrix() { return m_ViewMatrix; };
     const glm::mat4& GetViewProjectionMatrix() { return m_ViewProjectionMatrix; };
@@ -73,37 +66,5 @@ namespace Engine {
     float m_Speed = 10.0f;
     bool m_IsActive = true;
   };
-  
-  class OrthographicCamera: public Camera
-  {
-  public:
-    virtual void OnUpdate(Timestep &ts) override;
 
-  private:
-    virtual void RecalculateViewMatrix() override;
-  };
-  
-  class ThirdPersonCamera: public Camera
-  {
-  public:
-    ThirdPersonCamera(float left, float right, float bottom, float top);
-
-    virtual void OnUpdate(Timestep &ts) override;
-
-    void ProcessMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
-
-  private:
-    virtual void RecalculateViewMatrix() override;
-    
-    glm::vec3 m_Target;
-    glm::vec3 m_Front;
-    glm::vec3 m_Direction;
-    glm::vec3 Position, Front, Up, Right, WorldUp;
-  public:
-    float Yaw, Pitch, MouseSpeed, MouseSensitivity, Zoom;
-
-    float &GetYaw();
-
-    float &GetPitch();
-  };
 }

@@ -23,3 +23,10 @@ Next step: Vulkan
 1) run `cd engine/vendor/spdlog && cmake . && make` 
 1) develop
 1) run `build.sh`
+
+
+## usage
+
+### Minimal setup see `/minimal/src/Minimal.cpp`
+- create child from `Application`
+- define `Engine::Application* Engine::CreateApplication()`

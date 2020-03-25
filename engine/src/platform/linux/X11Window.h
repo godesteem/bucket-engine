@@ -7,7 +7,7 @@
  */
 #pragma once
 
-#include "engine/Window.h"
+#include "engine/core/Window.h"
 #include "engine/renderer/GraphicsContext.h"
 
 namespace Engine {
@@ -25,6 +25,7 @@ namespace Engine {
 
       inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; };
       virtual void SetFullScreen() override;
+      virtual void Resize(WindowProps props) override;
       void SetVSync(bool enabled) override;
       bool IsVSync() const override;
 

@@ -7,8 +7,8 @@
  */
 #pragma once
 
-#include "engine/Layer.h"
-#include "engine/renderer/Mesh.h"
+#include "engine/core/Layer.h"
+#include "engine/renderer/mesh/Mesh.h"
 
 namespace Engine {
   class Level: public Layer

@@ -7,15 +7,16 @@
  */
 #pragma once
 
-#include "engine/Layer.h"
+#include "engine/core/Layer.h"
+#include "ThirdPersonCamera.h"
 #include "OrthographicCamera.h"
 
 namespace Engine {
-  class OrthographicCameraController
+  class CameraController
   {
   public:
-    OrthographicCameraController(const std::string& name = "Camera");
-    ~OrthographicCameraController() = default;
+    CameraController(const std::string& name = "Camera", CameraType type = CameraType::Default);
+    ~CameraController() = default;
 
     void OnAttach();
     void OnDetach();
@@ -23,9 +24,10 @@ namespace Engine {
     void OnEvent(Event& event);
     void OnImGuiRender();
 
-    inline Camera& GetCamera() { return m_Camera; };
+    inline Camera& GetCamera() { return *m_Camera; };
+
   private:
-    ThirdPersonCamera m_Camera;
+    Ref<Camera> m_Camera;
 
     std::string m_Name;
   };

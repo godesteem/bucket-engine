@@ -10,7 +10,7 @@
 #include "bepch.h"
 
 #include "Core.h"
-#include "events/Event.h"
+#include "engine/events/Event.h"
 
 namespace Engine {
   
@@ -40,6 +40,7 @@ namespace Engine {
       virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 
       virtual void SetFullScreen() = 0;
+      virtual void Resize(WindowProps props) = 0;
 
       virtual void SetVSync(bool enabled) = 0;
       virtual bool IsVSync() const = 0;

@@ -6,16 +6,16 @@
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #pragma once
-#include "engine/Core.h"
+#include "engine/core/Core.h"
 #include <glm/glm.hpp>
 #include <utility>
 #include <vector>
 #include <regex>
-#include "Buffer.h"
-#include "VertexArray.h"
+#include "engine/renderer/Buffer.h"
+#include "engine/renderer/VertexArray.h"
 #include "engine/core/Timestep.h"
-#include "Shader.h"
-#include "OrthographicCamera.h"
+#include "engine/renderer/Shader.h"
+#include "engine/renderer/camera/OrthographicCamera.h"
 
 #ifdef BE_PLATFORM_WINDOWS
   typedef unsigned short int ushort;
@@ -29,8 +29,8 @@ namespace Engine {
     std::string name;
     const VertexBuffer& buffer;
 
-    ModelAttribute(std::string  n, const VertexBuffer& b)
-    : name(std::move(n)), buffer(b)
+    ModelAttribute(const std::string &n, const VertexBuffer& b)
+    : name(n), buffer(b)
     {}
   };
   class Mesh
@@ -51,9 +51,13 @@ namespace Engine {
     static Ref<Mesh> Create(Ref<VertexBuffer>& vertexBuffer, Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile);
     virtual void SetVertexArraySize(uint32_t size) = 0;
     virtual void SetName(const std::string& name) = 0;
+    virtual void SetPosition(glm::vec3& pos) = 0;
+    virtual void SetScale(float scale) = 0;
+
     //static Ref<Mesh> Create(const std::string& filePath);
   protected:
     std::vector<ModelAttribute> m_Attributes;
+    glm::vec3 m_Position;
   };
   struct ObjFile {
   public:

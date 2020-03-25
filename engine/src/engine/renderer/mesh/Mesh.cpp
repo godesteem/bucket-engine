@@ -6,7 +6,7 @@
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "Mesh.h"
-#include "Renderer.h"
+#include "engine/renderer/Renderer.h"
 #include "platform/opengl/OpenGLMesh.h"
 #include <fstream>
 

@@ -1,17 +1,13 @@
-/**
- * File              : OrthographicCamera.cpp
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 23.02.2020
- * Last Modified Date: 09.03.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
-#include "bepch.h"
-#include "OrthographicCamera.h"
+//
+// Created by phil on 24.03.20.
+//
 
+#include "ThirdPersonCamera.h"
+#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <GLFW/glfw3.h>
-#include <engine/KeyCodes.h>
-#include <engine/Input.h>
+#include <engine/core/io/KeyCodes.h>
+#include <engine/core/io/Input.h>
 
 namespace Engine {
 
@@ -24,33 +20,17 @@ namespace Engine {
   static std::pair<float, float> prev_position = {0.0f, 0.0f};
   bool init = true;
 
-  Camera::CameraStack* Camera::camStack = new Camera::CameraStack();
-  Camera::Camera(glm::mat4 projection, glm::mat4 view)
-      : m_ProjectionMatrix(projection), m_ViewMatrix(view),
-        m_ViewProjectionMatrix(m_ProjectionMatrix * m_ViewMatrix) 
-  {
-    camStack->AddCamera(this);
-  };
-
-  void OrthographicCamera::RecalculateViewMatrix(){
-    glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) *
-                          glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.x), glm::vec3(1, 0, 0)) *
-                          glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.y), glm::vec3(0, 1, 0));
-
-    m_ViewMatrix = glm::inverse(transform);
-    m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
-  };
   ThirdPersonCamera::ThirdPersonCamera(float left, float right, float bottom, float top)
-  : Camera(glm::perspective(glm::radians(45.0f), (right-left)/(bottom-top), 0.1f, 100.0f), glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f))),
-    MouseSensitivity(SENSITIFITY),
-    MouseSpeed(SPEED),
-    Zoom(ZOOM),
-    WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
-    m_Target(glm::vec3(0.0f)),
-    m_Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-    Up(glm::vec3(0.0f, 1.0f, 0.0f)),
-    Yaw(0.0f),
-    Pitch(0.0f)
+      : Camera(glm::perspective(glm::radians(45.0f), (right-left)/(bottom-top), 0.1f, 100.0f), glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f))),
+        MouseSensitivity(SENSITIFITY),
+        MouseSpeed(SPEED),
+        Zoom(ZOOM),
+        WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
+        m_Target(glm::vec3(1.0f)),
+        m_Front(glm::vec3(0.0f, 0.0f, -1.0f)),
+        Up(glm::vec3(0.0f, 1.0f, 0.0f)),
+        Yaw(0.0f),
+        Pitch(0.0f)
   {
     m_Direction = glm::normalize(m_Position - m_Target);
     RecalculateViewMatrix();
@@ -129,10 +109,10 @@ namespace Engine {
     Pitch += yoffset;
 
     if (constrainPitch) {
-      if (Pitch > 90.0f)
-        Pitch = 90.0f;
-      if (Pitch < -90.0f)
-        Pitch = -90.0f;
+      if (Pitch > 89.99f)
+        Pitch = 89.99f;
+      if (Pitch < -89.99f)
+        Pitch = -89.99f;
     }
     RecalculateViewMatrix();
   }
@@ -143,5 +123,5 @@ namespace Engine {
 
   float &ThirdPersonCamera::GetPitch() {
     return Pitch;
-  };
+  }
 }
