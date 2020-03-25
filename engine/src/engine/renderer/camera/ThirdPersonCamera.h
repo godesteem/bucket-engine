@@ -24,6 +24,7 @@ namespace Engine {
 
     float &GetYaw();
     float &GetPitch();
+    virtual glm::vec3& GetDirection() override { return m_Direction; };
 
   private:
     virtual void RecalculateViewMatrix() override;

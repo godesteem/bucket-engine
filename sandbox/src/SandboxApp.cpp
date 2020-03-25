@@ -7,9 +7,9 @@ class ExampleLayer: public Engine::Layer
 
   public:
     ExampleLayer()
-      :Layer("Example"),
-      m_Player()
+      :Layer("Example")
     {
+      m_Player.reset(new Engine::KineticBody());
     }
 
     void OnUpdate(Engine::Timestep ts) override {

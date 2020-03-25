@@ -26,7 +26,7 @@ namespace Engine {
         MouseSpeed(SPEED),
         Zoom(ZOOM),
         WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
-        m_Target(glm::vec3(0.0f)),
+        m_Target(glm::vec3(1.0f)),
         m_Front(glm::vec3(0.0f, 0.0f, -1.0f)),
         Up(glm::vec3(0.0f, 1.0f, 0.0f)),
         Yaw(0.0f),
@@ -109,10 +109,10 @@ namespace Engine {
     Pitch += yoffset;
 
     if (constrainPitch) {
-      if (Pitch > 90.0f)
-        Pitch = 90.0f;
-      if (Pitch < -90.0f)
-        Pitch = -90.0f;
+      if (Pitch > 89.99f)
+        Pitch = 89.99f;
+      if (Pitch < -89.99f)
+        Pitch = -89.99f;
     }
     RecalculateViewMatrix();
   }
@@ -123,5 +123,5 @@ namespace Engine {
 
   float &ThirdPersonCamera::GetPitch() {
     return Pitch;
-  };
+  }
 }

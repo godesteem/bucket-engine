@@ -43,6 +43,7 @@ namespace Engine {
     virtual void OnUpdate(Timestep &ts) = 0;
     glm::vec3& GetPosition() {return m_Position; };
     glm::vec2 GetRotation() const { return m_Rotation; };
+    virtual glm::vec3& GetDirection() = 0;
     float& GetSpeed() { return m_Speed; }
 
     const glm::mat4& GetProjectionMatrix() { return m_ProjectionMatrix; };

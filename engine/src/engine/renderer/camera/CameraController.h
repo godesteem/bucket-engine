@@ -17,9 +17,10 @@ namespace Engine {
     void OnEvent(Event& event);
     void OnImGuiRender();
 
-    inline Camera& GetCamera() { return m_Camera; };
+    inline Camera& GetCamera() { return *m_Camera; };
+
   private:
-    Camera m_Camera;
+    Ref<Camera> m_Camera;
 
     std::string m_Name;
   };

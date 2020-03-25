@@ -44,9 +44,13 @@ namespace Engine {
     static Ref<Mesh> Create(Ref<VertexBuffer>& vertexBuffer, Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile);
     virtual void SetVertexArraySize(uint32_t size) = 0;
     virtual void SetName(const std::string& name) = 0;
+    virtual void SetPosition(glm::vec3& pos) = 0;
+    virtual void SetScale(float scale) = 0;
+
     //static Ref<Mesh> Create(const std::string& filePath);
   protected:
     std::vector<ModelAttribute> m_Attributes;
+    glm::vec3 m_Position;
   };
   struct ObjFile {
   public:

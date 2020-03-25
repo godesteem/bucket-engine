@@ -17,21 +17,30 @@ namespace Engine {
     m_Position = props.Position;
     hasCamera = props.hasCamera;
 
-    if(props.hasMesh){
-      m_Mesh = Mesh::Create(props.meshFileName, "sandbox/assets/shaders/Example.glsl");
-    }
     if(hasCamera){
       m_CameraLayer.reset(new CameraController());
+    }
+    if(props.hasMesh){
+      m_Mesh = Mesh::Create(props.meshFileName, "sandbox/assets/shaders/Player.glsl");
+      glm::vec3 position(m_Position + 20.0f * m_CameraLayer->GetCamera().GetDirection());
+      m_Mesh->SetPosition(position);
+      m_Mesh->SetScale(0.001f);
     }
   }
 
   void KineticBody::OnUpdate(Timestep ts) {
-    BE_CORE_TRACE("KineticBody::OnUpdate");
+    // TODO: let camera follow mesh, mesh will be controlled from here.
+    // TODO: Add scrolling for ZOOM
     if(this->hasCamera){
       m_CameraLayer->OnUpdate(ts);
       m_Position = m_CameraLayer->GetCamera().GetPosition();
     } else {
       UpdatePosition(ts);
+    }
+    if(this->m_Mesh){
+      glm::vec3 position(m_Position + 20.0f * m_CameraLayer->GetCamera().GetDirection());
+      m_Mesh->SetPosition(position);
+      m_Mesh->OnUpdate(ts);
     }
   }
 
