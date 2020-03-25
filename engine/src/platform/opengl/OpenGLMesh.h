@@ -24,6 +24,8 @@ namespace Engine {
     virtual void OnImGuiRender() override;
     virtual void SetVertexArraySize(uint32_t size) override;
     virtual void SetName(const std::string& name) override { m_Name = name; }
+    virtual void SetPosition(glm::vec3& pos) override {m_Position = pos;};
+    virtual void SetScale(float scale) override {m_Scale = scale;};
     virtual OpenGLMesh& operator=(const OpenGLMesh& msh);
 
   private:
@@ -37,5 +39,6 @@ namespace Engine {
     Ref<Texture2D> m_Texture;
     glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
     std::string m_ShaderFileContent;
+    float m_Scale = 1.0f;
   };
 }
