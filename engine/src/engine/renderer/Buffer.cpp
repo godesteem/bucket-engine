@@ -17,7 +17,8 @@ namespace Engine {
     }
     BE_CORE_ASSERT(false, "Unknown RendererAPI");
     return nullptr;
-  };
+  }
+
   VertexBuffer* VertexBuffer::Create(const std::vector<glm::vec2> &vertices, uint32_t size) {
 //    BE_CORE_ASSERT(size % 3 == 0, "Wrong vector size for vertices");
     float* _vertices = new float[size];
@@ -31,6 +32,7 @@ namespace Engine {
 	delete[] _vertices;
 	return a;
   }
+
   VertexBuffer* VertexBuffer::Create(const std::vector<glm::vec3> &vertices, uint32_t size){
 //    BE_CORE_ASSERT(size % 3 == 0, "Wrong vector size for vertices");
 	  float* _vertices = new float[size];
@@ -45,6 +47,7 @@ namespace Engine {
 	delete[] _vertices;
 	return a;
   }
+
   VertexBuffer* VertexBuffer::Create(const std::vector<glm::vec4> &vertices, uint32_t size){
     //BE_CORE_ASSERT(size % 4 == 0, "Wrong vector size for vertices");
 	  float* _vertices = new float[size];
@@ -59,7 +62,8 @@ namespace Engine {
 	auto a = Create(_vertices, size);
 	delete[] _vertices;
 	return a;
-  };
+  }
+
   IndexBuffer* IndexBuffer::Create(std::vector<unsigned short> indices, uint32_t size){
 	  uint32_t* _indices = new uint32_t[size];
     for(int i = 0; i<size; ++i){
@@ -69,6 +73,7 @@ namespace Engine {
 	delete[] _indices;
 	return a;
   }
+
   IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t size){
     switch(Renderer::GetAPI()){
       case RendererAPI::API::None: BE_CORE_ASSERT(false, "RendererAPI::None is currently not supported ");
@@ -76,5 +81,5 @@ namespace Engine {
     }
     BE_CORE_ASSERT(false, "Unknown RendererAPI");
     return nullptr;
-  };
-};
+  }
+}
