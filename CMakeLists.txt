@@ -63,6 +63,7 @@ endif(CMAKE_BUILD_TYPE EQUAL "Debug")
 
 include_directories(${CMAKE_SOURCE_DIR}/engine/src)
 include_directories(${CMAKE_SOURCE_DIR}/engine/vendor)
+include_directories(${CMAKE_SOURCE_DIR}/engine/lib)
 
 add_subdirectory(./engine)
 
@@ -81,7 +82,8 @@ add_executable(engine-test ${TEST_HEADERS} ${TEST_SOURCES})
 
 target_include_directories(engine-test PUBLIC
   ${CMAKE_SOURCE_DIR}/engine/src
-  ${CMAKE_SOURCE_DIR}/engine/vendor)
+  ${CMAKE_SOURCE_DIR}/engine/vendor
+  ${CMAKE_SOURCE_DIR}/engine/lib)
 
 target_link_libraries(engine-test PRIVATE engine)
 

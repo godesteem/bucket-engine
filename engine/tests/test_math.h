@@ -3,8 +3,7 @@
 //
 
 #include <iostream>
-#include <math/vector.h>
-#include <math/matrix.h>
+#include <math/math.h> // NOLINT(modernize-deprecated-headers)
 #include <sstream>
 #include "tests.h"
 

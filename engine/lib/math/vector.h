@@ -7,7 +7,7 @@
  */
 #pragma once
 
-#include "math.h"
+#include "math_headers.h"
 #include <cmath>
 #include <bepch.h>
 
