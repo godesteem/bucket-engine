@@ -126,7 +126,7 @@ set(ENGINE_HEADER_FILES
 
 )
 
-#set(MATH_DIR "${CMAKE_SOURCE_DIR}/engine/vendor/math")
+#set(MATH_DIR "${CMAKE_SOURCE_DIR}/engine/libs/math")
 #set(MATH_HEADERS
 #  ${MATH_DIR}/math.h
 #  ${MATH_DIR}/matrix.h
