@@ -3,6 +3,8 @@
 
 #include "test_math.h"
 #include "core/test_timestep.h"
+#include "test_noise.h"
+
 
 int main(int argc, char** argv){
   Engine::Log::Init();
@@ -31,4 +33,5 @@ int main(int argc, char** argv){
       return 3; // cmdline argument malformed
     }
   }
+  test_noise();
 }
