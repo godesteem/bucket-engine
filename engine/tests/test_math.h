@@ -21,9 +21,17 @@ void matTest()
   //  std::cout << a.operator[](i).x << '\t' << a.operator[](i).y << '\t' << a.operator[](i).z << '\t' << a.operator[](i).w << std::endl;
   //}
 
-  Engine::Math::mat2 m1;
-  Engine::Math::mat2 m2(1);
+  using namespace Engine::Math;
+
+  mat2 m1;
+  mat2 m2(1);
   std::cout << m1 << std::endl;
+
+  Matrix<2,3> mat2x3;
+  Matrix<3,2> mat3x2;
+
+  auto res = mat2x3 * mat3x2;
+
 }
 
 int test_vec2()

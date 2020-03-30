@@ -17,6 +17,7 @@
 #include <array>
 #include <iostream>
 #include <cmath>
+#include <type_traits>
 
 namespace Engine::Math
 {
@@ -80,6 +81,7 @@ namespace Engine::Math
     Matrix operator+(Matrix const& m) const
     {
       //TODO
+      return Matrix();
     }
 
     Matrix operator-(Matrix const& m) const
@@ -101,6 +103,7 @@ namespace Engine::Math
     Matrix operator*(T const& m) const
     {
       //TODO
+      return Matrix();
     }
 
     Matrix operator/(T const& m) const
@@ -112,12 +115,14 @@ namespace Engine::Math
     Matrix<Rows,C> operator*(Matrix<Columns, C> const& m) const
     {
       //TODO
+      return Matrix<Rows,C>();
     }
 
     //return a copy which is transposed
     Matrix<Columns, Rows> Transposed() const
     {
       //TODO
+      return Matrix<Columns,Rows>();
     }
 
     constexpr static Matrix
@@ -144,11 +149,14 @@ namespace Engine::Math
       return ostr;
     }
 
-    operator double(Matrix<1,1,double> m) const
+    //typename = std::is_same<T,double>,
+    template<typename = std::enable_if<Rows==1 && Columns==1>>
+    explicit operator double() const
     {
       //TODO
-      return 0;
+      return 0.0;
     }
+
 
   protected:
     std::array<std::array<T, Columns>, Rows> _data;
@@ -195,15 +203,17 @@ namespace Engine::Math
     }
 
     template<typename V>
-    vec_generic operator*(vec_generic<Rows, V> const& v) const
+    vec_generic<1> operator*(vec_generic<Rows, V> const& v) const
     {
       //TODO
+      return vec_generic<1>();
     }
 
     static constexpr vec_generic
     Orthogonal()
     {
       //TODO
+      return vec_generic();
     }
 
     size_t magnitude() const
@@ -223,8 +233,8 @@ namespace Engine::Math
     }
   };
 
-  template<size_t Rows, typename U = dA>
-  vec_generic<Rows, U> Dot(vec_generic<Rows, U> const& u, vec_generic<Rows, U> const& v)
+  template<size_t Rows, typename U>
+  vec_generic<1, U> Dot(vec_generic<Rows, U> const& u, vec_generic<Rows, U> const& v)
   {
     return u * v;
   }
@@ -233,7 +243,9 @@ namespace Engine::Math
   vec_generic<Rows, U> Length(vec_generic<Rows, U> const& u)
   {
     Matrix<1, Rows> v = u.Transposed();
-    return std::sqrt(*(Matrix<Rows, 1>*)(&u) * v);
+    Matrix<Rows, 1> um = *(Matrix<Rows, 1>*)(&u);
+    Matrix<1, 1> val = v * um;
+    return std::sqrt((double)val);
   }
 
   //template<typename T>
