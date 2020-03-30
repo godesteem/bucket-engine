@@ -11,15 +11,20 @@
 #include <cmath>
 #include <bepch.h>
 
-namespace Engine {
-  namespace Math {
-    struct vec2 {
+
+#if 0
+namespace Engine
+{
+  namespace Math
+  {
+    struct vec2
+    {
       inline explicit vec2() : x(0.0f), y(x) {};
       inline vec2(float __x, float __y) : x(__x), y(__y) {};
       inline explicit vec2(float __x) : x(__x), y(x) {};
 
       // Constructors
-      inline float max() { return std::max(x, y); }
+      inline float max() { return std::max<float>(x, y); }
 
       inline float min() { return std::min(x, y); }
 
@@ -30,7 +35,8 @@ namespace Engine {
       static inline vec2 Orthogonal() { return {0.0f, 1.0f};}
 
       // Ostream operator
-      inline friend std::ostream &operator<<(std::ostream &ost, const vec2 &vec) {
+      inline friend std::ostream &operator<<(std::ostream &ost, const vec2 &vec)
+      {
         ost << "(" << vec.x << ", " << vec.y << ")" << std::endl;
         return ost;
       }
@@ -76,3 +82,4 @@ namespace Engine {
 
   }
 }
+#endif

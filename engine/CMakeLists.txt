@@ -13,6 +13,7 @@ endif(BE_PLATFORM_WINDOWS)
 set(ENV{ROOT_DIR} ${CMAKE_SOURCE_DIR})
 
 set(CORE_DIR ${CMAKE_SOURCE_DIR}/engine/src/engine/core/)
+set(MATH_DIR "${CMAKE_SOURCE_DIR}/engine/lib/math")
 
 set(ENGINE_SOURCE_FILES
   # sources
@@ -124,9 +125,11 @@ set(ENGINE_HEADER_FILES
   ${imgui_root}/imstb_textedit.h
   ${imgui_root}/imstb_truetype.h
 
+  ${MATH_DIR}/math.h
+  ${MATH_DIR}/matrix.h
+  ${MATH_DIR}/vector.h
 )
 
-set(MATH_DIR "${CMAKE_SOURCE_DIR}/engine/lib/math")
 
 set(GLAD_DIR "${CMAKE_SOURCE_DIR}/engine/vendor/glad")
 
@@ -153,7 +156,7 @@ add_library(stb_image STATIC
 add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/spdlog)
 add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/glfw-3.3.2)
 add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/glm/glm)
-add_subdirectory(${MATH_DIR})
+#add_subdirectory(${MATH_DIR})
 #add_library(glm SHARED ${CMAKE_SOURCE_DIR}/engine/vendor/glm/glm)
 add_library(glad STATIC ${GLAD_DIR}/src/glad.c)
 #add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/imgui)
@@ -162,7 +165,7 @@ add_library(glad STATIC ${GLAD_DIR}/src/glad.c)
 # target_include_directories(glad PRIVATE "${GLAD_DIR}/include")
 
 find_package(OpenGL REQUIRED)
-target_link_libraries(engine PUBLIC OpenGL::GL glad glfw glm stb_image bucket_math spdlog)
+target_link_libraries(engine PUBLIC OpenGL::GL glad glfw glm stb_image spdlog)
 
 # add_library("glad" "${GLAD_DIR}/src/glad.c")
 # target_include_directories(engine PRIVATE "${GLAD_DIR}/include")

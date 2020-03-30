@@ -11,5 +11,6 @@
 int main(int argc, char **argv){
   Engine::Log::Init();
   test_math();
+  matTest();
   return 0;
 }

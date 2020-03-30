@@ -86,6 +86,8 @@ target_include_directories(engine-test PUBLIC
   ${CMAKE_SOURCE_DIR}/engine/lib)
 
 target_link_libraries(engine-test PRIVATE engine)
+enable_testing()
+add_test(NAME engine-test COMMAND engine-test)
 
 # find & configure openGL
 # set(OpenGL_GL_PREFERENCE "GLVND")
@@ -100,4 +102,3 @@ target_link_libraries(engine-test PRIVATE engine)
 
 # add_library(STB_IMAGE "lib/stb_image.h")
 # add_library(GLAD "lib/src/glad.c")
-
