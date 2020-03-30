@@ -11,7 +11,7 @@
 #include <cmath>
 #include <bepch.h>
 
-
+// this file can be deleted, serves as reference until then
 #if 0
 namespace Engine
 {

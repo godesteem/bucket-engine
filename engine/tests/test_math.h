@@ -28,9 +28,9 @@ void matTest()
   std::cout << m1 << std::endl;
 
   Matrix<2,3> mat2x3;
-  Matrix<3,2> mat3x2;
+  Matrix<3,4> mat3x4;
 
-  auto res = mat2x3 * mat3x2;
+  auto res = mat2x3 * mat3x4; // compiler wont let you do an order of multiplication which is invalid
 
 }
 
@@ -40,6 +40,7 @@ int test_vec2()
   Engine::Math::vec2 b(1.0f);
   Engine::Math::vec2 c = Engine::Math::vec2();
   // Constructors
+  std::cout << "b:" << b << std::endl;
   BE_TEST_ASSERT(b == Engine::Math::vec2(1.0f, 1.0f));
   BE_TEST_ASSERT(c == Engine::Math::vec2(0.0f, 0.0f));
   BE_TEST_ASSERT(a != b);
@@ -51,6 +52,9 @@ int test_vec2()
   // Addition
   Engine::Math::vec2 add_1 = a+b;
   Engine::Math::vec2 add_2 = b+a;
+  std::cout << "a " << a << std::endl;
+  std::cout << "b " << b << std::endl;
+  std::cout << "add_1 " << add_1 << std::endl;
   BE_TEST_ASSERT(add_1 == Engine::Math::vec2(2.0f, 3.0f));
   BE_TEST_ASSERT(add_2 == Engine::Math::vec2(2.0f, 3.0f));
   BE_TEST_ASSERT(add_2 == add_1);
@@ -86,8 +90,8 @@ int test_mat2(){
 }
 
 void test_math(){
-  if(test_vec2() != TEST_OK) BE_TEST_ERROR( "Vec2 not working!");
-  else BE_TEST_SUCCESS( "Vec2 is working.");
   if(test_mat2() != TEST_OK) BE_TEST_ERROR( "Mat2 not working!");
   else BE_TEST_SUCCESS( "Mat2 is working.");
+  if(test_vec2() != TEST_OK) BE_TEST_ERROR( "Vec2 not working!");
+  else BE_TEST_SUCCESS( "Vec2 is working.");
 }

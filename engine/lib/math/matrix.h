@@ -13,6 +13,9 @@
 //TODO mat4x4
 //TODO vec4
 
+//until implementation is finished
+#include "tests.h"
+
 
 #include <array>
 #include <iostream>
@@ -38,12 +41,29 @@ namespace Engine::Math
   template<size_t Rows, size_t Columns, typename T>
   class Matrix
   {
+    //jnl maybe this allows for acces between different types of matrices,
+    //    that could be avoided, but one can also be careful, since this only
+    //    applies to the implementation of Matrix, not when using it
+    template<size_t R, size_t C, typename t>
+    friend class Matrix;
+
+    template<typename u>
+    friend class mat2_generic;
+
+
   public:
     Matrix() = default;
 
     Matrix(T const& t)
-      : _data{t}
-    { }
+    {
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          _data[row][col] = t;
+        }
+      }
+    }
 
     ~Matrix() = default;
 
@@ -62,11 +82,11 @@ namespace Engine::Math
       if(this == &m)
         return true;
 
-      for (size_t i = 0; i < m.cols(); i++)
+      for (size_t col = 0; col < m.cols(); col++)
       {
-        for (size_t j = 0; j < m.rows(); j++)
+        for (size_t row = 0; row < m.rows(); row++)
         {
-          if( this->_data[i][j] != m._data[i][j] )
+          if( this->_data[row][col] != m._data[row][col] )
             return false;
         }
       }
@@ -80,55 +100,91 @@ namespace Engine::Math
 
     Matrix operator+(Matrix const& m) const
     {
-      //TODO
-      return Matrix();
+      Matrix res(*this);
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          res._data[row][col] += m._data[row][col];
+        }
+      }
+      return res;
     }
 
     Matrix operator-(Matrix const& m) const
     {
+      BE_TEST_ASSERT(false);
       //TODO
     }
 
     //TODO create outer class methods for the other commutative order of operands for these four operators
     Matrix operator+(T const& m) const
     {
+      BE_TEST_ASSERT(false);
       //TODO
     }
 
     Matrix operator-(T const& m) const
     {
+      BE_TEST_ASSERT(false);
       //TODO
     }
 
-    Matrix operator*(T const& m) const
+    Matrix operator*(T const& t) const
     {
-      //TODO
-      return Matrix();
+      Matrix res(*this);
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          res._data[row][col] *= t;
+        }
+      }
+      return res;
     }
 
     Matrix operator/(T const& m) const
     {
+      BE_TEST_ASSERT(false);
       //TODO
     }
 
     template<size_t C>
     Matrix<Rows,C> operator*(Matrix<Columns, C> const& m) const
     {
-      //TODO
-      return Matrix<Rows,C>();
+      Matrix<Rows,C> res;
+      for (size_t spalte = 0; spalte < C; spalte++)
+      {
+        for (size_t zeile = 0; zeile < Rows; zeile++)
+        {
+          res._data[zeile][spalte] = 0;
+          for (size_t along = 0; along < Columns; along++)
+          {
+            res._data[zeile][spalte] += this->_data[zeile][along] * m._data[along][spalte];
+          }
+        }
+      }
+      return res;
     }
 
     //return a copy which is transposed
     Matrix<Columns, Rows> Transposed() const
     {
-      //TODO
-      return Matrix<Columns,Rows>();
+      Matrix<Columns,Rows> res;
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          res._data[col][row] = this->_data[row][col];
+        }
+      }
+      return res;
     }
 
     constexpr static Matrix
     Identity()
     {
-      Matrix m;
+      Matrix m(0);
       for (size_t d = 0; d < std::min(Rows, Columns); d++)
       {
         m._data[d][d] = 1;
@@ -136,13 +192,18 @@ namespace Engine::Math
       return m;
     }
 
+    const std::array<T,Columns> operator[](size_t index) const
+    {
+      return this->_data[index];
+    }
+
     friend std::ostream& operator<<(std::ostream& ostr, Matrix const& m)
     {
-      for (size_t i = 0; i < m.cols(); i++)
+      for (size_t col = 0; col < m.cols(); col++)
       {
-        for (size_t j = 0; j < m.rows(); j++)
+        for (size_t row = 0; row < m.rows(); row++)
         {
-          ostr << m._data[i][j] << ' ';
+          ostr << m._data[row][col] << ' ';
         }
         ostr << '\n';
       }
@@ -153,6 +214,7 @@ namespace Engine::Math
     template<typename = std::enable_if<Rows==1 && Columns==1>>
     explicit operator double() const
     {
+      BE_TEST_ASSERT(false);
       //TODO
       return 0.0;
     }
@@ -171,17 +233,19 @@ namespace Engine::Math
 
     mat2_generic(vec2 const& u, vec2 const& v)
     {
-      //TODO
+      this->_data[0][0] = u[0][0]; this->_data[0][1] = v[0][0];
+      this->_data[1][0] = u[1][0]; this->_data[1][1] = v[1][0];
     }
 
     mat2_generic(Matrix<2,2,U> const& m)
     {
-      //TODO
+      this->_data = m._data;
     }
 
-    mat2_generic(U a, U b, U c, U d)
+    mat2_generic(U const& a, U const& b, U const& c, U const& d)
     {
-      //TODO
+      this->_data[0][0] = a; this->_data[0][1] = a;
+      this->_data[1][0] = a; this->_data[1][1] = a;
     }
   };
 
@@ -194,30 +258,36 @@ namespace Engine::Math
 
     vec_generic(Matrix<Rows,1,U> const& m)
     {
-      //TODO
+      for (size_t row = 0; row < Rows; row++)
+      {
+        this->_data[row][0] = m[row][0];
+      }
     }
 
+    template<typename = std::enable_if<Rows==2>>
     vec_generic(U a, U b)
     {
-      //TODO
+      _data[0][0] = a;
+      _data[1][0] = b;
     }
 
     template<typename V>
     vec_generic<1> operator*(vec_generic<Rows, V> const& v) const
     {
-      //TODO
-      return vec_generic<1>();
+      return v.Transposed() * *this;
     }
 
     static constexpr vec_generic
     Orthogonal()
     {
+      BE_TEST_ASSERT(false);
       //TODO
       return vec_generic();
     }
 
     size_t magnitude() const
     {
+      BE_TEST_ASSERT(false);
       //TODO
     }
 
@@ -247,45 +317,4 @@ namespace Engine::Math
     Matrix<1, 1> val = v * um;
     return std::sqrt((double)val);
   }
-
-  //template<typename T>
-  //Matrix<2,2, T>(T a11, T a12,
-  //  T a21, T a22)
-  //{
-  //  std::cout << "foo!!!" << std::endl;
-  //}
-
-  //class mat2
-  //  : public Matrix<2, 2, dA>
-  //{
-  //  mat2(dA const& a11,
-  //       dA const& a12,
-  //       dA const& a21,
-  //       dA const& a22)
-  //    : Matrix{{a11, a12}, {a21, a22}}
-  //  { }
-  //};
-}
-
-
-#if 0
-namespace Engine::Math
-{
-  struct mat2 {
-  inline mat2(float a11, float a12, float a21, float a22): u({a11, a12}), v({a21, a22}){};
-  inline mat2(vec2 _u, vec2 _v): u(_u), v(_v){};
-  inline explicit mat2(float x): u(x), v(x){};
-
-  inline static mat2 Identity() {return {1.0f, 0.0f, 0.0f, 1.0f};}
-
-  // dimension is always given, minimum requirement is equality of elements
-  inline bool operator==(const mat2& other){return u == other.u && v == other.v;};
-  // A * x = b
-  inline mat2 operator*(float other){return {u.x * other, u.y * other, v.x * other, v.y * other};};
-  inline mat2 operator*(const mat2& other){return {u.x * other.u.x + u.y * other.v.x, u.x * other.u.y + u.y * other.v.y,v.x * other.u.x + v.y * other.v.x, v.x * other.u.y + v.y * other.v.y};};
-  friend inline vec2 operator*(const mat2 &a, const vec2 &b) { return {a.u.x*b.x + a.u.y*b.y,a.v.x*b.x + a.v.y*b.y};}
-  vec2 u;
-  vec2 v;
-}; // struct mat2
 } // namespace Engine::Math
-#endif
