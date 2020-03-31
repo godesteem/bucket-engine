@@ -87,7 +87,8 @@ target_include_directories(engine-test PUBLIC
 
 target_link_libraries(engine-test PRIVATE engine)
 enable_testing()
-add_test(NAME engine-test COMMAND engine-test)
+add_test(NAME engine-test1 COMMAND engine-test)
+add_test(NAME engine-test2 COMMAND engine-test)
 
 # find & configure openGL
 # set(OpenGL_GL_PREFERENCE "GLVND")

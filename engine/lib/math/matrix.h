@@ -260,7 +260,7 @@ namespace Engine::Math
     template<typename = std::enable_if<Rows==1 && Columns==1>>
     explicit operator double() const
     {
-      BE_TEST_ASSERT(false);
+      assert(false);
       //TODO
       return 0.0;
     }
@@ -326,7 +326,7 @@ namespace Engine::Math
     static constexpr vec_generic
     Orthogonal()
     {
-      BE_TEST_ASSERT(false);
+//      assert(false);
       //TODO
       return vec_generic();
     }

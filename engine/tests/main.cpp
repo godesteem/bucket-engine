@@ -10,7 +10,9 @@
 
 int main(int argc, char **argv){
   Engine::Log::Init();
-  test_math();
-  matTest();
-  return 0;
+  bool all_ok = true;
+  all_ok &= test_vec2() == test_status::TEST_OK;
+  all_ok &= test_mat2() == test_status::TEST_OK;
+  all_ok &= matTest() == test_status::TEST_OK;
+  return (all_ok ? 0 : 1);
 }
