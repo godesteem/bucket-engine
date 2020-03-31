@@ -21,22 +21,24 @@
 #include <iostream>
 #include <cmath>
 #include <type_traits>
+#include <initializer_list>
+#include <utility>
 
 namespace Engine::Math
 {
-  typedef float dA; // default argument
+  typedef float dA_float; // default argument
 
-  template<size_t Rows, size_t Columns, typename T = dA>
+  template<size_t Rows, size_t Columns, typename T = dA_float>
   class Matrix;
 
-  template<typename U = dA>
+  template<typename U = dA_float>
   class mat2_generic;
 
-  template<size_t Rows, typename V = dA>
+  template<size_t Rows, typename V = dA_float>
   class vec_generic;
 
-  typedef mat2_generic<dA> mat2;
-  typedef vec_generic<2, dA> vec2;
+  typedef mat2_generic<dA_float> mat2;
+  typedef vec_generic<2, dA_float> vec2;
 
   template<size_t Rows, size_t Columns, typename T>
   class Matrix
@@ -52,17 +54,57 @@ namespace Engine::Math
 
 
   public:
-    Matrix() = default;
+
+    // empty constructor fills with 0
+    Matrix()
+      : _data{std::array<T, Columns>{}}
+    { }
+
+    //template <typename ...e>
+    //matrix(e&&... e)
+    //  : _data{{std::forward<e>(e)...}}
+    //{ }
+
+
+    Matrix(std::initializer_list<std::initializer_list<T>> ll)
+    {
+      for (auto l : ll)
+      {
+        for(auto e : l)
+          std::cout << e << ",";
+        std::cout << ";"<< std::endl;
+      }
+
+      const std::initializer_list<T>* l = ll.begin();
+      for (size_t row = 0; row < Rows; row++, l++)
+      {
+        auto element = l->begin();
+        for (size_t col = 0; col < Columns; col++, element++)
+        {
+          std::cout << "next_to_insert:" << *element << std::endl;
+          _data[row][col] = *element;
+        }
+      }
+    }
+
+    Matrix(Matrix const& m)
+      : _data{m._data}
+    { }
 
     Matrix(T const& t)
     {
-      for (size_t col = 0; col < Columns; col++)
-      {
-        for (size_t row = 0; row < Rows; row++)
-        {
-          _data[row][col] = t;
-        }
-      }
+      auto proxy = std::array<T,Columns>{t};
+      proxy.fill(t);
+      _data.fill(proxy);
+      std::cout << __FUNCTION__ " " << t << std::endl;
+      std::cout << "and then: " << *this << std::endl;
+      //for (size_t col = 0; col < Columns; col++)
+      //{
+      //  for (size_t row = 0; row < Rows; row++)
+      //  {
+      //    _data[row][col] = t;
+      //  }
+      //}
     }
 
     ~Matrix() = default;
@@ -79,6 +121,8 @@ namespace Engine::Math
 
     bool operator==(Matrix const& m) const
     {
+      std::cout << "*this:\n" << *this << std::endl;
+      std::cout << "    m:\n" << m << std::endl;
       if(this == &m)
         return true;
 
@@ -184,11 +228,13 @@ namespace Engine::Math
     constexpr static Matrix
     Identity()
     {
-      Matrix m(0);
+      Matrix m(0.f);
+      std::cout << "m(0)" << m << std::endl;
       for (size_t d = 0; d < std::min(Rows, Columns); d++)
       {
-        m._data[d][d] = 1;
+        m._data[d][d] = 1.f;
       }
+      std::cout << "m(I)" << m << std::endl;
       return m;
     }
 
@@ -244,8 +290,8 @@ namespace Engine::Math
 
     mat2_generic(U const& a, U const& b, U const& c, U const& d)
     {
-      this->_data[0][0] = a; this->_data[0][1] = a;
-      this->_data[1][0] = a; this->_data[1][1] = a;
+      this->_data[0][0] = a; this->_data[0][1] = b;
+      this->_data[1][0] = c; this->_data[1][1] = d;
     }
   };
 
@@ -309,7 +355,7 @@ namespace Engine::Math
     return u * v;
   }
 
-  template<size_t Rows, typename U = dA>
+  template<size_t Rows, typename U = dA_float>
   vec_generic<Rows, U> Length(vec_generic<Rows, U> const& u)
   {
     Matrix<1, Rows> v = u.Transposed();

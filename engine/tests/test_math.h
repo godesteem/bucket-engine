@@ -10,7 +10,7 @@
 #include <glm/glm.hpp>
 #include <math\matrix.h>
 
-void matTest()
+test_status matTest()
 {
   //auto eye = glm::vec3{0,0,0};
   //auto center = glm::vec3{1,1,0};
@@ -24,7 +24,7 @@ void matTest()
   using namespace Engine::Math;
 
   mat2 m1;
-  mat2 m2(1);
+  mat2 m2(1.f);
   std::cout << m1 << std::endl;
 
   Matrix<2,3> mat2x3;
@@ -32,9 +32,17 @@ void matTest()
 
   auto res = mat2x3 * mat3x4; // compiler wont let you do an order of multiplication which is invalid
 
+  const Matrix<2,3> L{{1.f,2.f,3.f},{4.f,5.f,6.f}};
+  const Matrix<3,2> R{{7.f,8.f},{9.f,10.f},{11.f,12.f}};
+  const mat2 S{{58.f,64.f},{139.f,154.f}};
+  {
+    Matrix<2,2> E = L*R;
+    BE_TEST_ASSERT(E == S);
+  }
+  return test_status::TEST_OK;
 }
 
-int test_vec2()
+test_status test_vec2()
 {
   Engine::Math::vec2 a(1.0f, 2.0f);
   Engine::Math::vec2 b(1.0f);
@@ -74,24 +82,32 @@ int test_vec2()
   s << a;
   BE_TEST_ASSERT(buf.str() == "(1, 2)\n");
 
-  return TEST_OK;
+  return test_status::TEST_OK;
 }
 
-int test_mat2(){
-  Engine::Math::mat2 a(0.0f);
-  Engine::Math::mat2 b(0.0f, 0.0f, 0.0f, 0.0f);
-  Engine::Math::mat2 e1 = Engine::Math::mat2::Identity();
-  Engine::Math::mat2 e2({1.0f, 0.0f}, {0.0f, 1.0f});
+test_status test_mat2(){
+  {
+    Engine::Math::mat2 a(0.0f);
+    Engine::Math::mat2 b(0.0f, 0.0f, 0.0f, 0.0f);
+    BE_TEST_ASSERT(a == b);
+    BE_TEST_ASSERT(a*2.f == a);
+  }
+  {
+    Engine::Math::mat2 e1 = Engine::Math::mat2::Identity();
+    Engine::Math::mat2 e2({1.0f, 0.0f, 0.0f, 1.0f});
+    std::cout << "e1" << e1 << std::endl;
+    std::cout << "e2" << e2 << std::endl;
+    BE_TEST_ASSERT(e1 == e2);
+  }
 
-  BE_TEST_ASSERT(a == b);
-  BE_TEST_ASSERT(a*2 == a);
-  BE_TEST_ASSERT(e1 == e2);
-  return TEST_OK;
+  return test_status::TEST_OK;
 }
 
 void test_math(){
-  if(test_mat2() != TEST_OK) BE_TEST_ERROR( "Mat2 not working!");
+  if(matTest() != test_status::TEST_OK) BE_TEST_ERROR( "Vec2 not working!");
+  else BE_TEST_SUCCESS( "Vec2 is working.");
+  if(test_mat2() != test_status::TEST_OK) BE_TEST_ERROR( "Mat2 not working!");
   else BE_TEST_SUCCESS( "Mat2 is working.");
-  if(test_vec2() != TEST_OK) BE_TEST_ERROR( "Vec2 not working!");
+  if(test_vec2() != test_status::TEST_OK) BE_TEST_ERROR( "Vec2 not working!");
   else BE_TEST_SUCCESS( "Vec2 is working.");
 }

@@ -4,7 +4,10 @@
 #pragma once
 #include <cassert>
 
-#define TEST_OK 0
+enum class test_status
+{
+  TEST_OK = 0,
+};
 
 #ifndef BE_TEST_ASSERT
 #define BE_TEST_ASSERT(x) assert(x);
