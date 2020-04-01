@@ -24,6 +24,9 @@
 #include <initializer_list>
 #include <utility>
 
+#define DBGout(x) ;
+//std::cout << x << std::endl;
+
 namespace Engine::Math
 {
   typedef float dA_float; // default argument
@@ -71,8 +74,8 @@ namespace Engine::Math
       for (auto l : ll)
       {
         for(auto e : l)
-          std::cout << e << ",";
-        std::cout << ";"<< std::endl;
+          DBGout(e << ",")
+        DBGout(";");
       }
 
       const std::initializer_list<T>* l = ll.begin();
@@ -81,7 +84,7 @@ namespace Engine::Math
         auto element = l->begin();
         for (size_t col = 0; col < Columns; col++, element++)
         {
-          std::cout << "next_to_insert:" << *element << std::endl;
+          DBGout("next_to_insert:" << *element);
           _data[row][col] = *element;
         }
       }
@@ -96,8 +99,8 @@ namespace Engine::Math
       auto proxy = std::array<T,Columns>{t};
       proxy.fill(t);
       _data.fill(proxy);
-      std::cout << __FUNCTION__ " " << t << std::endl;
-      std::cout << "and then: " << *this << std::endl;
+      DBGout(__FUNCTION__ " " << t);
+      DBGout("and then: " << *this);
       //for (size_t col = 0; col < Columns; col++)
       //{
       //  for (size_t row = 0; row < Rows; row++)
@@ -121,8 +124,8 @@ namespace Engine::Math
 
     bool operator==(Matrix const& m) const
     {
-      std::cout << "*this:\n" << *this << std::endl;
-      std::cout << "    m:\n" << m << std::endl;
+      DBGout("*this:\n" << *this);
+      DBGout("    m:\n" << m);
       if(this == &m)
         return true;
 
@@ -229,12 +232,12 @@ namespace Engine::Math
     Identity()
     {
       Matrix m(0.f);
-      std::cout << "m(0)" << m << std::endl;
+      DBGout("m(0)" << m);
       for (size_t d = 0; d < std::min(Rows, Columns); d++)
       {
         m._data[d][d] = 1.f;
       }
-      std::cout << "m(I)" << m << std::endl;
+      DBGout("m(I)" << m);
       return m;
     }
 

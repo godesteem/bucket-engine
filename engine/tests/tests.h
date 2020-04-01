@@ -11,7 +11,7 @@ enum class test_status
 };
 
 #ifndef BE_TEST_ASSERT
-  #define BE_TEST_ASSERT(x) if(x)BE_TEST_SUCCESS(" ");else{ BE_TEST_ERROR(" "); return test_status::TEST_FAILED;}
+  #define BE_TEST_ASSERT(x, ...) if(x)BE_TEST_SUCCESS(std::to_string(__LINE__) + " " __FUNCTION__ " " + std::string(#x));else{ BE_TEST_ERROR(std::to_string(__LINE__) + " " __FUNCTION__ " " + std::string(#x)); return test_status::TEST_FAILED;}
 #endif
 #define BE_TEST_ERROR(...) ::Engine::Log::GetTestLogger()->error(__VA_ARGS__)
 #define BE_TEST_SUCCESS(...) ::Engine::Log::GetTestLogger()->info(__VA_ARGS__)

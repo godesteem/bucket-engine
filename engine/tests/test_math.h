@@ -25,7 +25,7 @@ test_status matTest()
 
   mat2 m1;
   mat2 m2(1.f);
-  std::cout << m1 << std::endl;
+//  std::cout << m1 << std::endl;
 
   Matrix<2,3> mat2x3;
   Matrix<3,4> mat3x4;
@@ -39,6 +39,22 @@ test_status matTest()
     Matrix<2,2> E = L*R;
     BE_TEST_ASSERT(E == S);
   }
+
+  {
+    Matrix<3,3> three(42);
+    BE_TEST_ASSERT(three[0][0] == 42);
+    BE_TEST_ASSERT(three[1][0] == 42);
+    BE_TEST_ASSERT(three[2][0] == 42);
+
+    BE_TEST_ASSERT(three[0][1] == 42);
+    BE_TEST_ASSERT(three[1][1] == 42);
+    BE_TEST_ASSERT(three[2][1] == 42);
+
+    BE_TEST_ASSERT(three[0][2] == 42);
+    BE_TEST_ASSERT(three[1][2] == 42);
+    BE_TEST_ASSERT(three[2][2] == 42);
+  }
+
   return test_status::TEST_OK;
 }
 
@@ -48,7 +64,7 @@ test_status test_vec2()
   Engine::Math::vec2 b(1.0f);
   Engine::Math::vec2 c = Engine::Math::vec2();
   // Constructors
-  std::cout << "b:" << b << std::endl;
+  //std::cout << "b:" << b << std::endl;
   BE_TEST_ASSERT(b == Engine::Math::vec2(1.0f, 1.0f));
   BE_TEST_ASSERT(c == Engine::Math::vec2(0.0f, 0.0f));
   BE_TEST_ASSERT(a != b);
@@ -60,9 +76,9 @@ test_status test_vec2()
   // Addition
   Engine::Math::vec2 add_1 = a+b;
   Engine::Math::vec2 add_2 = b+a;
-  std::cout << "a " << a << std::endl;
-  std::cout << "b " << b << std::endl;
-  std::cout << "add_1 " << add_1 << std::endl;
+  //std::cout << "a " << a << std::endl;
+  //std::cout << "b " << b << std::endl;
+  //std::cout << "add_1 " << add_1 << std::endl;
   BE_TEST_ASSERT(add_1 == Engine::Math::vec2(2.0f, 3.0f));
   BE_TEST_ASSERT(add_2 == Engine::Math::vec2(2.0f, 3.0f));
   BE_TEST_ASSERT(add_2 == add_1);
@@ -95,19 +111,10 @@ test_status test_mat2(){
   {
     Engine::Math::mat2 e1 = Engine::Math::mat2::Identity();
     Engine::Math::mat2 e2({1.0f, 0.0f, 0.0f, 1.0f});
-    std::cout << "e1" << e1 << std::endl;
-    std::cout << "e2" << e2 << std::endl;
+    //std::cout << "e1" << e1 << std::endl;
+    //std::cout << "e2" << e2 << std::endl;
     BE_TEST_ASSERT(e1 == e2);
   }
 
   return test_status::TEST_OK;
-}
-
-void test_math(){
-  if(matTest() != test_status::TEST_OK) BE_TEST_ERROR( "Vec2 not working!");
-  else BE_TEST_SUCCESS( "Vec2 is working.");
-  if(test_mat2() != test_status::TEST_OK) BE_TEST_ERROR( "Mat2 not working!");
-  else BE_TEST_SUCCESS( "Mat2 is working.");
-  if(test_vec2() != test_status::TEST_OK) BE_TEST_ERROR( "Vec2 not working!");
-  else BE_TEST_SUCCESS( "Vec2 is working.");
 }
