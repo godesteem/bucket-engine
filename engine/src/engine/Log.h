@@ -56,28 +56,26 @@ namespace Engine {
   #define BE_TRACE
   #define BE_INFO
   #define BE_FATAL
-
-
 #endif
+
 #ifndef BE_ENABLE_ASSERTS
-#ifdef BE_PLATFORM_WINDOWS
-#include <WinBase.h>
-#define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
-#define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
-#elif BE_PLATFORM_LINUX
-#define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
-#define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
-#endif
-#define BE_CHECK_FILE(x, y, ... ) {auto l = x.find_last_of("/\\"); \
-                                    l = l == std::string::npos ? 0 : l + 1; \
-                                    auto lDot = x.rfind('.'); \
-                                    std::ostringstream stringStream; \
-                                    stringStream << "Wrong file extension \"" << \
-                                    x.substr(lDot, x.size()) << "\". Need " << y << "!"; \
-                                    std::string copyOfStr = stringStream.str(); \
-                                    BE_CORE_ASSERT(x.substr(lDot, x.size()) == y, copyOfStr); }
+  #ifdef BE_PLATFORM_WINDOWS
+    #include <WinBase.h>
+    #define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
+    #define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
+  #elif BE_PLATFORM_LINUX
+    #define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
+    #define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
+  #endif
+  #define BE_CHECK_FILE(x, y, ... ) {auto l = x.find_last_of("/\\"); \
+                                      l = l == std::string::npos ? 0 : l + 1; \
+                                      auto lDot = x.rfind('.'); \
+                                      std::ostringstream stringStream; \
+                                      stringStream << "Wrong file extension \"" << \
+                                      x.substr(lDot, x.size()) << "\". Need " << y << "!"; \
+                                      std::string copyOfStr = stringStream.str(); \
+                                      BE_CORE_ASSERT(x.substr(lDot, x.size()) == y, copyOfStr); }
 #else
-#define BE_ASSERT(x, ... )
-#define BE_CORE_ASSERT(x, ... )
+  #define BE_ASSERT(x, ... )
+  #define BE_CORE_ASSERT(x, ... )
 #endif
-
