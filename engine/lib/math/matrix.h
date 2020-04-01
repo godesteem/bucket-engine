@@ -160,20 +160,20 @@ namespace Engine::Math
 
     Matrix operator-(Matrix const& m) const
     {
-      BE_TEST_ASSERT(false);
+      BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
       //TODO
     }
 
     //TODO create outer class methods for the other commutative order of operands for these four operators
     Matrix operator+(T const& m) const
     {
-      BE_TEST_ASSERT(false);
+      BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
       //TODO
     }
 
     Matrix operator-(T const& m) const
     {
-      BE_TEST_ASSERT(false);
+      BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
       //TODO
     }
 
@@ -192,7 +192,7 @@ namespace Engine::Math
 
     Matrix operator/(T const& m) const
     {
-      BE_TEST_ASSERT(false);
+      BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
       //TODO
     }
 
@@ -241,6 +241,28 @@ namespace Engine::Math
       return m;
     }
 
+    // this function will only exist (and compile) for a 4x4 Matrix
+    template <typename youDidntUseA4x4Matrix = std::enable_if<Rows == 4 && Columns == 4, void*>::type>
+    static Matrix<4,4>
+    Ortho(T const& left,
+          T const& right,
+          T const& bottom,
+          T const& top,
+          T const& nearVal,
+          T const& farVal)
+    {
+      Matrix<4,4> res(0);
+      res._data[0][0] = 2 / (right - left);
+      res._data[0][3] = (right + left) / (left - right);
+      res._data[1][1] = 2 / (top - bottom);
+      res._data[1][3] = (top + bottom) / (bottom - top);
+      res._data[2][2] = 2 / (nearVal - farVal);
+      res._data[2][3] = (farVal + nearVal) / (nearVal - farVal);
+      res._data[3][3] = 1;
+      return res;
+    }
+
+
     const std::array<T,Columns> operator[](size_t index) const
     {
       return this->_data[index];
@@ -250,11 +272,14 @@ namespace Engine::Math
     {
       for (size_t col = 0; col < m.cols(); col++)
       {
+        ostr << '(';
         for (size_t row = 0; row < m.rows(); row++)
         {
-          ostr << m._data[row][col] << ' ';
+          ostr << m._data[row][col];
+          if(row < m.rows() -1)
+            ostr << ", ";
         }
-        ostr << '\n';
+        ostr << ")\n";
       }
       return ostr;
     }
@@ -326,17 +351,18 @@ namespace Engine::Math
       return v.Transposed() * *this;
     }
 
-    static constexpr vec_generic
-    Orthogonal()
-    {
-//      assert(false);
-      //TODO
-      return vec_generic();
-    }
+    //static constexpr vec_generic
+    //Orthogonal()
+    //{
+    //  BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
+    //  //TODO
+    //  return vec_generic();
+    //}
+
 
     size_t magnitude() const
     {
-      BE_TEST_ASSERT(false);
+      BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
       //TODO
     }
 

@@ -33,6 +33,7 @@ test_status matTest()
   auto res = mat2x3 * mat3x4; // compiler wont let you do an order of multiplication which is invalid
 
   const Matrix<2,3> L{{1.f,2.f,3.f},{4.f,5.f,6.f}};
+  BE_TEST_ASSERT(L[0][1] == 2.f);
   const Matrix<3,2> R{{7.f,8.f},{9.f,10.f},{11.f,12.f}};
   const mat2 S{{58.f,64.f},{139.f,154.f}};
   {
@@ -53,6 +54,25 @@ test_status matTest()
     BE_TEST_ASSERT(three[0][2] == 42);
     BE_TEST_ASSERT(three[1][2] == 42);
     BE_TEST_ASSERT(three[2][2] == 42);
+  }
+
+  {
+    //auto ortho23 = Matrix<2,3>::Ortho(); // this line shall not compile
+    // arguments are some consecutive primes
+    auto ortho44 = Matrix<4,4>::Ortho(23, 29, 31, 37, 41, 43);
+    auto glOrtho44 = glm::ortho<Engine::Math::dA_float>(23, 29, 31, 37, 41, 43);
+
+    //std::cout << glOrtho44[3][0] << std::endl;
+    for (size_t c = 0; c < 4; c++)
+    {
+      for (size_t r = 0; r < 4; r++)
+      {
+        //std::cout << glOrtho44[c][r] << ",\t" << ortho44[r][c];
+        BE_TEST_ASSERT(ortho44[r][c] == glOrtho44[c][r]);
+      }
+      //std::cout << '\n';
+    }
+
   }
 
   return test_status::TEST_OK;
@@ -88,14 +108,17 @@ test_status test_vec2()
   BE_TEST_ASSERT(Engine::Math::Dot(a, b) == 3.0f);
   BE_TEST_ASSERT(Engine::Math::Dot(a, c) == 0.0f);
 
-  // Vector only:
-  Engine::Math::vec2 orthogonal = Engine::Math::vec2::Orthogonal();
-  BE_TEST_ASSERT(orthogonal == Engine::Math::vec2(0.0f, 1.0f));
-  BE_TEST_ASSERT(Engine::Math::Length(orthogonal) == 1.0f);
+  //// Vector only:
+  //Engine::Math::vec2 orthogonal = Engine::Math::vec2::Orthogonal();
+  //BE_TEST_ASSERT(orthogonal == Engine::Math::vec2(0.0f, 1.0f));
+  //BE_TEST_ASSERT(Engine::Math::Length(orthogonal) == 1.0f);
 
   std::stringbuf buf;
   std::ostream s(&buf);
   s << a;
+  //std::cout << buf.str() << "#";
+  //for(auto c : buf.str())
+  //  std::cout << c << ":" << (int)c << std::endl;
   BE_TEST_ASSERT(buf.str() == "(1, 2)\n");
 
   return test_status::TEST_OK;
