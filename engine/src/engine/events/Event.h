@@ -11,7 +11,7 @@
 #include "bepch.h"
 
 namespace Engine {
-  
+
   // Non buffered Event
   //
   enum class EventType {
@@ -63,7 +63,7 @@ namespace Engine {
   public:
     EventDispatcher(Event &event)
       :m_Event(event) {}
-    
+
     template<typename T>
     bool Dispatch(EventFn<T> func){
       if(m_Event.GetEventType() == T::GetStaticType()){

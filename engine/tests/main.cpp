@@ -6,13 +6,23 @@
  * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
  */
 #include "bepch.h"
+#include "tests.h"
+
 #include "test_math.h"
 
-int main(int argc, char **argv){
+int main(int argc, char** argv){
   Engine::Log::Init();
-  bool all_ok = true;
-  all_ok &= test_vec2() == test_status::TEST_OK;
-  all_ok &= test_mat2() == test_status::TEST_OK;
-  all_ok &= matTest() == test_status::TEST_OK;
-  return (all_ok ? 0 : 1);
+
+  if(argc > 1)
+    try
+    {
+      return Tester::execute(std::stoi(argv[1])) == test_status::TEST_OK;
+    }
+    catch (const std::exception&)
+    {
+      return 3; // cmdline argument malformed
+    }
+  else
+    Tester::executeAll(); // for manually debugging failing test
+  return 1; // in case no argument gets passed, fail
 }

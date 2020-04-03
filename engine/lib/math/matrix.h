@@ -68,8 +68,10 @@ namespace Engine::Math
     //  : _data{{std::forward<e>(e)...}}
     //{ }
 
-
+    #pragma warning( push )
+    #pragma warning( disable : 26495 )
     Matrix(std::initializer_list<std::initializer_list<T>> ll)
+    //jnl i am not able to initialize the std::Array in the initializer list
     {
       for (auto l : ll)
       {
@@ -89,6 +91,7 @@ namespace Engine::Math
         }
       }
     }
+    #pragma warning( pop )
 
     Matrix(Matrix const& m)
       : _data{m._data}
