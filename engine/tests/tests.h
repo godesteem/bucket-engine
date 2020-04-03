@@ -36,6 +36,7 @@ enum class test_status
     BE_TEST_ERROR("@Line:" + std::to_string(__LINE__) + " in " + std::string(__func__) + ": " + std::string(#x));\
     return test_status::TEST_FAILED;\
   }
+
 #endif
 #define BE_TEST_ERROR(...) ::Engine::Log::GetTestLogger()->error(__VA_ARGS__)
 #define BE_TEST_SUCCESS(...) ::Engine::Log::GetTestLogger()->info(__VA_ARGS__)
@@ -48,9 +49,10 @@ enum class test_status
 // wont remove duplicates
 class Tester
 {
-public:
+private:
   typedef std::function<test_status()> test_func_pointer;
-//  typedef test_status(*test_func_pointer)(void);
+  static std::vector<test_func_pointer> tests;
+public:
 
   Tester(test_func_pointer const& newTest)
   {
@@ -68,17 +70,17 @@ public:
   }
 
   // to debug a failiung test via breakpoints:
-  static void executeAll()
+  // returns if all have passed
+  static bool executeAll()
   {
+    bool allPassed = true;
     for (auto const& test : Tester::tests)
-      test();
+      allPassed &= (test() == test_status::TEST_OK);
+    return allPassed;
   }
 
   static void addTest(test_func_pointer const& newTest)
   {
     Tester::tests.push_back(newTest);
   }
-
-private:
-  static std::vector<test_func_pointer> tests;
 };

@@ -23,6 +23,7 @@ file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.h ${CMAKE_SOURC
 
 set(TEST_SOURCES
   ${CMAKE_SOURCE_DIR}/engine/tests/main.cpp
+  ${CMAKE_SOURCE_DIR}/engine/tests/tests.cpp
 )
 
 set(TEST_HEADERS
@@ -87,8 +88,8 @@ target_include_directories(engine-test PUBLIC
 
 target_link_libraries(engine-test PRIVATE engine)
 enable_testing()
-add_test(NAME engine-test1 COMMAND engine-test)
-add_test(NAME engine-test2 COMMAND engine-test)
+add_test(NAME engine-test-all COMMAND engine-test)
+add_test(NAME engine-test1 COMMAND engine-test 1)
 
 # find & configure openGL
 # set(OpenGL_GL_PREFERENCE "GLVND")

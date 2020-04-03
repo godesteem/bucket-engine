@@ -30,7 +30,7 @@ public:
       //{
       //  std::cout << a.operator[](i).x << '\t' << a.operator[](i).y << '\t' << a.operator[](i).z << '\t' << a.operator[](i).w << std::endl;
       //}
-      return test_status::TEST_OK;
+      BE_TEST_ONCE(true);
     });
 
     Tester::addTest([]()
@@ -43,7 +43,7 @@ public:
       Matrix<3,4> _mat3x4;
 
       Matrix<2,4> res = _mat2x3 * _mat3x4; // compiler wont let you do an order of multiplication which is invalid, even if the result is declared as auto type
-      return test_status::TEST_OK; // if this compiles this test is successful, i cant negatiuvely test for compilation
+      BE_TEST_ONCE(true); // if this compiles this test is successful, i cant negatiuvely test for compilation
     });
 
     Tester::addTest([]()
@@ -175,14 +175,6 @@ public:
       BE_TEST_ONCE(Engine::Math::Dot(a, c) == 0.0f);
     });
 
-    //Tester::addTest([]()
-    //{
-    //  // Vector only:
-    //  Engine::Math::vec2 orthogonal = Engine::Math::vec2::Orthogonal();
-    //  BE_TEST_ONCE(orthogonal == Engine::Math::vec2(0.0f, 1.0f));
-    //  BE_TEST_ONCE(Engine::Math::Length(orthogonal) == 1.0f);
-    //});
-
     Tester::addTest([]()
     {
       Engine::Math::vec2 a(1.0f, 2.0f);
@@ -216,6 +208,5 @@ public:
       //std::cout << "e2" << e2 << std::endl;
       BE_TEST_ONCE(e1 == e2);
     });
-
   }
-} TestMathInstance;
+};
