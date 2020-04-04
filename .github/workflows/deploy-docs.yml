@@ -1,0 +1,34 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Build
+        run: |
+          sudo apt-get install -y doxygen doxygen-doc doxygen-gui graphviz
+          doxygen docs/doxygen.conf
+          sudo rm -rf engine/
+          sudo rm -rf sandbox/
+          sudo rm -rf screenshots/
+          sudo rm -rf tools/
+          sudo rm CMakeLists.txt README.md .vimrc build.sh .gitignore
+          git checkout -b -f gh-pages
+          git config --global user.name "Docs CI"
+          git config --global user.email "philipp+bucket-engine-docs-auto-ci@godesteem.de"
+          git add .
+          git commit -m "deploy docs"
+          git push origin gh-pages
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: docs
