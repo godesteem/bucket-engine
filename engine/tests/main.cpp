@@ -17,8 +17,15 @@ int main(int argc, char** argv){
   //    otherwise the static vector will get initialized after the tests were added and get deleted
   //    that wasnt fun to debug and find, pinpoint and write sample classes to be sure
   TestMath instance;
+  // parse args
+  bool runAll = argc <= 1;
 
-  if(argc > 1)
+  if(runAll)
+  {
+    return ! Tester::executeAll();
+  }
+  else
+  {
     try
     {
       return (Tester::execute(std::stoi(argv[1])) == test_status::TEST_OK ? 0 : 1);
@@ -27,7 +34,5 @@ int main(int argc, char** argv){
     {
       return 3; // cmdline argument malformed
     }
-  else
-    return Tester::executeAll(); // for manually debugging failing test
-  return 2; // in case no argument gets passed, fail
+  }
 }

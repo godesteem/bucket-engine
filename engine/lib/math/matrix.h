@@ -48,7 +48,7 @@ namespace Engine::Math
   template<size_t Rows, size_t Columns, typename T>
   class Matrix
   {
-    //jnl maybe this allows for acces between different types of matrices,
+    //jnl maybe this allows for access between different types of matrices,
     //    that could be avoided, but one can also be careful, since this only
     //    applies to the implementation of Matrix, not when using it
     template<size_t R, size_t C, typename t>
@@ -293,7 +293,7 @@ namespace Engine::Math
     template<typename = std::enable_if<Rows==1 && Columns==1>>
     explicit operator double() const
     {
-      assert(false);
+      BE_CORE_ASSERT(false, "not implemented");
       //TODO
       return 0.0;
     }
@@ -372,7 +372,7 @@ namespace Engine::Math
     //static constexpr vec_generic
     //Orthogonal()
     //{
-    //  BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
+    //  BE_CORE_BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
     //  //TODO
     //  return vec_generic();
     //}
