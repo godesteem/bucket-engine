@@ -28,6 +28,7 @@ set(TEST_SOURCES
 
 set(TEST_HEADERS
   ${CMAKE_SOURCE_DIR}/engine/tests/test_math.h
+  ${CMAKE_SOURCE_DIR}/engine/tests/core/test_timestep.h
 )
 
 

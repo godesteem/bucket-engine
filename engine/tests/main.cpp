@@ -2,6 +2,7 @@
 #include "tests.h"
 
 #include "test_math.h"
+#include "core/test_timestep.h"
 
 int main(int argc, char** argv){
   Engine::Log::Init();
@@ -9,7 +10,8 @@ int main(int argc, char** argv){
   //jnl creates the tests after the static variable holding them is initialized
   //    otherwise the static vector will get initialized after the tests were added and get deleted
   //    that wasnt fun to debug and find, pinpoint and write sample classes to be sure
-  TestMath instance;
+  TestMath testMath;
+  TestTimestep testTimestep;
   // parse args
   bool runAll = argc <= 1;
 
