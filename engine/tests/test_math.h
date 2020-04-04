@@ -10,7 +10,7 @@
 #include "tests.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
-#include <math\matrix.h>
+#include <math/matrix.h>
 
 #include <functional>
 
@@ -43,7 +43,7 @@ public:
       Matrix<3,4> _mat3x4;
 
       Matrix<2,4> res = _mat2x3 * _mat3x4; // compiler wont let you do an order of multiplication which is invalid, even if the result is declared as auto type
-      BE_TEST_ONCE(true); // if this compiles this test is successful, i cant negatiuvely test for compilation
+      BE_TEST_ONCE(true); // if this compiles this test is successful, i cant negatively test for compilation
     });
 
     Tester::addTest([=]()
@@ -58,16 +58,16 @@ public:
     Tester::addTest([=]()
     {
       Matrix<3,3> three(42);
-      BE_TEST_MULT(three[0][0] == 42);
-      BE_TEST_MULT(three[1][0] == 42);
-      BE_TEST_MULT(three[2][0] == 42);
+      BE_TEST_MULTI(three[0][0] == 42);
+      BE_TEST_MULTI(three[1][0] == 42);
+      BE_TEST_MULTI(three[2][0] == 42);
 
-      BE_TEST_MULT(three[0][1] == 42);
-      BE_TEST_MULT(three[1][1] == 42);
-      BE_TEST_MULT(three[2][1] == 42);
+      BE_TEST_MULTI(three[0][1] == 42);
+      BE_TEST_MULTI(three[1][1] == 42);
+      BE_TEST_MULTI(three[2][1] == 42);
 
-      BE_TEST_MULT(three[0][2] == 42);
-      BE_TEST_MULT(three[1][2] == 42);
+      BE_TEST_MULTI(three[0][2] == 42);
+      BE_TEST_MULTI(three[1][2] == 42);
       BE_TEST_ONCE(three[2][2] == 42);
     });
 
@@ -84,7 +84,7 @@ public:
         for (size_t r = 0; r < 4; r++)
         {
           //std::cout << glOrtho44[c][r] << ",\t" << ortho44[r][c];
-          BE_TEST_MULT(ortho44[r][c] == glOrtho44[c][r]);
+          BE_TEST_MULTI(ortho44[r][c] == glOrtho44[c][r]);
         }
         //std::cout << '\n';
       }

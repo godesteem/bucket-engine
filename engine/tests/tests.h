@@ -13,14 +13,14 @@ enum class test_status
 
 #ifndef BE_TEST_ASSERT
   // will exit on test_fail, continue on test_ok
-  #define BE_TEST_MULT(x, ...) \
+  #define BE_TEST_MULTI(x, ...) \
   if(x)\
   {\
-    BE_TEST_SUCCESS("@Line:" + std::to_string(__LINE__) + " in " + std::string(__func__) + ": " + std::string(#x));\
+    BE_TEST_SUCCESS(std::string(__FILE__) + ":" + std::to_string(__LINE__) + " " + std::string(#x));\
   }\
   else\
   {\
-    BE_TEST_ERROR("@Line:" + std::to_string(__LINE__) + " in " + std::string(__func__) + ": " + std::string(#x));\
+    BE_TEST_ERROR(std::string(__FILE__) + ":" + std::to_string(__LINE__) + " " + std::string(#x));\
     return test_status::TEST_FAILED;\
   }
 
@@ -28,12 +28,12 @@ enum class test_status
   #define BE_TEST_ONCE(x, ...) \
   if(x)\
   {\
-    BE_TEST_SUCCESS("@Line:" + std::to_string(__LINE__) + " in " + std::string(__func__) + ": " + std::string(#x));\
+    BE_TEST_SUCCESS(std::string(__FILE__) + ":" + std::to_string(__LINE__) + " " + std::string(#x));\
    return test_status::TEST_OK;\
   }\
   else\
   {\
-    BE_TEST_ERROR("@Line:" + std::to_string(__LINE__) + " in " + std::string(__func__) + ": " + std::string(#x));\
+    BE_TEST_ERROR(std::string(__FILE__) + ":" + std::to_string(__LINE__) + " " + std::string(#x));\
     return test_status::TEST_FAILED;\
   }
 
@@ -69,7 +69,7 @@ public:
     return (*toCallIt)(); // call it
   }
 
-  // to debug a failiung test via breakpoints:
+  // to debug a failing test via breakpoints:
   // returns if all have passed
   static bool executeAll()
   {
@@ -83,4 +83,6 @@ public:
   {
     Tester::tests.push_back(newTest);
   }
+
+  static size_t Count(){return Tester::tests.size();}
 };

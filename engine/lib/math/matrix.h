@@ -14,7 +14,7 @@
 //TODO vec4
 
 //until implementation is finished
-#include "tests.h"
+//#include "tests.h"
 
 
 #include <array>
@@ -48,7 +48,7 @@ namespace Engine::Math
   template<size_t Rows, size_t Columns, typename T>
   class Matrix
   {
-    //jnl maybe this allows for acces between different types of matrices,
+    //jnl maybe this allows for access between different types of matrices,
     //    that could be avoided, but one can also be careful, since this only
     //    applies to the implementation of Matrix, not when using it
     template<size_t R, size_t C, typename t>
@@ -316,7 +316,7 @@ namespace Engine::Math
     template<typename = std::enable_if<Rows==1 && Columns==1>>
     explicit operator double() const
     {
-      assert(false);
+      BE_CORE_ASSERT(false, "not implemented");
       //TODO
       return 0.0;
     }
@@ -344,7 +344,7 @@ namespace Engine::Math
     : public Matrix<2,2,U>
   {
   public:
-    using Matrix::Matrix;
+    using Matrix<2,2,U>::Matrix;
 
     mat2_generic(vec2 const& u, vec2 const& v)
     {
@@ -369,7 +369,7 @@ namespace Engine::Math
     : public Matrix<Rows,1,U>
   {
   public:
-    using Matrix::Matrix;
+    using Matrix<Rows,1,U>::Matrix;
 
     vec_generic(Matrix<Rows,1,U> const& m)
     {
@@ -395,7 +395,7 @@ namespace Engine::Math
     //static constexpr vec_generic
     //Orthogonal()
     //{
-    //  BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
+    //  BE_CORE_BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
     //  //TODO
     //  return vec_generic();
     //}
@@ -415,7 +415,7 @@ namespace Engine::Math
 
     vec_generic Dot(vec_generic const& v) const
     {
-      return this->operator*(m):
+      return this->operator*(v);
     }
   };
 
