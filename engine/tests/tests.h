@@ -16,11 +16,11 @@ enum class test_status
   #define BE_TEST_MULT(x, ...) \
   if(x)\
   {\
-    BE_TEST_SUCCESS("@Line:" + std::to_string(__LINE__) + " in " + std::string(__func__) + ": " + std::string(#x));\
+    BE_TEST_SUCCESS(std::string(__FILE__) + ":" + std::to_string(__LINE__) + " " + std::string(#x));\
   }\
   else\
   {\
-    BE_TEST_ERROR("@Line:" + std::to_string(__LINE__) + " in " + std::string(__func__) + ": " + std::string(#x));\
+    BE_TEST_ERROR(std::string(__FILE__) + ":" + std::to_string(__LINE__) + " " + std::string(#x));\
     return test_status::TEST_FAILED;\
   }
 
@@ -28,12 +28,12 @@ enum class test_status
   #define BE_TEST_ONCE(x, ...) \
   if(x)\
   {\
-    BE_TEST_SUCCESS("@Line:" + std::to_string(__LINE__) + " in " + std::string(__func__) + ": " + std::string(#x));\
+    BE_TEST_SUCCESS(std::string(__FILE__) + ":" + std::to_string(__LINE__) + " " + std::string(#x));\
    return test_status::TEST_OK;\
   }\
   else\
   {\
-    BE_TEST_ERROR("@Line:" + std::to_string(__LINE__) + " in " + std::string(__func__) + ": " + std::string(#x));\
+    BE_TEST_ERROR(std::string(__FILE__) + ":" + std::to_string(__LINE__) + " " + std::string(#x));\
     return test_status::TEST_FAILED;\
   }
 

@@ -14,7 +14,7 @@
 //TODO vec4
 
 //until implementation is finished
-#include "tests.h"
+//#include "tests.h"
 
 
 #include <array>
@@ -321,7 +321,7 @@ namespace Engine::Math
     : public Matrix<2,2,U>
   {
   public:
-    using Matrix::Matrix;
+    using Matrix<2,2,U>::Matrix;
 
     mat2_generic(vec2 const& u, vec2 const& v)
     {
@@ -346,7 +346,7 @@ namespace Engine::Math
     : public Matrix<Rows,1,U>
   {
   public:
-    using Matrix::Matrix;
+    using Matrix<Rows,1,U>::Matrix;
 
     vec_generic(Matrix<Rows,1,U> const& m)
     {
@@ -392,7 +392,7 @@ namespace Engine::Math
 
     vec_generic Dot(vec_generic const& v) const
     {
-      return this->operator*(m):
+      return this->operator*(v);
     }
   };
 

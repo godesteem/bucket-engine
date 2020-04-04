@@ -10,7 +10,7 @@
 #include "tests.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
-#include <math\matrix.h>
+#include <math/matrix.h>
 
 #include <functional>
 
