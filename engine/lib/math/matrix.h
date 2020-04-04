@@ -70,6 +70,29 @@ namespace Engine::Math
     //  : _data{{std::forward<e>(e)...}}
     //{ }
 
+    //#pragma warning( push )
+    //#pragma warning( disable : 26495 )
+    //Matrix(std::initializer_list<T> l)
+    //  //jnl i am not able to initialize the std::Array in the initializer list
+    //{
+    //  for(auto e : l)
+    //    DBGout(e << ",")
+    //    DBGout(";");
+
+    //  auto element = l.begin();
+
+    //  for (size_t row = 0; row < Rows; row++)
+    //  {
+    //    for (size_t col = 0; col < Columns; col++, element++)
+    //    {
+    //      DBGout("next_to_insert:" << *element);
+    //      _data[row][col] = *element;
+    //      std::cout << *this << std::endl;
+    //    }
+    //  }
+    //}
+    //#pragma warning( pop )
+
     #pragma warning( push )
     #pragma warning( disable : 26495 )
     Matrix(std::initializer_list<std::initializer_list<T>> ll)
@@ -83,10 +106,10 @@ namespace Engine::Math
       }
 
       const std::initializer_list<T>* l = ll.begin();
-      for (size_t row = 0; row < Rows; row++, l++)
+      for (size_t row = 0; row < Rows; ++row, ++l)
       {
         auto element = l->begin();
-        for (size_t col = 0; col < Columns; col++, element++)
+        for (size_t col = 0; col < Columns; ++col, ++element)
         {
           DBGout("next_to_insert:" << *element);
           _data[row][col] = *element;
@@ -268,7 +291,7 @@ namespace Engine::Math
     }
 
 
-    const std::array<T,Columns> operator[](size_t index) const
+    const std::array<T,Columns>& operator[](size_t index) const
     {
       return this->_data[index];
     }

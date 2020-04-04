@@ -48,7 +48,8 @@ public:
 
     Tester::addTest([=]()
     {
-      Matrix<2,3> L{{1.f,2.f,3.f},{4.f,5.f,6.f}};
+      Matrix<2,3> L{{1.f, 2.f, 3.f},
+                    {4.f, 5.f, 6.f}};
       Matrix<3,2> R{{7.f,8.f},{9.f,10.f},{11.f,12.f}};
       Matrix<2,2> S{{58.f,64.f},{139.f,154.f}};
       BE_TEST_ONCE(L*R == S);
@@ -92,7 +93,8 @@ public:
     });
 
     const Engine::Math::vec2 vec2_1(1.0f);
-    const Engine::Math::vec2 vec2_1_2({{1.0f}, {2.0f}});
+    const Engine::Math::vec2 vec2_1_2({{1.0f},
+                                       {2.0f}});
     const Engine::Math::vec2 vec2_2_3({{2.0f}, {3.0f}});
     const Engine::Math::vec2 vec2_1_2_otherObj{{1.0f},{2.0f}};
     Tester::addTest([=]()
@@ -124,25 +126,25 @@ public:
 
     Tester::addTest([=]()
     {
-      BE_TEST_ONCE(vec2_1_2==vec2_1_2_otherObj);
+      BE_TEST_ONCE(vec2_1_2 == vec2_1_2_otherObj);
     });
 
     Tester::addTest([=]()
     {
-      Engine::Math::vec2 add_1 = vec2_1_2+vec2_1;
+      Engine::Math::vec2 add_1 = vec2_1_2 + vec2_1;
       BE_TEST_ONCE(add_1 == vec2_2_3);
     });
 
     Tester::addTest([=]()
     {
-      Engine::Math::vec2 add_2 = vec2_1+vec2_1_2;
+      Engine::Math::vec2 add_2 = vec2_1 + vec2_1_2;
       BE_TEST_ONCE(add_2 == vec2_2_3);
     });
 
     Tester::addTest([=]()
     {
-      Engine::Math::vec2 add_1 = vec2_1_2+vec2_1;
-      Engine::Math::vec2 add_2 = vec2_1+vec2_1_2;
+      Engine::Math::vec2 add_1 = vec2_1_2 + vec2_1;
+      Engine::Math::vec2 add_2 = vec2_1 + vec2_1_2;
       BE_TEST_ONCE(add_2 == add_1);
     });
 
