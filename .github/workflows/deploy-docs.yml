@@ -20,7 +20,7 @@ jobs:
           sudo rm -rf screenshots/
           sudo rm -rf tools/
           sudo rm CMakeLists.txt README.md .vimrc build.sh .gitignore
-          git checkout -b -f gh-pages
+          git checkout -fb gh-pages
           git config --global user.name "Docs CI"
           git config --global user.email "philipp+bucket-engine-docs-auto-ci@godesteem.de"
           git add .
