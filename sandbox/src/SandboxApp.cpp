@@ -1,11 +1,3 @@
-/**
- * File              : SandboxApp.cpp
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 15.02.2020
- * Last Modified Date: 09.03.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
-
 #include <engine.h>
 #include <imgui/imgui.h>
 #include <glm/gtc/matrix_transform.hpp>

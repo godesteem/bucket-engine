@@ -23,3 +23,8 @@ Next step: Vulkan
 1) run `cd engine/vendor/spdlog && cmake . && make` 
 1) develop
 1) run `build.sh`
+
+
+## Docs
+1) Install [doxygen](http://www.doxygen.nl/manual/install.html)
+1) Run `doxygen docs/doxygen.conf` to generate docs in `docs/`

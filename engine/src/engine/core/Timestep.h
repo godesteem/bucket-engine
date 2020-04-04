@@ -1,10 +1,3 @@
-/**
- * File              : Timestep.h
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 25.02.2020
- * Last Modified Date: 25.02.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #pragma once
 
 namespace Engine {

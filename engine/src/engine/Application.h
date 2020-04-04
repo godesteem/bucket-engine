@@ -1,10 +1,3 @@
-/**
- * File              : Application.h
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 15.02.2020
- * Last Modified Date: 25.02.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #pragma once
 
 #include "Core.h"
@@ -24,10 +17,16 @@
 #include "engine/renderer/OrthographicCamera.h"
 
 namespace Engine {
-
+  /**
+   * Main entry point
+   */
   class BE_API Application
   {
     public:
+
+      /**
+       * Constructor.
+       */
       Application();
       virtual ~Application();
       

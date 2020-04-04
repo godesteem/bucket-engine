@@ -1,10 +1,3 @@
-/**
- * File              : Texture.h
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 25.02.2020
- * Last Modified Date: 25.02.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #pragma once
 #include <string>
 #include "engine/Core.h"
