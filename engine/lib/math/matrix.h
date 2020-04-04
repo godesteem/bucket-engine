@@ -34,14 +34,16 @@ namespace Engine::Math
   template<size_t Rows, size_t Columns, typename T = dA_float>
   class Matrix;
 
-  template<typename U = dA_float>
-  class mat2_generic;
+  //template<typename U = dA_float>
+  //class mat2_generic;
 
-  template<size_t Rows, typename V = dA_float>
-  class vec_generic;
+  //template<size_t Rows, typename V = dA_float>
+  //class vec_generic;
 
-  typedef mat2_generic<dA_float> mat2;
-  typedef vec_generic<2, dA_float> vec2;
+  //typedef mat2_generic<dA_float> mat2;
+  typedef Matrix<2, 2, dA_float> mat2;
+  //typedef vec_generic<2, dA_float> vec2;
+  typedef Matrix<2, 1, dA_float> vec2;
 
   template<size_t Rows, size_t Columns, typename T>
   class Matrix
@@ -245,7 +247,7 @@ namespace Engine::Math
     }
 
     // this function will only exist (and compile) for a 4x4 Matrix
-    template <typename youDidntUseA4x4Matrix = std::enable_if<Rows == 4 && Columns == 4, void*>::type>
+    template <typename youDidntUseA4x4Matrix = std::enable_if<Rows == 4 && Columns == 4, void*>>
     static Matrix<4,4>
     Ortho(T const& left,
           T const& right,
@@ -296,10 +298,23 @@ namespace Engine::Math
       return 0.0;
     }
 
+    template<typename onlyForVectors = std::enable_if<Columns == 1>>
+    Matrix<1,1> operator*(Matrix<Rows, 1> const& v) const
+    {
+      return v.Transposed() * *this;
+    }
+
+    template<typename onlyForVectors = std::enable_if<Columns == 1>>
+    Matrix<1,1> Dot(Matrix<Rows, 1> const& v) const
+    {
+      return v.Transposed() * *this;
+    }
+
 
   protected:
     std::array<std::array<T, Columns>, Rows> _data;
   }; // class Matrix
+
 
   template<typename U>
   class mat2_generic
@@ -341,18 +356,18 @@ namespace Engine::Math
       }
     }
 
-    template<typename = std::enable_if<Rows==2>>
-    vec_generic(U a, U b)
-    {
-      _data[0][0] = a;
-      _data[1][0] = b;
-    }
+    //template<typename = std::enable_if<Rows==2>>
+    //vec_generic(U a, U b)
+    //{
+    //  _data[0][0] = a;
+    //  _data[1][0] = b;
+    //}
 
-    template<typename V>
-    vec_generic<1> operator*(vec_generic<Rows, V> const& v) const
-    {
-      return v.Transposed() * *this;
-    }
+    //template<typename V>
+    //vec_generic<1> operator*(vec_generic<Rows, V> const& v) const
+    //{
+    //  return v.Transposed() * *this;
+    //}
 
     //static constexpr vec_generic
     //Orthogonal()
@@ -381,11 +396,6 @@ namespace Engine::Math
     }
   };
 
-  template<size_t Rows, typename U>
-  vec_generic<1, U> Dot(vec_generic<Rows, U> const& u, vec_generic<Rows, U> const& v)
-  {
-    return u * v;
-  }
 
   template<size_t Rows, typename U = dA_float>
   vec_generic<Rows, U> Length(vec_generic<Rows, U> const& u)

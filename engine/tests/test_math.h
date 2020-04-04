@@ -20,7 +20,7 @@ public:
   TestMath()
   {
     using namespace Engine::Math;
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
       //auto eye = glm::vec3{0,0,0};
       //auto center = glm::vec3{1,1,0};
@@ -33,7 +33,7 @@ public:
       BE_TEST_ONCE(true);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
       mat2 m1;
       mat2 m2(1.f);
@@ -46,7 +46,7 @@ public:
       BE_TEST_ONCE(true); // if this compiles this test is successful, i cant negatiuvely test for compilation
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
       Matrix<2,3> L{{1.f,2.f,3.f},{4.f,5.f,6.f}};
       Matrix<3,2> R{{7.f,8.f},{9.f,10.f},{11.f,12.f}};
@@ -54,7 +54,7 @@ public:
       BE_TEST_ONCE(L*R == S);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
       Matrix<3,3> three(42);
       BE_TEST_MULT(three[0][0] == 42);
@@ -70,7 +70,7 @@ public:
       BE_TEST_ONCE(three[2][2] == 42);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
       //auto ortho23 = Matrix<2,3>::Ortho(); // this line shall not compile
       // arguments are some consecutive primes
@@ -91,119 +91,105 @@ public:
       return test_status::TEST_OK;
     });
 
-    Tester::addTest([]()
+    const Engine::Math::vec2 vec2_1(1.0f);
+    const Engine::Math::vec2 vec2_1_2({{1.0f}, {2.0f}});
+    const Engine::Math::vec2 vec2_2_3({{2.0f}, {3.0f}});
+    const Engine::Math::vec2 vec2_1_2_otherObj{{1.0f},{2.0f}};
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 b(1.0f);
-      BE_TEST_ONCE(b == Engine::Math::vec2(1.0f, 1.0f));
+      BE_TEST_ONCE(vec2_1 == Engine::Math::vec2({{1.0f}, {1.0f}}));
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
       Engine::Math::vec2 c = Engine::Math::vec2();
-      BE_TEST_ONCE(c == Engine::Math::vec2(0.0f, 0.0f));
+      BE_TEST_ONCE(c == Engine::Math::vec2({{0.0f}, {0.0f}}));
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 a(1.0f, 2.0f);
-      Engine::Math::vec2 b(1.0f);
-      BE_TEST_ONCE(a != b);
+      BE_TEST_ONCE(vec2_1_2 != vec2_1);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 a(1.0f, 2.0f);
-      Engine::Math::vec2 b(1.0f);
-      BE_TEST_ONCE(!(a == b));
+      Engine::Math::vec2 a({{1.0f}, {2.0f}});
+      BE_TEST_ONCE(!(a == vec2_1));
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 a(1.0f, 2.0f);
-      BE_TEST_ONCE(a==a);
+      BE_TEST_ONCE(vec2_1_2==vec2_1_2);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 a(1.0f, 2.0f);
-      BE_TEST_ONCE(a==Engine::Math::vec2(1.0f, 2.0f));
+      BE_TEST_ONCE(vec2_1_2==vec2_1_2_otherObj);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 a(1.0f, 2.0f);
-      Engine::Math::vec2 b(1.0f);
-      Engine::Math::vec2 add_1 = a+b;
-      BE_TEST_ONCE(add_1 == Engine::Math::vec2(2.0f, 3.0f));
+      Engine::Math::vec2 add_1 = vec2_1_2+vec2_1;
+      BE_TEST_ONCE(add_1 == vec2_2_3);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 a(1.0f, 2.0f);
-      Engine::Math::vec2 b(1.0f);
-      Engine::Math::vec2 add_2 = b+a;
-      BE_TEST_ONCE(add_2 == Engine::Math::vec2(2.0f, 3.0f));
+      Engine::Math::vec2 add_2 = vec2_1+vec2_1_2;
+      BE_TEST_ONCE(add_2 == vec2_2_3);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 a(1.0f, 2.0f);
-      Engine::Math::vec2 b(1.0f);
-      Engine::Math::vec2 add_1 = a+b;
-      Engine::Math::vec2 add_2 = b+a;
+      Engine::Math::vec2 add_1 = vec2_1_2+vec2_1;
+      Engine::Math::vec2 add_2 = vec2_1+vec2_1_2;
       BE_TEST_ONCE(add_2 == add_1);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 a(1.0f, 2.0f);
-      Engine::Math::vec2 b(1.0f);
-      BE_TEST_ONCE((a*b) == 3.0f);
+      BE_TEST_ONCE((vec2_1_2*vec2_1) == 3.0f);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 a(1.0f, 2.0f);
-      Engine::Math::vec2 b(1.0f);
-      BE_TEST_ONCE(Engine::Math::Dot(a, b) == 3.0f);
+      BE_TEST_ONCE(vec2_1_2.Dot(vec2_1) == 3.0f);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 a(1.0f, 2.0f);
       Engine::Math::vec2 c = Engine::Math::vec2();
-      BE_TEST_ONCE(Engine::Math::Dot(a, c) == 0.0f);
+      BE_TEST_ONCE(vec2_1_2.Dot(c) == 0.0f);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
-      Engine::Math::vec2 a(1.0f, 2.0f);
       std::stringbuf buf;
       std::ostream s(&buf);
-      s << a;
+      s << vec2_1_2;
       //std::cout << buf.str() << "#";
       //for(auto c : buf.str())
       //  std::cout << c << ":" << (int)c << std::endl;
       BE_TEST_ONCE(buf.str() == "(1, 2)\n");
     });
 
-    Tester::addTest([]()
+    const Engine::Math::mat2 mat2_0(0.0f);
+    const Engine::Math::mat2 mat2_0_0_0_0({{0.0f, 0.0f}, {0.0f, 0.0f}});
+    Tester::addTest([=]()
     {
-      Engine::Math::mat2 a(0.0f);
-      Engine::Math::mat2 b(0.0f, 0.0f, 0.0f, 0.0f);
-      BE_TEST_ONCE(a == b);
+      BE_TEST_ONCE(mat2_0 == mat2_0_0_0_0);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
       Engine::Math::mat2 a(0.0f);
       BE_TEST_ONCE(a*2.f == a);
     });
 
-    Tester::addTest([]()
+    Tester::addTest([=]()
     {
       Engine::Math::mat2 e1 = Engine::Math::mat2::Identity();
-      Engine::Math::mat2 e2({1.0f, 0.0f, 0.0f, 1.0f});
+      Engine::Math::mat2 e2({{1.0f, 0.0f}, {0.0f, 1.0f}});
       //std::cout << "e1" << e1 << std::endl;
       //std::cout << "e2" << e2 << std::endl;
       BE_TEST_ONCE(e1 == e2);
