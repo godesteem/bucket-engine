@@ -14,15 +14,7 @@ jobs:
       - name: Build
         run: |
           sudo apt-get install -y doxygen doxygen-doc doxygen-gui graphviz
-          sudo rm -rf $(find -not -path "./docs/*" -not -path "." -type d)
-
-          git init
-          git config --global user.name "Docs CI"
-          git config --global user.email "philipp+bucket-engine-docs-auto-ci@godesteem.de"
-          git checkout -fb gh-pages
-          git add .
-          git commit -m "deploy docs"
-          git push origin gh-pages
+          doxygen docs/doxygen.conf
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
