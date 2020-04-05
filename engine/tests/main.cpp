@@ -21,7 +21,7 @@ int main(int argc, char** argv){
 
   if(runAll)
   {
-    return ! Tester::executeAll();
+    return (Tester::executeAll() ? 0 : 1);
   }
   else
   {

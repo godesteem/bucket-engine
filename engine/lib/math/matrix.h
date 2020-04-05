@@ -183,9 +183,9 @@ namespace Engine::Math
     }
 
     template<size_t C>
-    Matrix<Rows,C> operator*(Matrix<Columns, C> const& m) const
+    Matrix<Rows,C, T> operator*(Matrix<Columns, C, T> const& m) const
     {
-      Matrix<Rows,C> res;
+      Matrix<Rows,C,T> res;
       for (size_t spalte = 0; spalte < C; spalte++)
       {
         for (size_t zeile = 0; zeile < Rows; zeile++)
@@ -201,9 +201,9 @@ namespace Engine::Math
     }
 
     //return a copy which is transposed
-    Matrix<Columns, Rows> Transposed() const
+    Matrix<Columns, Rows, T> Transposed() const
     {
-      Matrix<Columns,Rows> res;
+      Matrix<Columns,Rows,T> res;
       for (size_t col = 0; col < Columns; col++)
       {
         for (size_t row = 0; row < Rows; row++)
@@ -282,17 +282,15 @@ namespace Engine::Math
     }
 
     template<size_t C = Columns, typename onlyForVectors = std::enable_if<C == 1>>
-    Matrix<1,1> Dot(Matrix<Rows, 1> const& v) const
+    Matrix<1,1,T> Dot(Matrix<Rows, 1> const& v) const
     {
       return v.Transposed() * *this;
     }
 
-    template<typename onlyForVectors = std::enable_if<Columns == 1>>
+    template<size_t C=Columns, typename onlyForVectors = std::enable_if<C == 1>>
     T Magnitude() const
     {
-      auto t = (*this).Transposed();
-      Matrix<1,1> v = t * (*this);
-      return std::sqrtf(v.operator T());
+      return std::sqrt((this->Transposed() * (*this)).operator float());
     }
 
     Matrix operator-() const
