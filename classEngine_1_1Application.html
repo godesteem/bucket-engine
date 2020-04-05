@@ -66,6 +66,9 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="classEngine_1_1Application-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Engine::Application Class Reference</div>  </div>
@@ -97,6 +100,29 @@ Public Member Functions</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a8481bcd1fefaaf3be3aceaa3b36e3a07"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classEngine_1_1Application.html">Application</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Application.html#a8481bcd1fefaaf3be3aceaa3b36e3a07">Get</a> ()</td></tr>
 <tr class="separator:a8481bcd1fefaaf3be3aceaa3b36e3a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a6ac6d31e30228a870ba9b3876f527c7e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Application.html#a6ac6d31e30228a870ba9b3876f527c7e">OnWindowClose</a> (<a class="el" href="classEngine_1_1WindowCloseEvent.html">WindowCloseEvent</a> &amp;)</td></tr>
+<tr class="separator:a6ac6d31e30228a870ba9b3876f527c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a941dc4d1597f87585acfd404d7287c61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceEngine.html#ab1990618f0cb36e5a7d900d5d88de094">Scope</a>&lt; <a class="el" href="classEngine_1_1Window.html">Window</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Application.html#a941dc4d1597f87585acfd404d7287c61">m_Window</a></td></tr>
+<tr class="separator:a941dc4d1597f87585acfd404d7287c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcdad1a8cd09598866f58217f3a2da0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEngine_1_1ImGUILayer.html">ImGUILayer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Application.html#adcdad1a8cd09598866f58217f3a2da0a">m_ImGuiLayer</a></td></tr>
+<tr class="separator:adcdad1a8cd09598866f58217f3a2da0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b43b4bf89e85879731eea766012108d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Application.html#a5b43b4bf89e85879731eea766012108d">m_Running</a> = true</td></tr>
+<tr class="separator:a5b43b4bf89e85879731eea766012108d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c4d4e350257933628da261d12366946"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEngine_1_1LayerStack.html">LayerStack</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Application.html#a3c4d4e350257933628da261d12366946">m_LayerStack</a></td></tr>
+<tr class="separator:a3c4d4e350257933628da261d12366946"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4429feb5c06dcdb2721ece9768529feb"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Application.html#a4429feb5c06dcdb2721ece9768529feb">m_FrameLastTime</a> = 0.0f</td></tr>
+<tr class="separator:a4429feb5c06dcdb2721ece9768529feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:aa4d9a8c948e785dbe1d21542de42be6d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classEngine_1_1Application.html">Application</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Application.html#aa4d9a8c948e785dbe1d21542de42be6d">s_Instance</a> = nullptr</td></tr>
+<tr class="separator:aa4d9a8c948e785dbe1d21542de42be6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Main entry point </p>
@@ -238,6 +264,32 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a6ac6d31e30228a870ba9b3876f527c7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ac6d31e30228a870ba9b3876f527c7e">&#9670;&nbsp;</a></span>OnWindowClose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Engine::Application::OnWindowClose </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEngine_1_1WindowCloseEvent.html">WindowCloseEvent</a> &amp;&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a1ad741508a5544c30e740053a91225b4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1ad741508a5544c30e740053a91225b4">&#9670;&nbsp;</a></span>PushLayer()</h2>
 
@@ -287,6 +339,139 @@ Static Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4429feb5c06dcdb2721ece9768529feb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4429feb5c06dcdb2721ece9768529feb">&#9670;&nbsp;</a></span>m_FrameLastTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Engine::Application::m_FrameLastTime = 0.0f</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adcdad1a8cd09598866f58217f3a2da0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcdad1a8cd09598866f58217f3a2da0a">&#9670;&nbsp;</a></span>m_ImGuiLayer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEngine_1_1ImGUILayer.html">ImGUILayer</a>* Engine::Application::m_ImGuiLayer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3c4d4e350257933628da261d12366946"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c4d4e350257933628da261d12366946">&#9670;&nbsp;</a></span>m_LayerStack</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEngine_1_1LayerStack.html">LayerStack</a> Engine::Application::m_LayerStack</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5b43b4bf89e85879731eea766012108d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b43b4bf89e85879731eea766012108d">&#9670;&nbsp;</a></span>m_Running</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Engine::Application::m_Running = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a941dc4d1597f87585acfd404d7287c61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a941dc4d1597f87585acfd404d7287c61">&#9670;&nbsp;</a></span>m_Window</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceEngine.html#ab1990618f0cb36e5a7d900d5d88de094">Scope</a>&lt;<a class="el" href="classEngine_1_1Window.html">Window</a>&gt; Engine::Application::m_Window</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa4d9a8c948e785dbe1d21542de42be6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4d9a8c948e785dbe1d21542de42be6d">&#9670;&nbsp;</a></span>s_Instance</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEngine_1_1Application.html">Application</a> * Engine::Application::s_Instance = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

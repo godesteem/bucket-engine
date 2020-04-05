@@ -66,6 +66,8 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classEngine_1_1X11Window-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Engine::X11Window Class Reference</div>  </div>
@@ -83,6 +85,11 @@ Inheritance diagram for Engine::X11Window:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEngine_1_1X11Window_1_1WindowData.html">WindowData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a75786f6e6d69a8e754ec5a39f0798b38"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1X11Window.html#a75786f6e6d69a8e754ec5a39f0798b38">X11Window</a> (const <a class="el" href="structEngine_1_1WindowProps.html">WindowProps</a> &amp;props)</td></tr>
@@ -108,6 +115,22 @@ Public Member Functions</h2></td></tr>
 <tr class="inherit_header pub_methods_classEngine_1_1Window"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classEngine_1_1Window')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classEngine_1_1Window.html">Engine::Window</a></td></tr>
 <tr class="memitem:accbe1d6e66cde190940c0f9d5ac6b131 inherit pub_methods_classEngine_1_1Window"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Window.html#accbe1d6e66cde190940c0f9d5ac6b131">~Window</a> ()=default</td></tr>
 <tr class="separator:accbe1d6e66cde190940c0f9d5ac6b131 inherit pub_methods_classEngine_1_1Window"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ad028e6398f5a3785dba9ae0d32a674b2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1X11Window.html#ad028e6398f5a3785dba9ae0d32a674b2">Init</a> (const <a class="el" href="structEngine_1_1WindowProps.html">WindowProps</a> &amp;props)</td></tr>
+<tr class="separator:ad028e6398f5a3785dba9ae0d32a674b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7698ef9bf1bf6b0338cd15d5d443943"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1X11Window.html#ad7698ef9bf1bf6b0338cd15d5d443943">ShutDown</a> ()</td></tr>
+<tr class="separator:ad7698ef9bf1bf6b0338cd15d5d443943"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:abfa88d5102a69bb80603222eb5082a42"><td class="memItemLeft" align="right" valign="top">GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1X11Window.html#abfa88d5102a69bb80603222eb5082a42">m_Window</a></td></tr>
+<tr class="separator:abfa88d5102a69bb80603222eb5082a42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af78be4e53734f46475dd370216f9f591"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEngine_1_1GraphicsContext.html">GraphicsContext</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1X11Window.html#af78be4e53734f46475dd370216f9f591">m_Context</a></td></tr>
+<tr class="separator:af78be4e53734f46475dd370216f9f591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d1ece1fc814d128dd8351909cd137f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structEngine_1_1X11Window_1_1WindowData.html">WindowData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1X11Window.html#a39d1ece1fc814d128dd8351909cd137f">m_Data</a></td></tr>
+<tr class="separator:a39d1ece1fc814d128dd8351909cd137f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -241,6 +264,32 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classEngine_1_1Window.html#ab9a4b4236c538f0cf79ae89ba0d79c96">Engine::Window</a>.</p>
+
+</div>
+</div>
+<a id="ad028e6398f5a3785dba9ae0d32a674b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad028e6398f5a3785dba9ae0d32a674b2">&#9670;&nbsp;</a></span>Init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Engine::X11Window::Init </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structEngine_1_1WindowProps.html">WindowProps</a> &amp;&#160;</td>
+          <td class="paramname"><em>props</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -378,6 +427,98 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classEngine_1_1Window.html#ac25ea2cb917b39ae36ad12d2154c59c0">Engine::Window</a>.</p>
+
+</div>
+</div>
+<a id="ad7698ef9bf1bf6b0338cd15d5d443943"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7698ef9bf1bf6b0338cd15d5d443943">&#9670;&nbsp;</a></span>ShutDown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Engine::X11Window::ShutDown </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="af78be4e53734f46475dd370216f9f591"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af78be4e53734f46475dd370216f9f591">&#9670;&nbsp;</a></span>m_Context</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEngine_1_1GraphicsContext.html">GraphicsContext</a>* Engine::X11Window::m_Context</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a39d1ece1fc814d128dd8351909cd137f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39d1ece1fc814d128dd8351909cd137f">&#9670;&nbsp;</a></span>m_Data</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structEngine_1_1X11Window_1_1WindowData.html">WindowData</a> Engine::X11Window::m_Data</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abfa88d5102a69bb80603222eb5082a42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfa88d5102a69bb80603222eb5082a42">&#9670;&nbsp;</a></span>m_Window</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLFWwindow* Engine::X11Window::m_Window</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

@@ -14,6 +14,7 @@ var searchData=
   ['setsize',['SetSize',['../classEngine_1_1VertexArray.html#afd2e624835bd1a59cda78dc25f862974',1,'Engine::VertexArray']]],
   ['setvertexarraysize',['SetVertexArraySize',['../classEngine_1_1Mesh.html#acd95f4e1887beec0c584ccbf728edf20',1,'Engine::Mesh::SetVertexArraySize()'],['../classEngine_1_1OpenGLMesh.html#a39dbf7fa3a934baee8f4c8625c3aee7e',1,'Engine::OpenGLMesh::SetVertexArraySize()']]],
   ['setvsync',['SetVSync',['../classEngine_1_1Window.html#ac25ea2cb917b39ae36ad12d2154c59c0',1,'Engine::Window::SetVSync()'],['../classEngine_1_1X11Window.html#a6a6a870601ab0ef95436a93eca234286',1,'Engine::X11Window::SetVSync()']]],
+  ['shutdown',['ShutDown',['../classEngine_1_1X11Window.html#ad7698ef9bf1bf6b0338cd15d5d443943',1,'Engine::X11Window']]],
   ['submit',['Submit',['../classEngine_1_1Renderer.html#a4e0856edd853aecbd106d33952a584b1',1,'Engine::Renderer']]],
   ['swapbuffers',['SwapBuffers',['../classEngine_1_1GraphicsContext.html#a0d0f3137f961fccfd185875b4c380482',1,'Engine::GraphicsContext::SwapBuffers()'],['../classEngine_1_1OpenGLContext.html#ad6a877b467debb748158d509ce4b8e09',1,'Engine::OpenGLContext::SwapBuffers()']]]
 ];

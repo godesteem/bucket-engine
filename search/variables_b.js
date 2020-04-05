@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pitch',['Pitch',['../classEngine_1_1ThirdPersonCamera.html#a29ca0ad7562421783a87e150d809f4f6',1,'Engine::ThirdPersonCamera::Pitch()'],['../namespaceEngine.html#acb4869ba868f1f0fb951b6f6ccf28c15',1,'Engine::PITCH()']]]
+  ['offset',['Offset',['../structEngine_1_1BufferElement.html#a3a7003839804a10f3d2f8ff8a7c2a332',1,'Engine::BufferElement']]]
 ];

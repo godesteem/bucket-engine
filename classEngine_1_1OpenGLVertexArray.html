@@ -65,6 +65,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classEngine_1_1OpenGLVertexArray-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Engine::OpenGLVertexArray Class Reference</div>  </div>
@@ -107,6 +108,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad484a487ac8fa2147b8cc8cb4fb2944a inherit pub_methods_classEngine_1_1VertexArray"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd2e624835bd1a59cda78dc25f862974 inherit pub_methods_classEngine_1_1VertexArray"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1VertexArray.html#afd2e624835bd1a59cda78dc25f862974">SetSize</a> (uint32_t s)</td></tr>
 <tr class="separator:afd2e624835bd1a59cda78dc25f862974 inherit pub_methods_classEngine_1_1VertexArray"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a09e883e50fd1534aff93e9073fd78404"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLVertexArray.html#a09e883e50fd1534aff93e9073fd78404">m_RendererID</a> = 0</td></tr>
+<tr class="separator:a09e883e50fd1534aff93e9073fd78404"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44c80d0340d519687c07b7e252297ce7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespaceEngine.html#ad5b8efbd3ff3c1fe2d0a31cf5eecc08d">Ref</a>&lt; <a class="el" href="classEngine_1_1VertexBuffer.html">VertexBuffer</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLVertexArray.html#a44c80d0340d519687c07b7e252297ce7">m_VertexBuffers</a></td></tr>
+<tr class="separator:a44c80d0340d519687c07b7e252297ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a911ee53b1ce9f9a760df2e1011554fc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceEngine.html#ad5b8efbd3ff3c1fe2d0a31cf5eecc08d">Ref</a>&lt; <a class="el" href="classEngine_1_1IndexBuffer.html">IndexBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLVertexArray.html#a911ee53b1ce9f9a760df2e1011554fc7">m_IndexBuffer</a></td></tr>
+<tr class="separator:a911ee53b1ce9f9a760df2e1011554fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62eae9812a1db4ca2af4e89ecd12f486"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLVertexArray.html#a62eae9812a1db4ca2af4e89ecd12f486">m_VertexBuffersAttributesSize</a> = 0</td></tr>
+<tr class="separator:a62eae9812a1db4ca2af4e89ecd12f486"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -322,6 +334,95 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classEngine_1_1VertexArray.html#ae7d66f42c9dc74bc7a199cfdd50648b3">Engine::VertexArray</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a911ee53b1ce9f9a760df2e1011554fc7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a911ee53b1ce9f9a760df2e1011554fc7">&#9670;&nbsp;</a></span>m_IndexBuffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceEngine.html#ad5b8efbd3ff3c1fe2d0a31cf5eecc08d">Ref</a>&lt;<a class="el" href="classEngine_1_1IndexBuffer.html">IndexBuffer</a>&gt; Engine::OpenGLVertexArray::m_IndexBuffer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a09e883e50fd1534aff93e9073fd78404"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09e883e50fd1534aff93e9073fd78404">&#9670;&nbsp;</a></span>m_RendererID</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Engine::OpenGLVertexArray::m_RendererID = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a44c80d0340d519687c07b7e252297ce7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44c80d0340d519687c07b7e252297ce7">&#9670;&nbsp;</a></span>m_VertexBuffers</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="namespaceEngine.html#ad5b8efbd3ff3c1fe2d0a31cf5eecc08d">Ref</a>&lt;<a class="el" href="classEngine_1_1VertexBuffer.html">VertexBuffer</a>&gt; &gt; Engine::OpenGLVertexArray::m_VertexBuffers</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a62eae9812a1db4ca2af4e89ecd12f486"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62eae9812a1db4ca2af4e89ecd12f486">&#9670;&nbsp;</a></span>m_VertexBuffersAttributesSize</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Engine::OpenGLVertexArray::m_VertexBuffersAttributesSize = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['sensitifity',['SENSITIFITY',['../namespaceEngine.html#a7c98862bc9acdc4a94f6dbfb401a36db',1,'Engine']]],
-  ['size',['Size',['../structEngine_1_1BufferElement.html#a420284890488aa4644df32f2643da7ea',1,'Engine::BufferElement']]],
-  ['speed',['SPEED',['../namespaceEngine.html#a686012cb3c523e6a314112752eca543e',1,'Engine']]]
+  ['pitch',['Pitch',['../classEngine_1_1ThirdPersonCamera.html#a29ca0ad7562421783a87e150d809f4f6',1,'Engine::ThirdPersonCamera::Pitch()'],['../namespaceEngine.html#acb4869ba868f1f0fb951b6f6ccf28c15',1,'Engine::PITCH()']]],
+  ['position',['Position',['../classEngine_1_1ThirdPersonCamera.html#a77d183a9387545bb4b0c496ab17680fc',1,'Engine::ThirdPersonCamera']]]
 ];

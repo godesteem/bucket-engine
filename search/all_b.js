@@ -8,7 +8,7 @@ var searchData=
   ['layerstack',['LayerStack',['../classEngine_1_1LayerStack.html',1,'Engine::LayerStack'],['../classEngine_1_1LayerStack.html#a3f6476bd25dd62883dcedeb5abdce98d',1,'Engine::LayerStack::LayerStack()']]],
   ['layerstack_2ecpp',['LayerStack.cpp',['../LayerStack_8cpp.html',1,'']]],
   ['layerstack_2eh',['LayerStack.h',['../LayerStack_8h.html',1,'']]],
-  ['length',['Length',['../classEngine_1_1Math_1_1vec__generic.html#a0b3942f730c69fce07387cd0b2cfd38d',1,'Engine::Math::vec_generic::Length()'],['../namespaceEngine_1_1Math.html#a0b801cd4c5bb19c52181aafe049f595a',1,'Engine::Math::Length()']]],
+  ['length',['Length',['../namespaceEngine_1_1Math.html#a0b801cd4c5bb19c52181aafe049f595a',1,'Engine::Math']]],
   ['level',['Level',['../classEngine_1_1Level.html',1,'Engine::Level'],['../classEngine_1_1Level.html#ae44f4b141e88a8ec8cbb3bf7e07c7245',1,'Engine::Level::Level()']]],
   ['level_2ecpp',['Level.cpp',['../Level_8cpp.html',1,'']]],
   ['level_2eh',['Level.h',['../Level_8h.html',1,'']]],

@@ -65,6 +65,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="classEngine_1_1OrthographicCamera-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Engine::OrthographicCamera Class Reference</div>  </div>
@@ -106,13 +107,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a93b3e174a6b1e7057d55fa00e716ef1b inherit pub_methods_classEngine_1_1Camera"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Camera.html#a93b3e174a6b1e7057d55fa00e716ef1b">IsActive</a> ()</td></tr>
 <tr class="separator:a93b3e174a6b1e7057d55fa00e716ef1b inherit pub_methods_classEngine_1_1Camera"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a0ee49f3d608486ecf12db7be5ab5856a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OrthographicCamera.html#a0ee49f3d608486ecf12db7be5ab5856a">RecalculateViewMatrix</a> () override</td></tr>
+<tr class="separator:a0ee49f3d608486ecf12db7be5ab5856a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_static_methods_classEngine_1_1Camera"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classEngine_1_1Camera')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classEngine_1_1Camera.html">Engine::Camera</a></td></tr>
 <tr class="memitem:a10c1020e2db20df7a5c24a2fc41f9084 inherit pub_static_methods_classEngine_1_1Camera"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classEngine_1_1Camera.html">Camera</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Camera.html#a10c1020e2db20df7a5c24a2fc41f9084">GetActiveCamera</a> ()</td></tr>
 <tr class="separator:a10c1020e2db20df7a5c24a2fc41f9084 inherit pub_static_methods_classEngine_1_1Camera"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_classEngine_1_1Camera"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classEngine_1_1Camera')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classEngine_1_1Camera.html">Engine::Camera</a></td></tr>
-<tr class="memitem:a36a2322e609bd4e922dbb039a0aebea0 inherit pub_static_attribs_classEngine_1_1Camera"><td class="memItemLeft" align="right" valign="top">static CameraStack *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Camera.html#a36a2322e609bd4e922dbb039a0aebea0">camStack</a> = new Camera::CameraStack()</td></tr>
+<tr class="memitem:a36a2322e609bd4e922dbb039a0aebea0 inherit pub_static_attribs_classEngine_1_1Camera"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structEngine_1_1Camera_1_1CameraStack.html">CameraStack</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Camera.html#a36a2322e609bd4e922dbb039a0aebea0">camStack</a> = new <a class="el" href="structEngine_1_1Camera_1_1CameraStack.html">Camera::CameraStack</a>()</td></tr>
 <tr class="separator:a36a2322e609bd4e922dbb039a0aebea0 inherit pub_static_attribs_classEngine_1_1Camera"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classEngine_1_1Camera"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classEngine_1_1Camera')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classEngine_1_1Camera.html">Engine::Camera</a></td></tr>
 <tr class="memitem:a7ec727e7c143ce1597618e21811bdf21 inherit pro_attribs_classEngine_1_1Camera"><td class="memItemLeft" align="right" valign="top">glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Camera.html#a7ec727e7c143ce1597618e21811bdf21">m_ProjectionMatrix</a></td></tr>
@@ -156,6 +162,33 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classEngine_1_1Camera.html#a921add800f769494233d0bfcfad193db">Engine::Camera</a>.</p>
+
+</div>
+</div>
+<a id="a0ee49f3d608486ecf12db7be5ab5856a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ee49f3d608486ecf12db7be5ab5856a">&#9670;&nbsp;</a></span>RecalculateViewMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Engine::OrthographicCamera::RecalculateViewMatrix </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">private</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classEngine_1_1Camera.html#a4835083e089196ce3f6cdddee0f4a143">Engine::Camera</a>.</p>
 
 </div>
 </div>

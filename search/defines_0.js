@@ -3,14 +3,6 @@ var searchData=
   ['be_5fapi',['BE_API',['../Core_8h.html#ad46111838ff117736cf29c324fc5c950',1,'Core.h']]],
   ['be_5fbind_5fevent_5ffn',['BE_BIND_EVENT_FN',['../Core_8h.html#ac22eb871474985b2b8e5d91da642c662',1,'Core.h']]],
   ['be_5fcheck_5ffile',['BE_CHECK_FILE',['../Log_8h.html#a2883cbd90a3a7c8d7bca4d1ec24a3fc2',1,'Log.h']]],
-  ['be_5fcore_5ferror',['BE_CORE_ERROR',['../Log_8h.html#a9c81fcb8d62e0bad21ae84b8c19b0482',1,'Log.h']]],
-  ['be_5fcore_5ffatal',['BE_CORE_FATAL',['../Log_8h.html#a7127c8a2f31c17421556e4c3cb6496d2',1,'Log.h']]],
-  ['be_5fcore_5finfo',['BE_CORE_INFO',['../Log_8h.html#a788e6622dcba90e47b808bd2bee44c81',1,'Log.h']]],
-  ['be_5fcore_5ftrace',['BE_CORE_TRACE',['../Log_8h.html#a842a37d891145d277ed95721c7e27d54',1,'Log.h']]],
-  ['be_5fcore_5fwarn',['BE_CORE_WARN',['../Log_8h.html#abfd4d565f528a549634dadf1c8d74ab2',1,'Log.h']]],
-  ['be_5ferror',['BE_ERROR',['../Log_8h.html#a7f3fd67bd9c3e965bc27de92f9a584e2',1,'Log.h']]],
-  ['be_5ffatal',['BE_FATAL',['../Log_8h.html#a09c0bf96d1d0702a34e856868b4179b0',1,'Log.h']]],
-  ['be_5finfo',['BE_INFO',['../Log_8h.html#a1248fb00d52d98d5809a25b4a8c61e88',1,'Log.h']]],
   ['be_5fkey_5f0',['BE_KEY_0',['../KeyCodes_8h.html#a408c4ff7c6f11cc1f5a70eb469acbfbf',1,'KeyCodes.h']]],
   ['be_5fkey_5f1',['BE_KEY_1',['../KeyCodes_8h.html#a7b2599bedb57d6fcc7c02bcf2cc4c9f0',1,'KeyCodes.h']]],
   ['be_5fkey_5f2',['BE_KEY_2',['../KeyCodes_8h.html#a4777027c3117ef4a7492f7917446850d',1,'KeyCodes.h']]],
@@ -143,8 +135,6 @@ var searchData=
   ['be_5fmouse_5fbutton_5fleft',['BE_MOUSE_BUTTON_LEFT',['../MouseButtonCodes_8h.html#a32dda1dcfc25d66d23e730d6daee14ae',1,'MouseButtonCodes.h']]],
   ['be_5fmouse_5fbutton_5fmiddle',['BE_MOUSE_BUTTON_MIDDLE',['../MouseButtonCodes_8h.html#a16ffb2e378e99842665fa00110f7522d',1,'MouseButtonCodes.h']]],
   ['be_5fmouse_5fbutton_5fright',['BE_MOUSE_BUTTON_RIGHT',['../MouseButtonCodes_8h.html#a888113339a91ef7e619835d945fa5897',1,'MouseButtonCodes.h']]],
-  ['be_5ftrace',['BE_TRACE',['../Log_8h.html#a64887819ac4f1bba1c050ce95801e142',1,'Log.h']]],
-  ['be_5fwarn',['BE_WARN',['../Log_8h.html#a5613b5a732fc5f1bf3251625e358c865',1,'Log.h']]],
   ['bind_5fevent_5ffn',['BIND_EVENT_FN',['../Application_8cpp.html#a2290aac021a7119e86af0aa6d962a226',1,'Application.cpp']]],
   ['bit',['BIT',['../Core_8h.html#ad27cc17b25bb93134368d5eb21126eae',1,'Core.h']]]
 ];

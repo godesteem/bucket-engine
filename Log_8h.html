@@ -66,7 +66,8 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Log.h File Reference</div>  </div>
 </div><!--header-->
@@ -89,28 +90,41 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a9c81fcb8d62e0bad21ae84b8c19b0482"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Log_8h.html#a9c81fcb8d62e0bad21ae84b8c19b0482">BE_CORE_ERROR</a></td></tr>
-<tr class="separator:a9c81fcb8d62e0bad21ae84b8c19b0482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfd4d565f528a549634dadf1c8d74ab2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Log_8h.html#abfd4d565f528a549634dadf1c8d74ab2">BE_CORE_WARN</a></td></tr>
-<tr class="separator:abfd4d565f528a549634dadf1c8d74ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a842a37d891145d277ed95721c7e27d54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Log_8h.html#a842a37d891145d277ed95721c7e27d54">BE_CORE_TRACE</a></td></tr>
-<tr class="separator:a842a37d891145d277ed95721c7e27d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a788e6622dcba90e47b808bd2bee44c81"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Log_8h.html#a788e6622dcba90e47b808bd2bee44c81">BE_CORE_INFO</a></td></tr>
-<tr class="separator:a788e6622dcba90e47b808bd2bee44c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7127c8a2f31c17421556e4c3cb6496d2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Log_8h.html#a7127c8a2f31c17421556e4c3cb6496d2">BE_CORE_FATAL</a></td></tr>
-<tr class="separator:a7127c8a2f31c17421556e4c3cb6496d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f3fd67bd9c3e965bc27de92f9a584e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Log_8h.html#a7f3fd67bd9c3e965bc27de92f9a584e2">BE_ERROR</a></td></tr>
-<tr class="separator:a7f3fd67bd9c3e965bc27de92f9a584e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5613b5a732fc5f1bf3251625e358c865"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Log_8h.html#a5613b5a732fc5f1bf3251625e358c865">BE_WARN</a></td></tr>
-<tr class="separator:a5613b5a732fc5f1bf3251625e358c865"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64887819ac4f1bba1c050ce95801e142"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Log_8h.html#a64887819ac4f1bba1c050ce95801e142">BE_TRACE</a></td></tr>
-<tr class="separator:a64887819ac4f1bba1c050ce95801e142"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1248fb00d52d98d5809a25b4a8c61e88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Log_8h.html#a1248fb00d52d98d5809a25b4a8c61e88">BE_INFO</a></td></tr>
-<tr class="separator:a1248fb00d52d98d5809a25b4a8c61e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09c0bf96d1d0702a34e856868b4179b0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Log_8h.html#a09c0bf96d1d0702a34e856868b4179b0">BE_FATAL</a></td></tr>
-<tr class="separator:a09c0bf96d1d0702a34e856868b4179b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2883cbd90a3a7c8d7bca4d1ec24a3fc2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Log_8h.html#a2883cbd90a3a7c8d7bca4d1ec24a3fc2">BE_CHECK_FILE</a>(x,  y, ...)</td></tr>
 <tr class="separator:a2883cbd90a3a7c8d7bca4d1ec24a3fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a786b1770e20fb13d1129b20ca59abd43"><td class="memTemplParams" colspan="2">template&lt;typename T , typename ... P&gt; </td></tr>
+<tr class="memitem:a786b1770e20fb13d1129b20ca59abd43"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Log_8h.html#a786b1770e20fb13d1129b20ca59abd43">BE_CORE_ERROR</a> (const T &amp;t, const P &amp;... p)</td></tr>
+<tr class="separator:a786b1770e20fb13d1129b20ca59abd43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6533d4841dbc1ad1f72de7c7188806b3"><td class="memTemplParams" colspan="2">template&lt;typename T , typename ... P&gt; </td></tr>
+<tr class="memitem:a6533d4841dbc1ad1f72de7c7188806b3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Log_8h.html#a6533d4841dbc1ad1f72de7c7188806b3">BE_CORE_WARN</a> (const T &amp;t, const P &amp;... p)</td></tr>
+<tr class="separator:a6533d4841dbc1ad1f72de7c7188806b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8672249a8778d55a7f25435c6dcf4935"><td class="memTemplParams" colspan="2">template&lt;typename T , typename ... P&gt; </td></tr>
+<tr class="memitem:a8672249a8778d55a7f25435c6dcf4935"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Log_8h.html#a8672249a8778d55a7f25435c6dcf4935">BE_CORE_TRACE</a> (const T &amp;t, const P &amp;... p)</td></tr>
+<tr class="separator:a8672249a8778d55a7f25435c6dcf4935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba1efe31711b810df0499b5e75b980e4"><td class="memTemplParams" colspan="2">template&lt;typename T , typename ... P&gt; </td></tr>
+<tr class="memitem:aba1efe31711b810df0499b5e75b980e4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Log_8h.html#aba1efe31711b810df0499b5e75b980e4">BE_CORE_INFO</a> (const T &amp;t, const P &amp;... p)</td></tr>
+<tr class="separator:aba1efe31711b810df0499b5e75b980e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9df47257722d204445a7af3d1f7a9338"><td class="memTemplParams" colspan="2">template&lt;typename T , typename ... P&gt; </td></tr>
+<tr class="memitem:a9df47257722d204445a7af3d1f7a9338"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Log_8h.html#a9df47257722d204445a7af3d1f7a9338">BE_CORE_FATAL</a> (const T &amp;t, const P &amp;... p)</td></tr>
+<tr class="separator:a9df47257722d204445a7af3d1f7a9338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cda1f154a290b6c2804f98aaa0d9758"><td class="memTemplParams" colspan="2">template&lt;typename T , typename ... P&gt; </td></tr>
+<tr class="memitem:a5cda1f154a290b6c2804f98aaa0d9758"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Log_8h.html#a5cda1f154a290b6c2804f98aaa0d9758">BE_ERROR</a> (const T &amp;t, const P &amp;... p)</td></tr>
+<tr class="separator:a5cda1f154a290b6c2804f98aaa0d9758"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60360fde45b487903a2cdb0194c10e55"><td class="memTemplParams" colspan="2">template&lt;typename T , typename ... P&gt; </td></tr>
+<tr class="memitem:a60360fde45b487903a2cdb0194c10e55"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Log_8h.html#a60360fde45b487903a2cdb0194c10e55">BE_WARN</a> (const T &amp;t, const P &amp;... p)</td></tr>
+<tr class="separator:a60360fde45b487903a2cdb0194c10e55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6b419677fd5faca67b490d7787f8f6e"><td class="memTemplParams" colspan="2">template&lt;typename T , typename ... P&gt; </td></tr>
+<tr class="memitem:af6b419677fd5faca67b490d7787f8f6e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Log_8h.html#af6b419677fd5faca67b490d7787f8f6e">BE_TRACE</a> (const T &amp;t, const P &amp;... p)</td></tr>
+<tr class="separator:af6b419677fd5faca67b490d7787f8f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2120dc5b9beb046b31b839e398f0d12"><td class="memTemplParams" colspan="2">template&lt;typename T , typename ... P&gt; </td></tr>
+<tr class="memitem:ae2120dc5b9beb046b31b839e398f0d12"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Log_8h.html#ae2120dc5b9beb046b31b839e398f0d12">BE_INFO</a> (const T &amp;t, const P &amp;... p)</td></tr>
+<tr class="separator:ae2120dc5b9beb046b31b839e398f0d12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0a6b4c7acd80f3c3351ce53e1894bc0"><td class="memTemplParams" colspan="2">template&lt;typename T , typename ... P&gt; </td></tr>
+<tr class="memitem:aa0a6b4c7acd80f3c3351ce53e1894bc0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Log_8h.html#aa0a6b4c7acd80f3c3351ce53e1894bc0">BE_FATAL</a> (const T &amp;t, const P &amp;... p)</td></tr>
+<tr class="separator:aa0a6b4c7acd80f3c3351ce53e1894bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a2883cbd90a3a7c8d7bca4d1ec24a3fc2"></a>
@@ -147,140 +161,301 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">{<span class="keyword">auto</span> l = x.find_last_of(<span class="stringliteral">&quot;/\\&quot;</span>); \</div><div class="line">                                      l = l == std::string::npos ? 0 : l + 1; \</div><div class="line">                                      auto lDot = x.rfind(<span class="charliteral">&#39;.&#39;</span>); \</div><div class="line">                                      std::ostringstream stringStream; \</div><div class="line">                                      stringStream &lt;&lt; <span class="stringliteral">&quot;Wrong file extension \&quot;&quot;</span> &lt;&lt; \</div><div class="line">                                      x.substr(lDot, x.size()) &lt;&lt; <span class="stringliteral">&quot;\&quot;. Need &quot;</span> &lt;&lt; y &lt;&lt; <span class="stringliteral">&quot;!&quot;</span>; \</div><div class="line">                                      std::string copyOfStr = stringStream.str(); \</div><div class="line">                                      BE_CORE_ASSERT(x.substr(lDot, x.size()) == y, copyOfStr); }</div></div><!-- fragment -->
 </div>
 </div>
-<a id="a9c81fcb8d62e0bad21ae84b8c19b0482"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c81fcb8d62e0bad21ae84b8c19b0482">&#9670;&nbsp;</a></span>BE_CORE_ERROR</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a786b1770e20fb13d1129b20ca59abd43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a786b1770e20fb13d1129b20ca59abd43">&#9670;&nbsp;</a></span>BE_CORE_ERROR()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename ... P&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">#define BE_CORE_ERROR</td>
+          <td class="memname">void BE_CORE_ERROR </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const P &amp;...&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a7127c8a2f31c17421556e4c3cb6496d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7127c8a2f31c17421556e4c3cb6496d2">&#9670;&nbsp;</a></span>BE_CORE_FATAL</h2>
+<a id="a9df47257722d204445a7af3d1f7a9338"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9df47257722d204445a7af3d1f7a9338">&#9670;&nbsp;</a></span>BE_CORE_FATAL()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename ... P&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">#define BE_CORE_FATAL</td>
+          <td class="memname">void BE_CORE_FATAL </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const P &amp;...&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a788e6622dcba90e47b808bd2bee44c81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a788e6622dcba90e47b808bd2bee44c81">&#9670;&nbsp;</a></span>BE_CORE_INFO</h2>
+<a id="aba1efe31711b810df0499b5e75b980e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba1efe31711b810df0499b5e75b980e4">&#9670;&nbsp;</a></span>BE_CORE_INFO()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename ... P&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">#define BE_CORE_INFO</td>
+          <td class="memname">void BE_CORE_INFO </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const P &amp;...&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a842a37d891145d277ed95721c7e27d54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a842a37d891145d277ed95721c7e27d54">&#9670;&nbsp;</a></span>BE_CORE_TRACE</h2>
+<a id="a8672249a8778d55a7f25435c6dcf4935"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8672249a8778d55a7f25435c6dcf4935">&#9670;&nbsp;</a></span>BE_CORE_TRACE()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename ... P&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">#define BE_CORE_TRACE</td>
+          <td class="memname">void BE_CORE_TRACE </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const P &amp;...&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="abfd4d565f528a549634dadf1c8d74ab2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfd4d565f528a549634dadf1c8d74ab2">&#9670;&nbsp;</a></span>BE_CORE_WARN</h2>
+<a id="a6533d4841dbc1ad1f72de7c7188806b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6533d4841dbc1ad1f72de7c7188806b3">&#9670;&nbsp;</a></span>BE_CORE_WARN()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename ... P&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">#define BE_CORE_WARN</td>
+          <td class="memname">void BE_CORE_WARN </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const P &amp;...&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a7f3fd67bd9c3e965bc27de92f9a584e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f3fd67bd9c3e965bc27de92f9a584e2">&#9670;&nbsp;</a></span>BE_ERROR</h2>
+<a id="a5cda1f154a290b6c2804f98aaa0d9758"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cda1f154a290b6c2804f98aaa0d9758">&#9670;&nbsp;</a></span>BE_ERROR()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename ... P&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">#define BE_ERROR</td>
+          <td class="memname">void BE_ERROR </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const P &amp;...&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a09c0bf96d1d0702a34e856868b4179b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09c0bf96d1d0702a34e856868b4179b0">&#9670;&nbsp;</a></span>BE_FATAL</h2>
+<a id="aa0a6b4c7acd80f3c3351ce53e1894bc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0a6b4c7acd80f3c3351ce53e1894bc0">&#9670;&nbsp;</a></span>BE_FATAL()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename ... P&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">#define BE_FATAL</td>
+          <td class="memname">void BE_FATAL </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const P &amp;...&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a1248fb00d52d98d5809a25b4a8c61e88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1248fb00d52d98d5809a25b4a8c61e88">&#9670;&nbsp;</a></span>BE_INFO</h2>
+<a id="ae2120dc5b9beb046b31b839e398f0d12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2120dc5b9beb046b31b839e398f0d12">&#9670;&nbsp;</a></span>BE_INFO()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename ... P&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">#define BE_INFO</td>
+          <td class="memname">void BE_INFO </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const P &amp;...&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a64887819ac4f1bba1c050ce95801e142"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64887819ac4f1bba1c050ce95801e142">&#9670;&nbsp;</a></span>BE_TRACE</h2>
+<a id="af6b419677fd5faca67b490d7787f8f6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6b419677fd5faca67b490d7787f8f6e">&#9670;&nbsp;</a></span>BE_TRACE()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename ... P&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">#define BE_TRACE</td>
+          <td class="memname">void BE_TRACE </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const P &amp;...&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a5613b5a732fc5f1bf3251625e358c865"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5613b5a732fc5f1bf3251625e358c865">&#9670;&nbsp;</a></span>BE_WARN</h2>
+<a id="a60360fde45b487903a2cdb0194c10e55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60360fde45b487903a2cdb0194c10e55">&#9670;&nbsp;</a></span>BE_WARN()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename ... P&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">#define BE_WARN</td>
+          <td class="memname">void BE_WARN </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const P &amp;...&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

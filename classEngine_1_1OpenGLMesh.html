@@ -65,6 +65,9 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classEngine_1_1OpenGLMesh-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Engine::OpenGLMesh Class Reference</div>  </div>
@@ -111,6 +114,35 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad0faa560fb213568b656d476f3ad3643 inherit pub_methods_classEngine_1_1Mesh"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdc9d0f0548d652c15e6cda944755d51 inherit pub_methods_classEngine_1_1Mesh"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1Mesh.html#afdc9d0f0548d652c15e6cda944755d51">SetAttribute</a> (const std::string &amp;key, const <a class="el" href="classEngine_1_1VertexBuffer.html">VertexBuffer</a> &amp;buffer)</td></tr>
 <tr class="separator:afdc9d0f0548d652c15e6cda944755d51 inherit pub_methods_classEngine_1_1Mesh"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a0a14a52b090b27e431b9f44347a0fc25"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLMesh.html#a0a14a52b090b27e431b9f44347a0fc25">ExtractShaderFileContent</a> (const std::string &amp;shaderFilePath)</td></tr>
+<tr class="separator:a0a14a52b090b27e431b9f44347a0fc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:af56259a15e819c3694ab11d3fcfd370d"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLMesh.html#af56259a15e819c3694ab11d3fcfd370d">ReadObjFile</a> (const std::string &amp;filePath, std::vector&lt; glm::vec3 &gt; &amp;vertices, std::vector&lt; glm::vec3 &gt; &amp;normals, std::vector&lt; glm::vec2 &gt; &amp;uvs)</td></tr>
+<tr class="separator:af56259a15e819c3694ab11d3fcfd370d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ac09887e13b1952086266576dff3265e0"><td class="memItemLeft" align="right" valign="top">friend&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLMesh.html#ac09887e13b1952086266576dff3265e0">Mesh</a></td></tr>
+<tr class="separator:ac09887e13b1952086266576dff3265e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32e924ece91a8039745407c1634b78d8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLMesh.html#a32e924ece91a8039745407c1634b78d8">m_Name</a></td></tr>
+<tr class="separator:a32e924ece91a8039745407c1634b78d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16281da33dd1e9c635d1a41a2b03fcee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceEngine.html#ad5b8efbd3ff3c1fe2d0a31cf5eecc08d">Ref</a>&lt; <a class="el" href="classEngine_1_1VertexBuffer.html">VertexBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLMesh.html#a16281da33dd1e9c635d1a41a2b03fcee">m_VertexBuffer</a></td></tr>
+<tr class="separator:a16281da33dd1e9c635d1a41a2b03fcee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b5e1a5ac7a33e14388e2ee4a01184e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceEngine.html#ad5b8efbd3ff3c1fe2d0a31cf5eecc08d">Ref</a>&lt; <a class="el" href="classEngine_1_1VertexArray.html">VertexArray</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLMesh.html#a3b5e1a5ac7a33e14388e2ee4a01184e7">m_VertexArray</a></td></tr>
+<tr class="separator:a3b5e1a5ac7a33e14388e2ee4a01184e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58057f6e69ae0b19fc45722de833cd98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEngine_1_1ShaderLibrary.html">ShaderLibrary</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLMesh.html#a58057f6e69ae0b19fc45722de833cd98">m_ShaderLibrary</a></td></tr>
+<tr class="separator:a58057f6e69ae0b19fc45722de833cd98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fd6ed1397c0263699df6e3692011522"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceEngine.html#ad5b8efbd3ff3c1fe2d0a31cf5eecc08d">Ref</a>&lt; <a class="el" href="classEngine_1_1Texture2D.html">Texture2D</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLMesh.html#a8fd6ed1397c0263699df6e3692011522">m_Texture</a></td></tr>
+<tr class="separator:a8fd6ed1397c0263699df6e3692011522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac35c0025c6c0f32c54ce3ce1bdda1957"><td class="memItemLeft" align="right" valign="top">glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLMesh.html#ac35c0025c6c0f32c54ce3ce1bdda1957">m_Position</a> = {0.0f, 0.0f, 0.0f}</td></tr>
+<tr class="separator:ac35c0025c6c0f32c54ce3ce1bdda1957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8bfaa98d321f7f41e80516faec4f951"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEngine_1_1OpenGLMesh.html#aa8bfaa98d321f7f41e80516faec4f951">m_ShaderFileContent</a></td></tr>
+<tr class="separator:aa8bfaa98d321f7f41e80516faec4f951"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -246,6 +278,32 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a0a14a52b090b27e431b9f44347a0fc25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a14a52b090b27e431b9f44347a0fc25">&#9670;&nbsp;</a></span>ExtractShaderFileContent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Engine::OpenGLMesh::ExtractShaderFileContent </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>shaderFilePath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a6816b896487ba148c177d9ad4fb903a0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6816b896487ba148c177d9ad4fb903a0">&#9670;&nbsp;</a></span>OnImGuiRender()</h2>
 
@@ -324,6 +382,55 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="af56259a15e819c3694ab11d3fcfd370d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af56259a15e819c3694ab11d3fcfd370d">&#9670;&nbsp;</a></span>ReadObjFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Engine::OpenGLMesh::ReadObjFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; glm::vec3 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vertices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; glm::vec3 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>normals</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; glm::vec2 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>uvs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Loads a .obj file with following layout vertices : v f f f uvs : vt f f normals : vn f f f figure faces: syntax: &lt;v&gt;/&lt;vt&gt;/&lt;vn&gt; || &lt;v&gt; || &lt;v&gt;//&lt;vn&gt; f d d d f d//d d//d d//d f d/d/d d/d/d d/d/d</p>
 
 </div>
 </div>
@@ -407,6 +514,183 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implements <a class="el" href="classEngine_1_1Mesh.html#abad0ac735f9d879eeb3e7df3ed5a360b">Engine::Mesh</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a32e924ece91a8039745407c1634b78d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32e924ece91a8039745407c1634b78d8">&#9670;&nbsp;</a></span>m_Name</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Engine::OpenGLMesh::m_Name</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac35c0025c6c0f32c54ce3ce1bdda1957"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac35c0025c6c0f32c54ce3ce1bdda1957">&#9670;&nbsp;</a></span>m_Position</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::vec3 Engine::OpenGLMesh::m_Position = {0.0f, 0.0f, 0.0f}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa8bfaa98d321f7f41e80516faec4f951"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8bfaa98d321f7f41e80516faec4f951">&#9670;&nbsp;</a></span>m_ShaderFileContent</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Engine::OpenGLMesh::m_ShaderFileContent</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a58057f6e69ae0b19fc45722de833cd98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58057f6e69ae0b19fc45722de833cd98">&#9670;&nbsp;</a></span>m_ShaderLibrary</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEngine_1_1ShaderLibrary.html">ShaderLibrary</a> Engine::OpenGLMesh::m_ShaderLibrary</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8fd6ed1397c0263699df6e3692011522"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fd6ed1397c0263699df6e3692011522">&#9670;&nbsp;</a></span>m_Texture</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceEngine.html#ad5b8efbd3ff3c1fe2d0a31cf5eecc08d">Ref</a>&lt;<a class="el" href="classEngine_1_1Texture2D.html">Texture2D</a>&gt; Engine::OpenGLMesh::m_Texture</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3b5e1a5ac7a33e14388e2ee4a01184e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b5e1a5ac7a33e14388e2ee4a01184e7">&#9670;&nbsp;</a></span>m_VertexArray</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceEngine.html#ad5b8efbd3ff3c1fe2d0a31cf5eecc08d">Ref</a>&lt;<a class="el" href="classEngine_1_1VertexArray.html">VertexArray</a>&gt; Engine::OpenGLMesh::m_VertexArray</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a16281da33dd1e9c635d1a41a2b03fcee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16281da33dd1e9c635d1a41a2b03fcee">&#9670;&nbsp;</a></span>m_VertexBuffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceEngine.html#ad5b8efbd3ff3c1fe2d0a31cf5eecc08d">Ref</a>&lt;<a class="el" href="classEngine_1_1VertexBuffer.html">VertexBuffer</a>&gt; Engine::OpenGLMesh::m_VertexBuffer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac09887e13b1952086266576dff3265e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac09887e13b1952086266576dff3265e0">&#9670;&nbsp;</a></span>Mesh</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend Engine::OpenGLMesh::Mesh</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

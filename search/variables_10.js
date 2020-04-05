@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['zoom',['Zoom',['../classEngine_1_1ThirdPersonCamera.html#afea3cc2017404a05ecca0823a962bbe7',1,'Engine::ThirdPersonCamera::Zoom()'],['../namespaceEngine.html#a6ed240bdbf1370aacf4c92ac4f63ad0c',1,'Engine::ZOOM()']]]
+  ['up',['Up',['../classEngine_1_1ThirdPersonCamera.html#a0bdc2ef1d91bf18f9fb2d06f83321ab1',1,'Engine::ThirdPersonCamera']]],
+  ['uvs',['uvs',['../structEngine_1_1ObjFile.html#a098a9594ef7fb6949aa3a9ad0b3c8a25',1,'Engine::ObjFile']]]
 ];

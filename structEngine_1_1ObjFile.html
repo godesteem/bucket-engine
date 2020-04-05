@@ -67,6 +67,7 @@ $(function() {
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="structEngine_1_1ObjFile-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Engine::ObjFile Struct Reference</div>  </div>
@@ -111,8 +112,25 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a4c0b86324acc128e2d0ff2f70dac0764"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEngine_1_1ObjFile.html#a4c0b86324acc128e2d0ff2f70dac0764">CreateObjFile</a> (float *vertices, size_t vertexCount, uint32_t vertexCategories, size_t vertexElementCount, uint32_t *indices, size_t indexCount, const std::string &amp;fp)</td></tr>
+<tr class="memitem:a4c0b86324acc128e2d0ff2f70dac0764"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEngine_1_1ObjFile.html#a4c0b86324acc128e2d0ff2f70dac0764">CreateObjFile</a> (float *<a class="el" href="structEngine_1_1ObjFile.html#a19a5e7c9b022c6e78c8faac1dce35e01">vertices</a>, size_t vertexCount, uint32_t vertexCategories, size_t vertexElementCount, uint32_t *indices, size_t indexCount, const std::string &amp;fp)</td></tr>
 <tr class="separator:a4c0b86324acc128e2d0ff2f70dac0764"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a7551321fd7e00a50924162a668930284"><td class="memItemLeft" align="right" valign="top">FILE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEngine_1_1ObjFile.html#a7551321fd7e00a50924162a668930284">file</a></td></tr>
+<tr class="separator:a7551321fd7e00a50924162a668930284"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a990e1cab04789e1638eaa7d572293d8f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEngine_1_1ObjFile.html#a990e1cab04789e1638eaa7d572293d8f">filePath</a></td></tr>
+<tr class="separator:a990e1cab04789e1638eaa7d572293d8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19a5e7c9b022c6e78c8faac1dce35e01"><td class="memItemLeft" align="right" valign="top">std::vector&lt; glm::vec3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEngine_1_1ObjFile.html#a19a5e7c9b022c6e78c8faac1dce35e01">vertices</a></td></tr>
+<tr class="separator:a19a5e7c9b022c6e78c8faac1dce35e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4d2037fa83974e3b043430e3c5ddf09"><td class="memItemLeft" align="right" valign="top">std::vector&lt; glm::vec3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEngine_1_1ObjFile.html#ac4d2037fa83974e3b043430e3c5ddf09">normals</a></td></tr>
+<tr class="separator:ac4d2037fa83974e3b043430e3c5ddf09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a098a9594ef7fb6949aa3a9ad0b3c8a25"><td class="memItemLeft" align="right" valign="top">std::vector&lt; glm::vec2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEngine_1_1ObjFile.html#a098a9594ef7fb6949aa3a9ad0b3c8a25">uvs</a></td></tr>
+<tr class="separator:a098a9594ef7fb6949aa3a9ad0b3c8a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07a632d346cc35dfe60840fd30dfdda1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEngine_1_1ObjFile.html#a07a632d346cc35dfe60840fd30dfdda1">hasUVs</a> = false</td></tr>
+<tr class="separator:a07a632d346cc35dfe60840fd30dfdda1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa33e7fab4fc38c96f7bb7e26e92a19ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEngine_1_1ObjFile.html#aa33e7fab4fc38c96f7bb7e26e92a19ba">hasNormals</a> = false</td></tr>
+<tr class="separator:aa33e7fab4fc38c96f7bb7e26e92a19ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a8443a9ba757c576c3ce212946e39adba"></a>
@@ -469,6 +487,161 @@ Static Public Member Functions</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a7551321fd7e00a50924162a668930284"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7551321fd7e00a50924162a668930284">&#9670;&nbsp;</a></span>file</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">FILE* Engine::ObjFile::file</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a990e1cab04789e1638eaa7d572293d8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a990e1cab04789e1638eaa7d572293d8f">&#9670;&nbsp;</a></span>filePath</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Engine::ObjFile::filePath</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa33e7fab4fc38c96f7bb7e26e92a19ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa33e7fab4fc38c96f7bb7e26e92a19ba">&#9670;&nbsp;</a></span>hasNormals</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Engine::ObjFile::hasNormals = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a07a632d346cc35dfe60840fd30dfdda1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07a632d346cc35dfe60840fd30dfdda1">&#9670;&nbsp;</a></span>hasUVs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Engine::ObjFile::hasUVs = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac4d2037fa83974e3b043430e3c5ddf09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4d2037fa83974e3b043430e3c5ddf09">&#9670;&nbsp;</a></span>normals</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;glm::vec3&gt; Engine::ObjFile::normals</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a098a9594ef7fb6949aa3a9ad0b3c8a25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a098a9594ef7fb6949aa3a9ad0b3c8a25">&#9670;&nbsp;</a></span>uvs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;glm::vec2&gt; Engine::ObjFile::uvs</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a19a5e7c9b022c6e78c8faac1dce35e01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19a5e7c9b022c6e78c8faac1dce35e01">&#9670;&nbsp;</a></span>vertices</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;glm::vec3&gt; Engine::ObjFile::vertices</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

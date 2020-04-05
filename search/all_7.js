@@ -2,7 +2,7 @@ var searchData=
 [
   ['get',['Get',['../classEngine_1_1Application.html#a8481bcd1fefaaf3be3aceaa3b36e3a07',1,'Engine::Application::Get()'],['../classEngine_1_1ShaderLibrary.html#af12372c400c845a9ff12813985f637c9',1,'Engine::ShaderLibrary::Get()']]],
   ['get_5f3rd_5farg',['GET_3RD_ARG',['../math__headers_8h.html#ac31b1440a7d933c92418accf8d6da864',1,'math_headers.h']]],
-  ['getactivecamera',['GetActiveCamera',['../classEngine_1_1Camera.html#a10c1020e2db20df7a5c24a2fc41f9084',1,'Engine::Camera']]],
+  ['getactivecamera',['GetActiveCamera',['../structEngine_1_1Camera_1_1CameraStack.html#aa606ace7aed85d39ab18a32185e57f0d',1,'Engine::Camera::CameraStack::GetActiveCamera()'],['../classEngine_1_1Camera.html#a10c1020e2db20df7a5c24a2fc41f9084',1,'Engine::Camera::GetActiveCamera()']]],
   ['getapi',['GetAPI',['../classEngine_1_1Renderer.html#a6072d8ea6368a00903e1eb0c6faee589',1,'Engine::Renderer::GetAPI()'],['../classEngine_1_1RendererAPI.html#a51ca710fa77fd8a232368cade1a863f3',1,'Engine::RendererAPI::GetAPI()']]],
   ['getattributelocation',['GetAttributeLocation',['../classEngine_1_1Shader.html#ac212b189f5b21d12172f0ee9e7039bef',1,'Engine::Shader::GetAttributeLocation()'],['../classEngine_1_1OpenGLShader.html#a18230f31514111f285ee124b9b627ad3',1,'Engine::OpenGLShader::GetAttributeLocation()']]],
   ['getattributes',['GetAttributes',['../classEngine_1_1Mesh.html#ad0faa560fb213568b656d476f3ad3643',1,'Engine::Mesh']]],
