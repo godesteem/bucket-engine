@@ -11,7 +11,8 @@ int main(int argc, char** argv){
   //    otherwise the static vector will get initialized after the tests were added and get deleted
   //    that wasnt fun to debug and find, pinpoint and write sample classes to be sure
   TestMath();
-  TestTimestep testTimestep;
+  TestTimestep();
+
   // parse args
   bool runAll = argc <= 1;
 
