@@ -1,9 +1,3 @@
-" File              : .vimrc
-" Author            : Philipp Zettl <philipp.zettl@godesteem.de>
-" Date              : 28.09.2019
-" Last Modified Date: 23.02.2020
-" Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
-
 " Requirements:
 " NERDTree
 " Syntastic
@@ -13,9 +7,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-let g:header_auto_add_header = 1
-let g:header_field_author = "Philipp Zettl"
-let g:header_field_author_email = "philipp.zettl@godesteem.de"
+let g:header_auto_add_header = 0
 let NERDTreeShowHidden = 1
 
 " C++ Settings "

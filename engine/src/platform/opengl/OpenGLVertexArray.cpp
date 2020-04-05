@@ -1,11 +1,3 @@
-/**
- * File              : OpenGLVertexArray.cpp
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 23.02.2020
- * Last Modified Date: 25.02.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
-
 #include "bepch.h"
 
 #include "OpenGLVertexArray.h"
@@ -67,8 +59,9 @@ namespace Engine {
           element.Normalized ? GL_TRUE : GL_FALSE,
           layout.GetStride(),
           (const void*) element.Offset
+          //warning	c4312	'type cast': conversion from 'const uint32_t' to 'const void *' of greater size
         );
-        index++;  
+        index++;
       }
       m_VertexBuffersAttributesSize = index;
       m_VertexBuffers.push_back(vertexBuffer);
@@ -80,7 +73,7 @@ namespace Engine {
       glBindVertexArray(m_RendererID);
       BE_CORE_ASSERT(m_RendererID, "VertexArray not bound.");
       indexBuffer->Bind();
-      
+
       m_IndexBuffer = indexBuffer;
     }
 

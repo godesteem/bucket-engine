@@ -1,10 +1,3 @@
-/**
- * File              : Shader.h
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 23.02.2020
- * Last Modified Date: 01.03.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 //
 // Created by phil on 22.02.20.
 //

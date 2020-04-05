@@ -2,7 +2,8 @@
 CMakeFiles/
 cmake-build-debug/
 cmake-build-user/
-build/
+build*/
+
 
 *.cmake
 Makefile

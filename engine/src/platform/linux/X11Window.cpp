@@ -1,11 +1,3 @@
-/**
- * File              : X11Window.cpp
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 16.02.2020
- * Last Modified Date: 22.02.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
-
 #include "bepch.h"
 #include "platform/opengl/OpenGLContext.h"
 #include "X11Window.h"

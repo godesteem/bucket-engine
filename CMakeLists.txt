@@ -23,10 +23,12 @@ file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/sandbox/src/*.h ${CMAKE_SOURC
 
 set(TEST_SOURCES
   ${CMAKE_SOURCE_DIR}/engine/tests/main.cpp
+  ${CMAKE_SOURCE_DIR}/engine/tests/tests.cpp
 )
 
 set(TEST_HEADERS
   ${CMAKE_SOURCE_DIR}/engine/tests/test_math.h
+  ${CMAKE_SOURCE_DIR}/engine/tests/core/test_timestep.h
 )
 
 
@@ -63,6 +65,7 @@ endif(CMAKE_BUILD_TYPE EQUAL "Debug")
 
 include_directories(${CMAKE_SOURCE_DIR}/engine/src)
 include_directories(${CMAKE_SOURCE_DIR}/engine/vendor)
+include_directories(${CMAKE_SOURCE_DIR}/engine/lib)
 
 add_subdirectory(./engine)
 
@@ -81,21 +84,10 @@ add_executable(engine-test ${TEST_HEADERS} ${TEST_SOURCES})
 
 target_include_directories(engine-test PUBLIC
   ${CMAKE_SOURCE_DIR}/engine/src
-  ${CMAKE_SOURCE_DIR}/engine/vendor)
+  ${CMAKE_SOURCE_DIR}/engine/vendor
+  ${CMAKE_SOURCE_DIR}/engine/lib)
 
 target_link_libraries(engine-test PRIVATE engine)
-
-# find & configure openGL
-# set(OpenGL_GL_PREFERENCE "GLVND")
-# find_package(OpenGL REQUIRED)
-# find_package(GLUT REQUIRED)
-
-# find_package(glm REQUIRED)
-# message(STATUS "GLM included at ${GLM_INCLUDE_DIR}")
-
-# find_package(glfw3 REQUIRED)
-# message(STATUS "GLFW3 included at ${GLFW3_INCLUDE_DIR}")
-
-# add_library(STB_IMAGE "lib/stb_image.h")
-# add_library(GLAD "lib/src/glad.c")
-
+enable_testing()
+add_test(NAME engine-test-all COMMAND engine-test)
+add_test(NAME engine-test1 COMMAND engine-test 1)

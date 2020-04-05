@@ -1,10 +1,3 @@
-/**
- * File              : MouseEvent.h
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 15.02.2020
- * Last Modified Date: 18.02.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #pragma once
 
 #include "Event.h"

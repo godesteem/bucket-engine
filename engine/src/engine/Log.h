@@ -1,10 +1,3 @@
-/**
- * File              : Log.h
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 15.02.2020
- * Last Modified Date: 16.02.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #pragma once
 
 #include "Core.h"
@@ -93,7 +86,7 @@ namespace Engine {
     #include <WinBase.h>
     #define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
     #define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); DebugBreak();} }
-#elif BE_PLATFORM_LINUX
+  #elif BE_PLATFORM_LINUX
     #define BE_ASSERT(x, ... ) { if(!(x)){BE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
     #define BE_CORE_ASSERT(x, ... ) { if(!(x)){BE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();} }
   #endif
@@ -109,4 +102,3 @@ namespace Engine {
   #define BE_ASSERT(x, ... )
   #define BE_CORE_ASSERT(x, ... )
 #endif
-

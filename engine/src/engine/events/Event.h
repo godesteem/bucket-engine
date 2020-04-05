@@ -1,17 +1,10 @@
-/**
- * File              : Event.h
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 15.02.2020
- * Last Modified Date: 17.02.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #pragma once
 
 #include "../Core.h"
 #include "bepch.h"
 
 namespace Engine {
-  
+
   // Non buffered Event
   //
   enum class EventType {
@@ -63,7 +56,7 @@ namespace Engine {
   public:
     EventDispatcher(Event &event)
       :m_Event(event) {}
-    
+
     template<typename T>
     bool Dispatch(EventFn<T> func){
       if(m_Event.GetEventType() == T::GetStaticType()){
