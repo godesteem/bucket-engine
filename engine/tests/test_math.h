@@ -50,8 +50,16 @@ void TestMath()
 
   Tester::addTest([=]()
   {
-    vec2 v({{3}, {4}});
+    vec2 v({{3},
+            {4}});
     BE_TEST_ONCE(v.Magnitude() == 5);
+  });
+
+  Tester::addTest([=]()
+  {
+    vec2 v({{5},
+            {12}});
+    BE_TEST_ONCE(v.Magnitude() == 13);
   });
 
   Tester::addTest([=]()
@@ -158,7 +166,20 @@ void TestMath()
 
   Tester::addTest([=]()
   {
+    // the 3 is cast to a Matrix<1,1> and compared at the matrix level
     BE_TEST_ONCE((vec2_1_2*vec2_1) == 3.0f);
+  });
+
+  Tester::addTest([=]()
+  {
+    // the left hand side is cast to a float and compared at the float level
+    BE_TEST_ONCE(float(vec2_1_2*vec2_1) == 3.0f);
+  });
+
+  Tester::addTest([=]()
+  {
+    //BE_TEST_ONCE(3.0f == (vec2_1_2*vec2_1)); // can not compile, implicit cast is not allowed because of confusion which == to take
+    BE_TEST_ONCE(3.0f == float(vec2_1_2*vec2_1));
   });
 
   Tester::addTest([=]()
@@ -198,10 +219,296 @@ void TestMath()
 
   Tester::addTest([=]()
   {
+    Matrix<2,2> S{{58.f,64.f},{139.f,154.f}};
+    Matrix SS(S);
+    BE_TEST_MULTI(SS[0][0] == 58);
+    BE_TEST_MULTI(SS[0][1] == 64);
+    BE_TEST_MULTI(SS[1][0] == 139);
+    BE_TEST_MULTI(SS[1][1] == 154);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
     Engine::Math::mat2 e1 = Engine::Math::mat2::Identity();
     Engine::Math::mat2 e2({{1.0f, 0.0f}, {0.0f, 1.0f}});
     //std::cout << "e1" << e1 << std::endl;
     //std::cout << "e2" << e2 << std::endl;
     BE_TEST_ONCE(e1 == e2);
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    mat2 n(2);
+    mat2 r = m-n;
+    float resValue = 3;
+    BE_TEST_MULTI(r[0][0] == resValue);
+    BE_TEST_MULTI(r[0][1] == resValue);
+    BE_TEST_MULTI(r[1][0] == resValue);
+    BE_TEST_MULTI(r[1][1] == resValue);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    mat2 n(2);
+    mat2 r = n-m;
+    float resValue = -3;
+    BE_TEST_MULTI(r[0][0] == resValue);
+    BE_TEST_MULTI(r[0][1] == resValue);
+    BE_TEST_MULTI(r[1][0] == resValue);
+    BE_TEST_MULTI(r[1][1] == resValue);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    mat2 n(2);
+    mat2 r = m+n;
+    float resValue = 7;
+    BE_TEST_MULTI(r[0][0] == resValue);
+    BE_TEST_MULTI(r[0][1] == resValue);
+    BE_TEST_MULTI(r[1][0] == resValue);
+    BE_TEST_MULTI(r[1][1] == resValue);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    mat2 n(2);
+    mat2 r = n+m;
+    float resValue = 7;
+    BE_TEST_MULTI(r[0][0] == resValue);
+    BE_TEST_MULTI(r[0][1] == resValue);
+    BE_TEST_MULTI(r[1][0] == resValue);
+    BE_TEST_MULTI(r[1][1] == resValue);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    float n(2);
+    mat2 r = m+n;
+    float resValue = 7;
+    BE_TEST_MULTI(r[0][0] == resValue);
+    BE_TEST_MULTI(r[0][1] == resValue);
+    BE_TEST_MULTI(r[1][0] == resValue);
+    BE_TEST_MULTI(r[1][1] == resValue);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    float n(2);
+    mat2 r = n+m;
+    float resValue = 7;
+    BE_TEST_MULTI(r[0][0] == resValue);
+    BE_TEST_MULTI(r[0][1] == resValue);
+    BE_TEST_MULTI(r[1][0] == resValue);
+    BE_TEST_MULTI(r[1][1] == resValue);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    float n(2);
+    mat2 r = m-n;
+    float resValue = 3;
+    BE_TEST_MULTI(r[0][0] == resValue);
+    BE_TEST_MULTI(r[0][1] == resValue);
+    BE_TEST_MULTI(r[1][0] == resValue);
+    BE_TEST_MULTI(r[1][1] == resValue);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    float n(2);
+    mat2 r = n-m;
+    float resValue = -3;
+    BE_TEST_MULTI(r[0][0] == resValue);
+    BE_TEST_MULTI(r[0][1] == resValue);
+    BE_TEST_MULTI(r[1][0] == resValue);
+    BE_TEST_MULTI(r[1][1] == resValue);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    float n(2);
+    mat2 r = m*n;
+    float resValue = 10;
+    BE_TEST_MULTI(r[0][0] == resValue);
+    BE_TEST_MULTI(r[0][1] == resValue);
+    BE_TEST_MULTI(r[1][0] == resValue);
+    BE_TEST_MULTI(r[1][1] == resValue);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    float n(2);
+    mat2 r = n*m;
+    float resValue = 10;
+    BE_TEST_MULTI(r[0][0] == resValue);
+    BE_TEST_MULTI(r[0][1] == resValue);
+    BE_TEST_MULTI(r[1][0] == resValue);
+    BE_TEST_MULTI(r[1][1] == resValue);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    float n(2);
+    mat2 r = m/n;
+    float resValue = 5/2.;
+    BE_TEST_MULTI(r[0][0] == resValue);
+    BE_TEST_MULTI(r[0][1] == resValue);
+    BE_TEST_MULTI(r[1][0] == resValue);
+    BE_TEST_MULTI(r[1][1] == resValue);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    mat2 n(2);
+    m += n;
+    float resValueM = 7;
+    BE_TEST_MULTI(m[0][0] == resValueM);
+    BE_TEST_MULTI(m[0][1] == resValueM);
+    BE_TEST_MULTI(m[1][0] == resValueM);
+    BE_TEST_MULTI(m[1][1] == resValueM);
+    float resValueN = 2;
+    BE_TEST_MULTI(n[0][0] == resValueN);
+    BE_TEST_MULTI(n[0][1] == resValueN);
+    BE_TEST_MULTI(n[1][0] == resValueN);
+    BE_TEST_MULTI(n[1][1] == resValueN);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    float n(2);
+    m += n;
+    float resValueM = 7;
+    BE_TEST_MULTI(m[0][0] == resValueM);
+    BE_TEST_MULTI(m[0][1] == resValueM);
+    BE_TEST_MULTI(m[1][0] == resValueM);
+    BE_TEST_MULTI(m[1][1] == resValueM);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    mat2 n(2);
+    m -= n;
+    float resValueM = 3;
+    BE_TEST_MULTI(m[0][0] == resValueM);
+    BE_TEST_MULTI(m[0][1] == resValueM);
+    BE_TEST_MULTI(m[1][0] == resValueM);
+    BE_TEST_MULTI(m[1][1] == resValueM);
+    float resValueN = 2;
+    BE_TEST_MULTI(n[0][0] == resValueN);
+    BE_TEST_MULTI(n[0][1] == resValueN);
+    BE_TEST_MULTI(n[1][0] == resValueN);
+    BE_TEST_MULTI(n[1][1] == resValueN);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    float n(2);
+    m -= n;
+    float resValueM = 3;
+    BE_TEST_MULTI(m[0][0] == resValueM);
+    BE_TEST_MULTI(m[0][1] == resValueM);
+    BE_TEST_MULTI(m[1][0] == resValueM);
+    BE_TEST_MULTI(m[1][1] == resValueM);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    mat2 n(2);
+    m *= n;
+    float resValueM = 20;
+    BE_TEST_MULTI(m[0][0] == resValueM);
+    BE_TEST_MULTI(m[0][1] == resValueM);
+    BE_TEST_MULTI(m[1][0] == resValueM);
+    BE_TEST_MULTI(m[1][1] == resValueM);
+    float resValueN = 2;
+    BE_TEST_MULTI(n[0][0] == resValueN);
+    BE_TEST_MULTI(n[0][1] == resValueN);
+    BE_TEST_MULTI(n[1][0] == resValueN);
+    BE_TEST_MULTI(n[1][1] == resValueN);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    float n(2);
+    m *= n;
+    float resValueM = 10;
+    BE_TEST_MULTI(m[0][0] == resValueM);
+    BE_TEST_MULTI(m[0][1] == resValueM);
+    BE_TEST_MULTI(m[1][0] == resValueM);
+    BE_TEST_MULTI(m[1][1] == resValueM);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m(5);
+    float n(2);
+    m /= n;
+    float resValueM = 2.5;
+    BE_TEST_MULTI(m[0][0] == resValueM);
+    BE_TEST_MULTI(m[0][1] == resValueM);
+    BE_TEST_MULTI(m[1][0] == resValueM);
+    BE_TEST_MULTI(m[1][1] == resValueM);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m;
+    float resValueM = 0;
+    BE_TEST_MULTI(m[0][0] == resValueM);
+    BE_TEST_MULTI(m[0][1] == resValueM);
+    BE_TEST_MULTI(m[1][0] == resValueM);
+    BE_TEST_MULTI(m[1][1] == resValueM);
+    return test_status::TEST_OK;
+  });
+
+  Tester::addTest([=]()
+  {
+    mat2 m{{ 2,  5},
+           { 1,  3}};
+    mat2 i{{ 3, -5},
+           {-1,  2}};
+    auto r = m*i;
+    auto I = mat2::Identity();
+    BE_TEST_MULTI(r[0][0] == I[0][0]);
+    BE_TEST_MULTI(r[0][1] == I[0][1]);
+    BE_TEST_MULTI(r[1][0] == I[1][0]);
+    BE_TEST_MULTI(r[1][1] == I[1][1]);
+    return test_status::TEST_OK;
   });
 }
