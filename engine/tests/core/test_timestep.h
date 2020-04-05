@@ -43,6 +43,7 @@ public:
       t = t + 1;
       BE_TEST_MULTI(t.GetSeconds() == 1.0f);
       BE_TEST_MULTI(t.GetMilliseconds() == 1000.0f);
+      //Warning	C4715	'<lambda_bb557d9c8f4837619b6480b6a60b4f65>::operator()': not all control paths return a value
     });
     Tester::addTest([=]()
     {
@@ -50,6 +51,8 @@ public:
       t = t - 1;
       BE_TEST_MULTI(t.GetSeconds() == 0.0f);
       BE_TEST_MULTI(t.GetMilliseconds() == 0.0f);
+      //Warning	C4715	'<lambda_812a0c0e34e59e1725d88879a760847b>::operator()': not all control paths return a value
+
     });
 
     /**
@@ -70,6 +73,7 @@ public:
       }
       float frameTime = 1000.f/fps;
       BE_TEST_MULTI(t - (10.0f * frameTime) <= 0.0001);
+      //Warning	C4715	'<lambda_d46812fce8d74eb6faf7b7105a2d707d>::operator()': not all control paths return a value
     });
   }
 };
