@@ -16,53 +16,49 @@ void TestNoise()
   Tester::addTest([=]()
   {
     Engine::Noise::OpenSimplexNoise noise(0);
-    double value = noise.Evaluate(0.0, 0.0);
-    BE_TEST_ONCE(value == 0.0f);
+    Engine::Noise::OpenSimplexNoise noise2(0);
+    double value = noise.Evaluate(10.0, 10.0);
+    double value2 = noise2.Evaluate(10.0, 10.0);
+    BE_TEST_ONCE(value == value2);
   });
   Tester::addTest([=]()
   {
     Engine::Noise::OpenSimplexNoise noise(0);
-    double value = noise.Evaluate(1.0, 0.0);
-    BE_TEST_ONCE(value != 0.0f);
-  });
-  Tester::addTest([=]()
-  {
-    Engine::Noise::OpenSimplexNoise noise(0);
-    double value = noise.Evaluate(0.0, 0.0, 0.0);
-    BE_TEST_ONCE(fabs(value) < NOISE_PRECISION_EPS);
-  });
-  Tester::addTest([=]()
-  {
-    Engine::Noise::OpenSimplexNoise noise(0);
-    double value = noise.Evaluate(1.0, 0.0, 0.0);
-    BE_TEST_ONCE(value != 0.0f);
-  });
-  Tester::addTest([=]()
-  {
-    Engine::Noise::OpenSimplexNoise noise(0);
-    double value = noise.Evaluate(0.0, 0.0, 0.0, 0.0);
-    BE_TEST_ONCE(fabs(value) < NOISE_PRECISION_EPS);
-  });
-  Tester::addTest([=]()
-  {
-    Engine::Noise::OpenSimplexNoise noise(0);
-    double value = noise.Evaluate(1.0, 0.0, 0.0, 0.0);
-    BE_TEST_ONCE(value != 0.0f);
+    Engine::Noise::OpenSimplexNoise noise2(2);
+    double value = noise.Evaluate(10.0, 10.0);
+    double value2 = noise2.Evaluate(10.0, 10.0);
+    BE_TEST_ONCE(value != value2);
   });
   Tester::addTest([=]()
   {
     Engine::Noise::OpenSimplexNoise noise(0);
     Engine::Noise::OpenSimplexNoise noise2(0);
-    double value = noise.Evaluate(0.0, 0.0, 0.0);
-    double value2 = noise2.Evaluate(0.0, 0.0, 0.0);
-    BE_TEST_ONCE(value - value2 == 0.0);
+    double value = noise.Evaluate(10.0, 10.0, 10.0);
+    double value2 = noise2.Evaluate(10.0, 10.0, 10.0);
+    BE_TEST_ONCE(value == value2);
   });
   Tester::addTest([=]()
   {
     Engine::Noise::OpenSimplexNoise noise(0);
-    double noiseEval2D = noise.Evaluate(0.0, 0.0) / (float)(1.0 / 47.0);
-    double noiseEval3D = noise.Evaluate(0.0, 0.0, 0.0) / (float)(1.0 / 103.0);
-    double noiseEval4D = noise.Evaluate(0.0, 0.0, 0.0, 0.0) / (float)(1.0 / 30.0);
-    BE_TEST_ONCE(fabs(noiseEval2D - noiseEval3D - noiseEval4D) < NOISE_PRECISION_EPS);
+    Engine::Noise::OpenSimplexNoise noise2(2);
+    double value = noise.Evaluate(10.0, 10.0, 10.0);
+    double value2 = noise2.Evaluate(10.0, 10.0, 10.0);
+    BE_TEST_ONCE(value != value2);
+  });
+  Tester::addTest([=]()
+  {
+    Engine::Noise::OpenSimplexNoise noise(0);
+    Engine::Noise::OpenSimplexNoise noise2(0);
+    double value = noise.Evaluate(10.0, 10.0, 10.0, 10.0);
+    double value2 = noise2.Evaluate(10.0, 10.0, 10.0, 10.0);
+    BE_TEST_ONCE(value  == value2);
+  });
+  Tester::addTest([=]()
+  {
+    Engine::Noise::OpenSimplexNoise noise(0);
+    Engine::Noise::OpenSimplexNoise noise2(2);
+    double value = noise.Evaluate(10.0, 10.0, 10.0, 10.0);
+    double value2 = noise2.Evaluate(10.0, 10.0, 10.0, 10.0);
+    BE_TEST_ONCE(value != value2);
   });
 }
