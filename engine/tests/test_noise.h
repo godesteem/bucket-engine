@@ -3,9 +3,6 @@
 #include "tests.h"
 #include "noise/noise.h"
 
-const double NOISE_PRECISION_EPS = 1e-50;
-
-
 void TestNoise()
 {
   static bool alreadyRan = false;
