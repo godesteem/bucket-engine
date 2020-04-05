@@ -4,6 +4,7 @@ cmake-build-debug/
 cmake-build-user/
 build*/
 
+
 *.cmake
 Makefile
 CMakeLists.txt.bak

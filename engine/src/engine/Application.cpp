@@ -1,10 +1,3 @@
-/**
- * File              : Application.cpp
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 15.02.2020
- * Last Modified Date: 29.02.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #include "bepch.h"
 #include "Application.h"
 #include "engine/renderer/Renderer.h"

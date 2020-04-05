@@ -1,10 +1,3 @@
-/**
- * File              : Mesh.cpp
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 01.03.2020
- * Last Modified Date: 01.03.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #include "Mesh.h"
 #include "Renderer.h"
 #include "platform/opengl/OpenGLMesh.h"

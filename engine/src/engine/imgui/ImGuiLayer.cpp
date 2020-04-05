@@ -1,10 +1,3 @@
-/**
- * File              : ImGuiLayer.cpp
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 18.02.2020
- * Last Modified Date: 23.02.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #include "bepch.h"
 #include "ImGuiLayer.h"
 

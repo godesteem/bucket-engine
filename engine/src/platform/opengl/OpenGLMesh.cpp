@@ -1,10 +1,3 @@
-/**
- * File              : OpenGLMesh.cpp
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 01.03.2020
- * Last Modified Date: 01.03.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #include "bepch.h"
 #include "OpenGLMesh.h"
 #include <glad/glad.h>

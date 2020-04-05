@@ -23,3 +23,8 @@ Next step: Vulkan
 1) run `cd engine/vendor/spdlog && cmake . && make` 
 1) develop
 1) run `build.sh`
+
+
+## [Docs](https://godesteem.github.io/bucket-engine/index.html) ![Deploy to GitHub Pages](https://github.com/godesteem/bucket-engine/workflows/Deploy%20to%20GitHub%20Pages/badge.svg)
+1) Install [doxygen](http://www.doxygen.nl/manual/install.html)
+1) Run `doxygen docs/doxygen.conf` to generate docs in `docs/`

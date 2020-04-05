@@ -1,10 +1,3 @@
-/**
- * File              : Level.h
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 09.03.2020
- * Last Modified Date: 09.03.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #pragma once
 
 #include "engine/Layer.h"

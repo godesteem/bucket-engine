@@ -1,10 +1,3 @@
-/**
- * File              : Mesh.h
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 01.03.2020
- * Last Modified Date: 23.03.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #pragma once
 #include "engine/Core.h"
 #include <glm/glm.hpp>

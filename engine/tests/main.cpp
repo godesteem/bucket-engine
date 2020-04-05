@@ -1,14 +1,8 @@
-/**
- * File              : main.cpp
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 10.03.2020
- * Last Modified Date: 10.03.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #include "bepch.h"
 #include "tests.h"
 
 #include "test_math.h"
+#include "core/test_timestep.h"
 
 int main(int argc, char** argv){
   Engine::Log::Init();
@@ -17,6 +11,7 @@ int main(int argc, char** argv){
   //    otherwise the static vector will get initialized after the tests were added and get deleted
   //    that wasnt fun to debug and find, pinpoint and write sample classes to be sure
   TestMath();
+  TestTimestep testTimestep;
   // parse args
   bool runAll = argc <= 1;
 

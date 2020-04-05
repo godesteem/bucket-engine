@@ -1,10 +1,3 @@
-/**
- * File              : RendererAPI.h
- * Author            : Philipp Zettl <philipp.zettl@godesteem.de>
- * Date              : 23.02.2020
- * Last Modified Date: 29.02.2020
- * Last Modified By  : Philipp Zettl <philipp.zettl@godesteem.de>
- */
 #pragma once
 #include "engine/Core.h"
 #include <glm/glm.hpp>
