@@ -333,6 +333,12 @@ namespace Engine::Math
       return v.Transposed() * *this;
     }
 
+    template<typename onlyForVectors = std::enable_if<Columns == 1>>
+    T Magnitude() const
+    {
+      return std::sqrt((*this).Transposed() * *this);
+    }
+
 
   protected:
     std::array<std::array<T, Columns>, Rows> _data;
@@ -400,17 +406,10 @@ namespace Engine::Math
     //  return vec_generic();
     //}
 
-
     size_t magnitude() const
     {
       BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
       //TODO
-    }
-
-    size_t Length() const
-    {
-      BE_ASSERT(false, "length is deprecated, use magnitude() instead!");
-      return 0;
     }
 
     vec_generic Dot(vec_generic const& v) const

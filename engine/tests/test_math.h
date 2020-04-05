@@ -50,6 +50,12 @@ void TestMath()
 
   Tester::addTest([=]()
   {
+    vec2 v({{3}, {4}});
+    BE_TEST_ONCE(v.Magnitude() == 5);
+  });
+
+  Tester::addTest([=]()
+  {
     Matrix<2,3> L{{1.f, 2.f, 3.f},
                   {4.f, 5.f, 6.f}};
     Matrix<3,2> R{{7.f,8.f},{9.f,10.f},{11.f,12.f}};
