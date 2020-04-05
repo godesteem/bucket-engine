@@ -50,8 +50,27 @@ void TestMath()
 
   Tester::addTest([=]()
   {
+    Matrix<2,3,double> m1;
+    Matrix<2,3,double> m2(1.f);
+
+    Matrix<2,3,double> _mat2x3;
+    Matrix<3,4,double> _mat3x4;
+
+    Matrix<2,4,double> res = _mat2x3 * _mat3x4;
+    BE_TEST_ONCE(true); // if this compiles this test is successful, i cant negatively test for compilation
+  });
+
+  Tester::addTest([=]()
+  {
     vec2 v({{3},
-            {4}});
+      {4}});
+    BE_TEST_ONCE(v.Magnitude() == 5);
+  });
+
+  Tester::addTest([=]()
+  {
+    Matrix<2,1,double> v({{3},
+                          {4}});
     BE_TEST_ONCE(v.Magnitude() == 5);
   });
 
