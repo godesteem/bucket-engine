@@ -14,6 +14,7 @@ int main(int argc, char** argv){
   //    that wasnt fun to debug and find, pinpoint and write sample classes to be sure
   TestMath();
   TestTimestep();
+  TestNoise();
 
   // parse args
   bool runAll = argc <= 1;
@@ -33,5 +34,4 @@ int main(int argc, char** argv){
       return 3; // cmdline argument malformed
     }
   }
-  test_noise();
 }

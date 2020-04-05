@@ -4,15 +4,17 @@
 #include "noise/noise.h"
 
 
-bool test_OpenSimplexNoise(){
-  Engine::Noise::OpenSimplexNoise noise(2);
-  double value = noise.Evaluate(1.0, 1.0, 1.0/100);
-  BE_TEST_ASSERT(value != 0.0);
-
-  return TEST_OK;
-}
-
-void test_noise(){
-  if(test_OpenSimplexNoise() != TEST_OK) BE_TEST_ERROR( "OpenSimplexNoise not working!");
-  else BE_TEST_SUCCESS( "OpenSimplexNoise is working.");
+void TestNoise()
+{
+  // guard against adding tests twice
+  static bool alreadyRan = false;
+  if(alreadyRan) return;
+  alreadyRan = true;
+  using namespace Engine;
+  Tester::addTest([=]()
+  {
+    Engine::Noise::OpenSimplexNoise noise(2);
+    double value = noise.Evaluate(1.0, 1.0, 1.0/100);
+    BE_TEST_ONCE(value != 0.0f);
+  });
 }
