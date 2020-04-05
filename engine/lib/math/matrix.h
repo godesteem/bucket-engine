@@ -336,7 +336,8 @@ namespace Engine::Math
     template<typename onlyForVectors = std::enable_if<Columns == 1>>
     T Magnitude() const
     {
-      return std::sqrt((*this).Transposed() * *this);
+      //return std::sqrt((*this).Transposed() * *this);
+      return 0;
     }
 
 

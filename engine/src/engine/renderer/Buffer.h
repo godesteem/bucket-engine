@@ -37,11 +37,11 @@ namespace Engine {
   };
 
   struct BufferElement {
-    std::string Name;
-    uint32_t Offset;
-    uint32_t Size;
-    ShaderDataType Type;
-    bool Normalized;
+    std::string Name = "";
+    uint32_t Offset = 0;
+    uint32_t Size = 0;
+    ShaderDataType Type = ShaderDataType::None;
+    bool Normalized = false;
 
     BufferElement() {};
 
