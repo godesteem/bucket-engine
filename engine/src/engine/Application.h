@@ -47,7 +47,7 @@ namespace Engine {
       ImGUILayer* m_ImGuiLayer;
       bool m_Running = true;
       LayerStack m_LayerStack;
-      Timestep m_FrameLastTime;
+      Timestep m_FrameLastTime{0.f};
       static Application* s_Instance;
   };
 

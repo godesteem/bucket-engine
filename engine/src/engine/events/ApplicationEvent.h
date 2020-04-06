@@ -18,7 +18,7 @@ namespace Engine {
       }
 
       EVENT_CLASS_TYPE(WindowResize)
-      EVENT_CLASS_CATEGORY(EventCategory::EventCategoryApplication)
+      EVENT_CLASS_CATEGORY(EventCategory::Application)
     private:
       unsigned int m_Width, m_Height;
   };
@@ -29,7 +29,7 @@ namespace Engine {
       WindowCloseEvent() {}
 
       EVENT_CLASS_TYPE(WindowClose)
-      EVENT_CLASS_CATEGORY(EventCategory::EventCategoryApplication)
+      EVENT_CLASS_CATEGORY(EventCategory::Application)
   };
   class BE_API WindowMovedEvent: public Event
   {
@@ -37,7 +37,7 @@ namespace Engine {
       WindowMovedEvent() {}
 
       EVENT_CLASS_TYPE(WindowMoved)
-      EVENT_CLASS_CATEGORY(EventCategory::EventCategoryApplication)
+      EVENT_CLASS_CATEGORY(EventCategory::Application)
   };
 
   class BE_API WindowFocusEvent: public Event
@@ -46,7 +46,7 @@ namespace Engine {
       WindowFocusEvent() {}
 
       EVENT_CLASS_TYPE(WindowFocus)
-      EVENT_CLASS_CATEGORY(EventCategory::EventCategoryApplication)
+      EVENT_CLASS_CATEGORY(EventCategory::Application)
   };
 
   class BE_API WindowLostFocusEvent: public Event
@@ -55,7 +55,7 @@ namespace Engine {
       WindowLostFocusEvent() {}
 
       EVENT_CLASS_TYPE(WindowLostFocus)
-      EVENT_CLASS_CATEGORY(EventCategory::EventCategoryApplication)
+      EVENT_CLASS_CATEGORY(EventCategory::Application)
   };
 
 
@@ -65,7 +65,7 @@ namespace Engine {
       AppTickEvent() {}
 
       EVENT_CLASS_TYPE(AppTick)
-      EVENT_CLASS_CATEGORY(EventCategory::EventCategoryApplication)
+      EVENT_CLASS_CATEGORY(EventCategory::Application)
   };
 
   class BE_API AppUpdateEvent: public Event
@@ -74,7 +74,7 @@ namespace Engine {
       AppUpdateEvent() {}
 
       EVENT_CLASS_TYPE(AppUpdate)
-      EVENT_CLASS_CATEGORY(EventCategory::EventCategoryApplication)
+      EVENT_CLASS_CATEGORY(EventCategory::Application)
   };
 
   class BE_API AppRenderEvent: public Event
@@ -83,6 +83,6 @@ namespace Engine {
       AppRenderEvent() {}
 
       EVENT_CLASS_TYPE(AppRender)
-      EVENT_CLASS_CATEGORY(EventCategory::EventCategoryApplication)
+      EVENT_CLASS_CATEGORY(EventCategory::Application)
   };
 }

@@ -20,7 +20,7 @@ namespace Engine {
       }
 
       EVENT_CLASS_TYPE(MouseMoved)
-      EVENT_CLASS_CATEGORY(EventCategory::EventCategoryMouse | EventCategory::EventCategoryInput)
+      EVENT_CLASS_CATEGORY(EventCategory::Mouse | EventCategory::Input)
     protected:
       float m_MouseX, m_MouseY;
   };
@@ -41,7 +41,7 @@ namespace Engine {
       }
 
       EVENT_CLASS_TYPE(MouseScrolled)
-      EVENT_CLASS_CATEGORY(EventCategory::EventCategoryMouse | EventCategory::EventCategoryInput)
+      EVENT_CLASS_CATEGORY(EventCategory::Mouse | EventCategory::Input)
     private:
       float m_XOffset, m_YOffset;
   };
@@ -51,7 +51,7 @@ namespace Engine {
     public:
       inline int GetMouseButton() const { return m_Button; }
 
-      EVENT_CLASS_CATEGORY(EventCategory::EventCategoryMouseButton | EventCategory::EventCategoryInput)
+      EVENT_CLASS_CATEGORY(EventCategory::MouseButton | EventCategory::Input)
     protected:
       MouseButtonEvent(int button)
         : m_Button(button) {}
