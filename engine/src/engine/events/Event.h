@@ -15,7 +15,8 @@ namespace Engine {
     MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
   };
 
-  enum EventCategory {
+  enum class EventCategory
+  {
     None = 0,
     EventCategoryApplication = BIT(0),
     EventCategoryInput = BIT(1),
@@ -23,6 +24,7 @@ namespace Engine {
     EventCategoryMouse = BIT(3),
     EventCategoryMouseButton = BIT(4),
   };
+  ENABLE_BITMASK_OPERATORS(EventCategory)
 
 #ifndef EVENT_CLASS_TYPE
   #define EVENT_CLASS_TYPE(type) static EventType GetStaticType(){return Engine::EventType::type; }\
@@ -30,7 +32,7 @@ namespace Engine {
       virtual const char* GetName() const override {return #type;}
 #endif
 #ifndef EVENT_CLASS_CATEGORY
-  #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override {return category;}
+  #define EVENT_CLASS_CATEGORY(category) virtual EventCategory GetCategoryFlags() const override {return category;}
 #endif
   class BE_API Event
   {
@@ -38,11 +40,11 @@ namespace Engine {
   public:
     virtual EventType GetEventType() const = 0;
     virtual const char *GetName() const = 0;
-    virtual int GetCategoryFlags() const = 0;
+    virtual EventCategory GetCategoryFlags() const = 0;
     virtual std::string ToString() const { return GetName(); }
 
     inline bool IsInCategory(EventCategory category){
-      return GetCategoryFlags() && category;
+      return static_cast<bool>(GetCategoryFlags() & category);
     }
     bool Handled = false;
 

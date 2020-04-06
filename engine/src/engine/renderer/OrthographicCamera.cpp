@@ -20,7 +20,7 @@ namespace Engine {
   Camera::CameraStack* Camera::camStack = new Camera::CameraStack();
   Camera::Camera(glm::mat4 projection, glm::mat4 view)
       : m_ProjectionMatrix(projection), m_ViewMatrix(view),
-        m_ViewProjectionMatrix(m_ProjectionMatrix * m_ViewMatrix) 
+        m_ViewProjectionMatrix(m_ProjectionMatrix * m_ViewMatrix)
   {
     camStack->AddCamera(this);
   };
@@ -63,7 +63,8 @@ namespace Engine {
   }
 
 
-  void ThirdPersonCamera::OnUpdate(Timestep &ts) {
+  void ThirdPersonCamera::OnUpdate(Timestep& tsr) {
+  const float ts = tsr.count();
     {
       if (Input::IsKeyPressed(BE_KEY_LEFT)) {
         ProcessMouseMovement(m_Speed * 100.0f * ts, 0);

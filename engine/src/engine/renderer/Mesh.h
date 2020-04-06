@@ -58,6 +58,8 @@ namespace Engine {
       VertexCategoryNormal = BIT(2),
     };
     explicit ObjFile() {}
+    // Warning	C26495	Variable 'Engine::ObjFile::file' is uninitialized. Always initialize a member variable (type.6).
+
 
     explicit ObjFile(const std::string& fp);
     inline void Open(const char* mode="r") { file = fopen(filePath.c_str(), mode);}

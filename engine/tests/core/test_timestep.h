@@ -22,39 +22,38 @@ void TestTimestep()
   Tester::addTest([=]()
   {
     Timestep t;
-    BE_TEST_ONCE(t.GetMilliseconds() == 0);
+    BE_TEST_ONCE(std::chrono::duration_cast<std::chrono::milliseconds>(t) == Timestep{0.f});
   });
   Tester::addTest([=]()
   {
     Timestep t;
-    BE_TEST_ONCE(t.GetSeconds() == 0);
+    BE_TEST_ONCE(t.count() == 0);
   });
   Tester::addTest([=]()
   {
     Timestep t(1.0f);
-    BE_TEST_ONCE(t.GetSeconds() == 1.0f);
+    BE_TEST_ONCE(t.count() == 1.0f);
   });
   Tester::addTest([=]()
   {
     Timestep t(1.0f);
-    BE_TEST_ONCE(t.GetMilliseconds() == 1000.0f);
+    BE_TEST_ONCE(std::chrono::duration_cast<std::chrono::milliseconds>(t) == Timestep{1000.0f});
   });
   Tester::addTest([=]()
   {
     Timestep t;
-    t = t + 1;
-    BE_TEST_MULTI(t.GetSeconds() == 1.0f);
-    BE_TEST_ONCE(t.GetMilliseconds() == 1000.0f);
-    //Warning	C4715	'<lambda_bb557d9c8f4837619b6480b6a60b4f65>::operator()': not all control paths return a value
+    t++;
+    BE_TEST_MULTI(t.count() == 1.0f);
+    BE_TEST_MULTI(std::chrono::duration_cast<std::chrono::milliseconds>(t) == Timestep{1000.0f});
+    return test_status::TEST_OK;
   });
   Tester::addTest([=]()
   {
-    Timestep t(1.0);
-    t = t - 1;
-    BE_TEST_MULTI(t.GetSeconds() == 0.0f);
-    BE_TEST_ONCE(t.GetMilliseconds() == 0.0f);
-    //Warning	C4715	'<lambda_812a0c0e34e59e1725d88879a760847b>::operator()': not all control paths return a value
-
+    Timestep t(1.0f);
+    t--;
+    BE_TEST_MULTI(t.count() == 0.0f);
+    BE_TEST_MULTI(std::chrono::duration_cast<std::chrono::milliseconds>(t) == Timestep{0.f});
+    return test_status::TEST_OK;
   });
 
   /**
@@ -62,19 +61,23 @@ void TestTimestep()
     * for real usage see `Engine::Application`s implementation of the
     * main game loop.
     */
-  auto deltaProducer = [=](float &ts){float fps = 60.0f;ts = (1000.f/fps);};
+  auto deltaProducer = [=](Timestep &ts)
+  {
+    const Timestep fps{60.0f};
+    ts = (fps * 1/1000.f);
+  };
 
   Tester::addTest([=]()
   {
     Timestep t;
     float fps = 60.0f;
-    float delta;
+    Timestep delta;
     for(int i=0; i<10; ++i){
       deltaProducer(delta);
       t = t + delta;
     }
-    float frameTime = 1000.f/fps;
-    BE_TEST_ONCE(t - (10.0f * frameTime) <= 0.0001);
-    //Warning	C4715	'<lambda_d46812fce8d74eb6faf7b7105a2d707d>::operator()': not all control paths return a value
+    Timestep frameTime{1000.f/fps};
+    BE_TEST_MULTI(t - (10.0f * frameTime) <= Timestep{0.0001f});
+    return test_status::TEST_OK;
   });
 }
