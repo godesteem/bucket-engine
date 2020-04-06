@@ -21,12 +21,12 @@ void TestTimestep()
   using namespace Engine;
   Tester::addTest([=]()
   {
-    Timestep t;
+    Timestep t{0.f};
     BE_TEST_ONCE(std::chrono::duration_cast<std::chrono::milliseconds>(t) == Timestep{0.f});
   });
   Tester::addTest([=]()
   {
-    Timestep t;
+    Timestep t{0.f};
     BE_TEST_ONCE(t.count() == 0);
   });
   Tester::addTest([=]()
@@ -37,19 +37,19 @@ void TestTimestep()
   Tester::addTest([=]()
   {
     Timestep t(1.0f);
-    BE_TEST_ONCE(std::chrono::duration_cast<std::chrono::milliseconds>(t) == Timestep{1000.0f});
+    BE_TEST_ONCE(std::chrono::duration_cast<std::chrono::milliseconds>(t).count() == 1000.f);
   });
   Tester::addTest([=]()
   {
-    Timestep t;
+    Timestep t{0.f};
     t++;
     BE_TEST_MULTI(t.count() == 1.0f);
-    BE_TEST_MULTI(std::chrono::duration_cast<std::chrono::milliseconds>(t) == Timestep{1000.0f});
+    BE_TEST_MULTI(std::chrono::duration_cast<std::chrono::milliseconds>(t).count() == 1000.f);
     return test_status::TEST_OK;
   });
   Tester::addTest([=]()
   {
-    Timestep t(1.0f);
+    Timestep t{1.f};
     t--;
     BE_TEST_MULTI(t.count() == 0.0f);
     BE_TEST_MULTI(std::chrono::duration_cast<std::chrono::milliseconds>(t) == Timestep{0.f});
