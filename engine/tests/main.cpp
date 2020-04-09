@@ -3,6 +3,8 @@
 
 #include "test_math.h"
 #include "core/test_timestep.h"
+#include "test_noise.h"
+
 
 int main(int argc, char** argv){
   Engine::Log::Init();
@@ -12,6 +14,7 @@ int main(int argc, char** argv){
   //    that wasnt fun to debug and find, pinpoint and write sample classes to be sure
   TestMath();
   TestTimestep();
+  TestNoise();
 
   // parse args
   bool runAll = argc <= 1;

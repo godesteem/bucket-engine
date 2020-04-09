@@ -15,6 +15,7 @@ set(ENV{ROOT_DIR} ${CMAKE_SOURCE_DIR})
 set(CORE_DIR ${CMAKE_SOURCE_DIR}/engine/src/engine/core/)
 set(MATH_DIR "${CMAKE_SOURCE_DIR}/engine/lib/math")
 
+set(NOISE_DIR "${CMAKE_SOURCE_DIR}/engine/lib/noise")
 set(ENGINE_SOURCE_FILES
   # sources
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Application.cpp
@@ -60,6 +61,9 @@ set(ENGINE_SOURCE_FILES
   ${imgui_root}/imgui_demo.cpp
   ${imgui_root}/imgui_draw.cpp
   ${imgui_root}/imgui_widgets.cpp
+
+  # noise
+  ${NOISE_DIR}/noise.cpp
   )
 set(ENGINE_HEADER_FILES
   # sources
@@ -128,6 +132,7 @@ set(ENGINE_HEADER_FILES
   ${MATH_DIR}/math.h
   ${MATH_DIR}/matrix.h
   ${MATH_DIR}/vector.h
+  ${NOISE_DIR}/noise.h
 )
 
 
