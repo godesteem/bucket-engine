@@ -15,6 +15,7 @@ set(ENV{ROOT_DIR} ${CMAKE_SOURCE_DIR})
 set(CORE_DIR ${CMAKE_SOURCE_DIR}/engine/src/engine/core/)
 set(MATH_DIR "${CMAKE_SOURCE_DIR}/engine/lib/math")
 
+set(NOISE_DIR "${CMAKE_SOURCE_DIR}/engine/lib/noise")
 set(ENGINE_SOURCE_FILES
   # sources
   ${CMAKE_SOURCE_DIR}/engine/src/engine/Application.cpp
@@ -60,6 +61,9 @@ set(ENGINE_SOURCE_FILES
   ${imgui_root}/imgui_demo.cpp
   ${imgui_root}/imgui_draw.cpp
   ${imgui_root}/imgui_widgets.cpp
+
+  # noise
+  ${NOISE_DIR}/noise.cpp
   )
 set(ENGINE_HEADER_FILES
   # sources
@@ -128,9 +132,9 @@ set(ENGINE_HEADER_FILES
   ${MATH_DIR}/math.h
   ${MATH_DIR}/matrix.h
   ${MATH_DIR}/vector.h
+  ${NOISE_DIR}/noise.h
 )
 
-set(NOISE_DIR "${CMAKE_SOURCE_DIR}/engine/lib/noise")
 
 set(GLAD_DIR "${CMAKE_SOURCE_DIR}/engine/vendor/glad")
 
@@ -158,7 +162,6 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/spdlog)
 add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/glfw-3.3.2)
 add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/glm/glm)
 #add_subdirectory(${MATH_DIR})
-add_subdirectory(${NOISE_DIR})
 #add_library(glm SHARED ${CMAKE_SOURCE_DIR}/engine/vendor/glm/glm)
 add_library(glad STATIC ${GLAD_DIR}/src/glad.c)
 #add_subdirectory(${CMAKE_SOURCE_DIR}/engine/vendor/imgui)
@@ -167,7 +170,7 @@ add_library(glad STATIC ${GLAD_DIR}/src/glad.c)
 # target_include_directories(glad PRIVATE "${GLAD_DIR}/include")
 
 find_package(OpenGL REQUIRED)
-target_link_libraries(engine PUBLIC OpenGL::GL glad glfw glm stb_image spdlog bucket_noise)
+target_link_libraries(engine PUBLIC OpenGL::GL glad glfw glm stb_image spdlog)
 
 # add_library("glad" "${GLAD_DIR}/src/glad.c")
 # target_include_directories(engine PRIVATE "${GLAD_DIR}/include")
