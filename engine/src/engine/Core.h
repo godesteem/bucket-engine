@@ -39,7 +39,7 @@ namespace Engine {
 }
 
 //jnl from http://blog.bitwigglers.org/using-enum-classes-as-type-safe-bitmasks/
-//    this enables us to use a type-safe bitmast with enum class
+//    this enables us to use a type-safe bitmask with enum class
 template<typename Enum>
 struct EnableBitMaskOperators
 {
