@@ -36,8 +36,8 @@ namespace Engine {
   void BE_CORE_INFO(const T& t, const P& ... p)
   { Engine::Log::GetCoreLogger()->info(t, p...); }
   template <typename T, typename ... P>
-  void BE_CORE_FATAL(const T& t, const P& ... p)
-  { Engine::Log::GetCoreLogger()->fatal(t, p...); }
+  void BE_CORE_CRITICAL(const T& t, const P& ... p)
+  { Engine::Log::GetCoreLogger()->critical(t, p...); }
 
   // CLIENT LOG FUNCTIONS
   template <typename T, typename ... P>
@@ -53,8 +53,8 @@ namespace Engine {
   void BE_INFO(const T& t, const P& ... p)
   { Engine::Log::GetClientLogger()->info(t, p...); }
   template <typename T, typename ... P>
-  void BE_FATAL(const T& t, const P& ... p)
-  { Engine::Log::GetClientLogger()->fatal(t, p...); }
+  void BE_CRITICAL(const T& t, const P& ... p)
+  { Engine::Log::GetClientLogger()->critical(t, p...); }
 #else
   // CORE LOG FUNCTIONS
   template <typename T, typename ... P>
