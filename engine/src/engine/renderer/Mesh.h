@@ -58,8 +58,6 @@ namespace Engine {
       VertexCategoryNormal = BIT(2),
     };
     explicit ObjFile() {}
-    // Warning	C26495	Variable 'Engine::ObjFile::file' is uninitialized. Always initialize a member variable (type.6).
-
 
     explicit ObjFile(const std::string& fp);
     inline void Open(const char* mode="r") { file = fopen(filePath.c_str(), mode);}
@@ -79,7 +77,7 @@ namespace Engine {
     bool LoadObjFile(std::string const& fileName);
 
   private:
-    FILE* file;
+    FILE* file = nullptr;
     std::string filePath;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> normals;
