@@ -30,6 +30,11 @@ namespace Engine
     LoadObjFile(this->_filePath);
   }
 
+  ObjFile::~ObjFile()
+  {
+    saveObjFile(); // for testing
+  }
+
   void ObjFile::CreateObjFile(float* vertices, size_t vertexCount, VertexCategory vertexCategories, size_t vertexElementCount, uint32_t* indices, size_t indexCount, const std::string& fp) {
     std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
     std::vector<glm::vec3> _vertices;
@@ -100,6 +105,16 @@ namespace Engine
       return false;
     }
 
+    // clear potentially existing data
+    _vertices.clear();
+    _normals.clear();
+    _texture_uvs.clear();
+
+    // stupid 1-indexed data, pushback one so everything is nice...
+    _vertices.push_back(Engine::Math::vec3());
+    _normals.push_back(Engine::Math::vec3());
+    _texture_uvs.push_back(Engine::Math::vec2());
+
     while(!fin.eof())
     {
       const size_t bufSize = 1024;
@@ -134,6 +149,13 @@ namespace Engine
         //            currentLine.erase(0, 1);
 
         std::string currentLine(buf +1);
+
+        // sigh: https://stackoverflow.com/questions/8362094/replace-multiple-spaces-with-one-space-in-a-string
+        // temporary fix to remove unnecessary multiple whitespace
+        std::string::iterator new_end = std::unique(currentLine.begin(), currentLine.end(), [=](char lhs, char rhs){ return (lhs == rhs) && (lhs == ' '); } );
+        currentLine.erase(new_end, currentLine.end());
+
+        // because the following only expects a single space per separation...
         size_t start0 = currentLine.find_first_of(' ');
         size_t end0   = currentLine.find_first_of(' ', start0+1);
         size_t start1 = currentLine.find_first_of(' ', end0);
@@ -148,9 +170,9 @@ namespace Engine
         {
           float x = 0, y = 0, z = 0;
 
+          // jnl: read https://stackoverflow.com/a/57865805/10314791 atof is way faster, accepting the caveats
           if(start0 != std::string::npos && start0 < currentLine.size())
           try {
-            // jnl: read https://stackoverflow.com/a/57865805/10314791 atof is way faster, accepting the caveats
             x = atof(currentLine.c_str() + start0);
           } catch (...) { }
 
@@ -165,11 +187,8 @@ namespace Engine
           }catch (...) { }
 
           Engine::Math::vec3 v{{x},{y},{z}};
-          if(vertexKind == 'n') { //jnl switch(vertexKind) case 'n':, warum also dieses if?
-            _normals.push_back(v);
-          } else {
-            _vertices.push_back(v);
-          }
+          if(vertexKind == 'n') { _normals.push_back(v); }
+          else { _vertices.push_back(v); }
           break;
         }
         case 't':
@@ -199,8 +218,18 @@ namespace Engine
       case 'f': // face definition
       {
         std::string currentLine(buf+1);
+
+        // sigh: https://stackoverflow.com/questions/8362094/replace-multiple-spaces-with-one-space-in-a-string
+        // temporary fix to remove unnecessary multiple whitespace
+        std::string::iterator new_end = std::unique(currentLine.begin(), currentLine.end(), [=](char lhs, char rhs){ return (lhs == rhs) && (lhs == ' '); } );
+        currentLine.erase(new_end, currentLine.end());
+
         size_t nSlashes = std::count(currentLine.begin(), currentLine.end(), '/');
-        size_t nDoubleSlashes = std::count(currentLine.begin(), currentLine.end(), '//');
+        size_t nDoubleSlashes = 0;
+        for (size_t i = 0; i < currentLine.size()-1; ++i)
+        {
+          nDoubleSlashes += currentLine[i] == currentLine[i+1] && currentLine[i] == '/';
+        }
 
         _hasTexturess = nDoubleSlashes == 0 && nSlashes > 0;
         _hasNormals = nSlashes > 0;
@@ -299,17 +328,22 @@ namespace Engine
     }
     fout << "# auto generated file\n";
     fout << "# " + fileName + "\n";
+    bool ignoreFirst = true;
 
-    for (auto& v : this->_vertices) { fout << "v  " << v.x() << ' ' << v.y() << ' ' << v.z() << '\n'; }
+    ignoreFirst = true;
+    for (auto& v : this->_vertices) { if(ignoreFirst) {ignoreFirst = false; continue;} fout << "v  " << v.x() << ' ' << v.y() << ' ' << v.z() << '\n'; }
     fout << '\n';
 
-    for (auto& vt : this->_texture_uvs) { fout << "vt " << vt.x() << ' ' << vt.y() << ' ' << vt.z() << '\n'; }
+    ignoreFirst = true;
+    for (auto& vt : this->_texture_uvs) { if(ignoreFirst) {ignoreFirst = false; continue;} fout << "vt " << vt.x() << ' ' << vt.y() << '\n'; }
     fout << '\n';
 
-    for (auto& vn : this->_normals) { fout << "vn " << vn.x() << ' ' << vn.y() << ' ' << vn.z() << '\n'; }
+    ignoreFirst = true;
+    for (auto& vn : this->_normals) { if(ignoreFirst) {ignoreFirst = false; continue;} fout << "vn " << vn.x() << ' ' << vn.y() << ' ' << vn.z() << '\n'; }
     fout << '\n';
 
-    for (auto& f : this->_faces) { fout << "f " << f.p1 << ' ' << f.p2 << ' ' << f.p3 << '\n'; }
+    ignoreFirst = false;
+    for (auto& f : this->_faces) { if(ignoreFirst) {ignoreFirst = false; continue;} fout << "f " << f.p1 << ' ' << f.p2 << ' ' << f.p3 << '\n'; }
     fout << '\n';
 
     fout.close();

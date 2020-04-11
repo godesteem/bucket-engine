@@ -183,7 +183,7 @@ namespace Engine::Math
     }
 
     // this function will only exist (and compile) for a 4x4 Matrix
-    template<size_t R = Rows, size_t C = Columns, typename youDidntUseA4x4Matrix = std::enable_if<R == 4 && C == 4>>
+    template<size_t R = Rows, size_t C = Columns, typename youDidntUseA4x4Matrix = std::enable_if_t<R == 4 && C == 4>>
     static Matrix<4, 4> // clang-format off
     Ortho(T const& left,
           T const& right,
@@ -222,25 +222,25 @@ namespace Engine::Math
     }
 
     // explicit cast to underlying template type T
-    template<size_t R = Rows, size_t C = Columns, typename size_is_1_1 = std::enable_if<R == 1 && C == 1>>
+    template<size_t R = Rows, size_t C = Columns, typename size_is_1_1 = std::enable_if_t<R == 1 && C == 1>>
     explicit operator T() const
     {
       return _data[0][0];
     }
 
-    template<size_t C = Columns, typename onlyForVectors = std::enable_if<C == 1>>
+    template<size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1>>
     Matrix<1, 1> operator*(Matrix<Rows, 1> const& v) const
     {
       return v.Transposed() * *this;
     }
 
-    template<size_t C = Columns, typename onlyForVectors = std::enable_if<C == 1>>
+    template<size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1>>
     Matrix<1, 1, T> Dot(Matrix<Rows, 1> const& v) const
     {
       return v.Transposed() * *this;
     }
 
-    template<size_t C = Columns, typename onlyForVectors = std::enable_if<C == 1>>
+    template<size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1>>
     T Magnitude() const
     {
       return std::sqrt((this->Transposed() * (*this)).operator T());
@@ -295,7 +295,7 @@ namespace Engine::Math
       return *this;
     }
 
-    template<size_t R = Rows, size_t C = Columns, typename onlyForSquareMatrices = std::enable_if<R == C>>
+    template<size_t R = Rows, size_t C = Columns, typename onlyForSquareMatrices = std::enable_if_t<R == C>>
     Matrix& operator*=(Matrix const& m)
     {
       Matrix temp = this->operator*(m);
@@ -315,25 +315,25 @@ namespace Engine::Math
       return *this;
     }
 
-    template<size_t C = Columns, size_t R = Rows, typename onlyForVectors = std::enable_if<C == 1 && (R > 0) && R <= 4>>
+    template<size_t R = Rows, size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1 && (R > 0) && R <= 4>>
     T const& x() const
     {
       return _data[0][0];
     }
 
-    template<size_t C = Columns, size_t R = Rows, typename onlyForVectors = std::enable_if<C == 1 && (R > 1) && R <= 4>>
+    template<size_t R = Rows, size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1 && (R > 1) && R <= 4>>
     T const& y() const
     {
       return _data[1][0];
     }
 
-    template<size_t C = Columns, size_t R = Rows, typename onlyForVectors = std::enable_if<C == 1 && (R > 2) && R <= 4>>
+    template<size_t R = Rows, size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1 && (R > 2) && R <= 4>>
     T const& z() const
     {
       return _data[2][0];
     }
 
-    template<size_t C = Columns, size_t R = Rows, typename onlyForVectors = std::enable_if<C == 1 && (R > 3) && R <= 4>>
+    template<size_t R = Rows, size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1 && (R > 3) && R <= 4>>
     T const& w() const
     {
       return _data[3][0];

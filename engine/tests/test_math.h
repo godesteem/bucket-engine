@@ -24,6 +24,15 @@ void TestMath()
   using namespace Engine::Math;
   Tester::addTest([=]()
   {
+    Matrix<2,1> v2;
+    v2.x();
+    v2.y();
+    // v2.z(); // shall not compile
+    BE_TEST_ONCE(true);
+  });
+
+  Tester::addTest([=]()
+  {
     //auto eye = glm::vec3{0,0,0};
     //auto center = glm::vec3{1,1,0};
     //auto up = glm::vec3{0,0,1};

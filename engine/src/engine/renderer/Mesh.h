@@ -72,12 +72,9 @@ namespace Engine
       {
         ostr << fp.vertex;
         ostr << '/';
-        if(fp.texture != 0)
-          ostr << fp.texture;
+        if(fp.texture != 0) ostr << fp.texture;
         ostr << '/';
-        if(fp.normal != 0)
-          ostr << fp.normal;
-        ostr << '/';
+        if(fp.normal != 0) ostr << fp.normal;
         return ostr;
       }
     };
@@ -92,6 +89,8 @@ namespace Engine
     explicit ObjFile() { }
 
     explicit ObjFile(const std::string& fp);
+    ~ObjFile();
+
     inline const std::vector<Engine::Math::vec3>& GetVertices() const { return _vertices; };
     inline const std::vector<Engine::Math::vec3>& GetNormals() const { return _normals; };
     inline const std::vector<Engine::Math::vec2>& GetTextureUVs() const { return _texture_uvs; };

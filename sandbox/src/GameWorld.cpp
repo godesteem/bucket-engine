@@ -83,4 +83,3 @@ GameWorld::GameWorld(Engine::Ref<Engine::VertexBuffer> vb, Engine::Ref<Engine::I
 {
   mesh_ground = Engine::Mesh::Create(vb, ib, "sandbox/assets/shaders/World.glsl");
 }
-
