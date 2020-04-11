@@ -18,6 +18,7 @@ namespace Engine {
   float lastY = WINDOW_HEIGHT / 2.0f;
   bool firstMouse = true;
   static std::pair<float, float> prev_position = {0.0f, 0.0f};
+  const glm::vec3 WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
   bool init = true;
 
   ThirdPersonCamera::ThirdPersonCamera(float left, float right, float bottom, float top)
@@ -25,10 +26,6 @@ namespace Engine {
         MouseSensitivity(SENSITIFITY),
         MouseSpeed(SPEED),
         Zoom(ZOOM),
-        WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)),
-        m_Target(glm::vec3(1.0f)),
-        m_Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-        Up(glm::vec3(0.0f, 1.0f, 0.0f)),
         Yaw(0.0f),
         Pitch(0.0f)
   {
@@ -37,15 +34,29 @@ namespace Engine {
   }
 
   void ThirdPersonCamera::RecalculateViewMatrix() {
-    m_Direction.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    m_Direction.y = sin(glm::radians(Pitch));
-    m_Direction.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    m_Front = glm::normalize(m_Direction);
-    // Also re-calculate the Right and Up vector
-//    Right = glm::normalize(glm::cross(m_Front, WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-//    Up    = glm::normalize(glm::cross(Right, m_Front));
+    /**
+     *
+        glm::vec3 front;
+        front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+        front.y = sin(glm::radians(Pitch));
+        front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+        Front = glm::normalize(front);
+        // Also re-calculate the Right and Up vector
+        Right = glm::normalize(glm::cross(Front, WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+        Up    = glm::normalize(glm::cross(Right, Front));
+     */
+    glm::vec3 front;
+    float distance = 10.0f;
 
-    m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Front, Up);
+    front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+    front.y = sin(glm::radians(Pitch));
+    front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+    m_Front = glm::normalize(front) * distance;
+    m_Right = glm::normalize(glm::cross(m_Front, WorldUp));
+    m_Up = glm::normalize(glm::cross(m_Right, m_Front));
+    m_Position = m_Target - m_Front;
+
+    m_ViewMatrix = glm::lookAt(m_Position, m_Target, m_Up);
     m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
   }
 
@@ -62,18 +73,6 @@ namespace Engine {
         ProcessMouseMovement(0, m_Speed * 100.0f * ts);
       } else if (Input::IsKeyPressed(BE_KEY_DOWN)) {
         ProcessMouseMovement(0, -m_Speed * 100.0f * ts);
-      }
-    }
-    {
-      if (Input::IsKeyPressed(BE_KEY_W)) {
-        m_Position += m_Speed * ts * m_Front;
-      } else if (Input::IsKeyPressed(BE_KEY_S)) {
-        m_Position -= m_Speed * ts * m_Front;
-      }
-      if (Input::IsKeyPressed(BE_KEY_A)) {
-        m_Position += glm::normalize(glm::cross(m_Front, Up)) * (m_Speed * ts);
-      } else if (Input::IsKeyPressed(BE_KEY_D)) {
-        m_Position -= glm::normalize(glm::cross(m_Front, Up)) * (m_Speed * ts);
       }
     }
     {
@@ -118,11 +117,4 @@ namespace Engine {
     RecalculateViewMatrix();
   }
 
-  float &ThirdPersonCamera::GetYaw() {
-    return Yaw;
-  }
-
-  float &ThirdPersonCamera::GetPitch() {
-    return Pitch;
-  }
 }

@@ -39,10 +39,15 @@ namespace Engine {
     Camera(glm::mat4 projection, glm::mat4 view);
     void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix();};
     void SetRotation(glm::vec2 rotation) { m_Rotation = rotation; RecalculateViewMatrix();};
+    void SetTarget(glm::vec3 target) { m_Target = target; RecalculateViewMatrix();};
 
     virtual void OnUpdate(Timestep &ts) = 0;
     glm::vec3& GetPosition() {return m_Position; };
     glm::vec2 GetRotation() const { return m_Rotation; };
+    glm::vec3& GetTarget() {return m_Target; };
+    glm::vec3 GetFront(){return m_Front;};
+    glm::vec3 GetUp(){return m_Up;};
+
     virtual glm::vec3& GetDirection() = 0;
     float& GetSpeed() { return m_Speed; }
 
@@ -61,6 +66,9 @@ namespace Engine {
     glm::mat4 m_ViewMatrix;
     glm::mat4 m_ViewProjectionMatrix;
 
+    glm::vec3 m_Up;
+    glm::vec3 m_Front;
+    glm::vec3 m_Target;
     glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
     glm::vec2 m_Rotation = {0.0f, 0.0f};
     float m_Speed = 10.0f;
