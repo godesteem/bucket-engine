@@ -290,7 +290,7 @@ namespace Engine::Math
     template<size_t C=Columns, typename onlyForVectors = std::enable_if<C == 1>>
     T Magnitude() const
     {
-      return std::sqrt((this->Transposed() * (*this)).operator float());
+      return std::sqrt((this->Transposed() * (*this)).operator T());
     }
 
     Matrix operator-() const
