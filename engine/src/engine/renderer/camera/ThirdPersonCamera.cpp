@@ -50,7 +50,8 @@ namespace Engine {
   }
 
 
-  void ThirdPersonCamera::OnUpdate(Timestep &ts) {
+  void ThirdPersonCamera::OnUpdate(Timestep &tsr) {
+    float ts = std::chrono::duration_cast<std::chrono::milliseconds>(tsr).count() / 1000.0f;
     {
       if (Input::IsKeyPressed(BE_KEY_LEFT)) {
         ProcessMouseMovement(m_Speed * 100.0f * ts, 0);

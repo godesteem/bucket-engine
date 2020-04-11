@@ -1,4 +1,3 @@
-#include <GL/freeglut.h>
 #include "bepch.h"
 #include "platform/opengl/OpenGLContext.h"
 #include "X11Window.h"

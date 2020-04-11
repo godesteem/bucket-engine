@@ -3,10 +3,10 @@
 //
 #pragma once
 
-#include "engine/renderer/GraphicsContext.h"
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include "engine/renderer/GraphicsContext.h"
 
 struct GLFWwindow;
 

@@ -56,7 +56,7 @@ GameWorld::GameWorld(Engine::Ref<Engine::VertexBuffer> vb, Engine::Ref<Engine::I
 void GameWorld::GenerateVertices(const std::string &fileName) {
 // Warning	C6262	Function uses '921780' bytes of stack:  exceeds /analyze:stacksize '16384'.  Consider moving some data to heap.
 
-  const int rowCount = 80;
+  const int rowCount = 20;
   const int columnCount = rowCount;
   const int verticesForSquare = 6;
   const int vertexCount = verticesForSquare * rowCount * columnCount;
