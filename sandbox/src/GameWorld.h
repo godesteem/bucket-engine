@@ -15,5 +15,5 @@ public:
   virtual void OnImGuiRender() override;
   static void GenerateVertices(const std::string& fileName);
 
-  Engine::Ref<Engine::Mesh> m_Mesh;
+  Engine::Ref<Engine::Mesh> mesh_ground;
 };

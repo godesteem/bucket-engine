@@ -15,15 +15,15 @@ namespace Engine {
     if(!shaderFilePath.empty()){
       BE_CHECK_FILE(shaderFilePath, ".glsl");
     }
-    std::vector<glm::vec3> vertices;
-    std::vector<glm::vec3> normals;
-    std::vector<glm::vec2> uvs;
+    std::vector<Engine::Math::vec3> vertices;
+    std::vector<Engine::Math::vec3> normals;
+    std::vector<Engine::Math::vec2> uvs;
 
     ReadObjFile(objectFilePath, vertices, normals, uvs);
 
     m_VertexArray.reset(VertexArray::Create());
     if(!vertices.empty()) {
-      m_VertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(glm::vec3)));
+      m_VertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(Engine::Math::vec3)));
       Engine::BufferLayout vertexLayout = {
           {Engine::ShaderDataType::Float3, "position"}
       };
@@ -31,7 +31,7 @@ namespace Engine {
       m_VertexArray->AddVertexBuffer(m_VertexBuffer);
     }
     if(!uvs.empty()) {
-      m_VertexBuffer.reset(Engine::VertexBuffer::Create(uvs, vertices.size() * sizeof(glm::vec2)));
+      m_VertexBuffer.reset(Engine::VertexBuffer::Create(uvs, vertices.size() * sizeof(Engine::Math::vec2)));
       Engine::BufferLayout vertexLayout = {
           {Engine::ShaderDataType::Float2, "vertexUV"}
       };
@@ -122,7 +122,7 @@ namespace Engine {
     m_VertexArray->SetSize(size);
   }
 
-  bool OpenGLMesh::ReadObjFile(const std::string& filePath, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs) {
+  bool OpenGLMesh::ReadObjFile(const std::string& filePath, std::vector<Engine::Math::vec3> &vertices, std::vector<Engine::Math::vec3> &normals, std::vector<Engine::Math::vec2> &uvs) {
     /**
      * Loads a .obj file with following layout
      * vertices    : v %f %f %f
@@ -137,7 +137,7 @@ namespace Engine {
 
     ObjFile file(filePath);
     vertices = file.GetVertices();
-    uvs = file.GetUVs();
+    uvs = file.GetTextureUVs();
     normals = file.GetNormals();
     return true;
   }

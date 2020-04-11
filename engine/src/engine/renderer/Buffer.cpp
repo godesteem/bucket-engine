@@ -12,13 +12,13 @@ namespace Engine {
     return nullptr;
   }
 
-  VertexBuffer* VertexBuffer::Create(const std::vector<glm::vec2> &vertices, uint32_t size) {
+  VertexBuffer* VertexBuffer::Create(const std::vector<Engine::Math::vec2> &vertices, uint32_t size) {
 //    BE_CORE_ASSERT(size % 3 == 0, "Wrong vector size for vertices");
     float* _vertices = new float[size];
     int ind = 0;
     for (auto i : vertices) {
-      _vertices[ind] = i.x;
-      _vertices[ind + 1] = i.y;
+      _vertices[ind] = i.x();
+      _vertices[ind + 1] = i.y();
       ind += 2;
     }
     auto a = Create(_vertices, size);
@@ -26,14 +26,14 @@ namespace Engine {
 	return a;
   }
 
-  VertexBuffer* VertexBuffer::Create(const std::vector<glm::vec3> &vertices, uint32_t size){
+  VertexBuffer* VertexBuffer::Create(const std::vector<Engine::Math::vec3> &vertices, uint32_t size){
 //    BE_CORE_ASSERT(size % 3 == 0, "Wrong vector size for vertices");
 	  float* _vertices = new float[size];
 	  int ind = 0;
     for(auto i : vertices){
-      _vertices[ind] = i.x;
-      _vertices[ind+1] = i.y;
-      _vertices[ind+2] = i.z;
+      _vertices[ind] = i.x();
+      _vertices[ind+1] = i.y();
+      _vertices[ind+2] = i.z();
       ind += 3;
     }
 	auto a = Create(_vertices, size);
@@ -41,15 +41,15 @@ namespace Engine {
 	return a;
   }
 
-  VertexBuffer* VertexBuffer::Create(const std::vector<glm::vec4> &vertices, uint32_t size){
+  VertexBuffer* VertexBuffer::Create(const std::vector<Engine::Math::vec4> &vertices, uint32_t size){
     //BE_CORE_ASSERT(size % 4 == 0, "Wrong vector size for vertices");
 	  float* _vertices = new float[size];
 	  int ind = 0;
     for(auto i : vertices){
-      _vertices[ind] = i.x;
-      _vertices[ind+1] = i.y;
-      _vertices[ind+2] = i.z;
-      _vertices[ind+3] = i.w;
+      _vertices[ind] = i.x();
+      _vertices[ind+1] = i.y();
+      _vertices[ind+2] = i.z();
+      _vertices[ind+3] = i.w();
       ind += 4;
     }
 	auto a = Create(_vertices, size);

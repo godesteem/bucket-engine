@@ -3,7 +3,8 @@
 #include "platform/opengl/OpenGLMesh.h"
 #include <fstream>
 
-namespace Engine {
+namespace Engine
+{
   Ref<Mesh> Mesh::Create(const std::string &objectFilePath, const std::string &shaderFilePath) {
     switch(Renderer::GetAPI()) {
       case RendererAPI::API::None: BE_CORE_ASSERT(false, "RendererAPI::None is currently not supported ");
@@ -24,28 +25,26 @@ namespace Engine {
   }
 
   ObjFile::ObjFile(const std::string& fp)
-    : filePath(CONSTRUCT_FILE_PATH(fp))
-    , file(nullptr)
+    : _filePath(CONSTRUCT_FILE_PATH(fp))
   {
-    LoadObjFile(this->filePath);
+    LoadObjFile(this->_filePath);
   }
 
-  void ObjFile::CreateObjFile(float * vertices, size_t vertexCount, uint32_t vertexCategories, size_t vertexElementCount, uint32_t * indices, size_t indexCount, const std::string & fp) {
-    ObjFile file;
-    file.SetFilePath(CONSTRUCT_FILE_PATH(fp));
+  void ObjFile::CreateObjFile(float* vertices, size_t vertexCount, VertexCategory vertexCategories, size_t vertexElementCount, uint32_t* indices, size_t indexCount, const std::string& fp) {
     std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
     std::vector<glm::vec3> temp_vertices;
     std::vector<glm::vec2> temp_uvs;
     std::vector<glm::vec3> temp_normals;
 
-    file.Open("w");
-    if (!file.IsOpen()) {
+    std::string resultFilePath = CONSTRUCT_FILE_PATH(fp);
+    FILE* resultFile = fopen(resultFilePath.c_str(), "w");
+    if (resultFile == nullptr) {
       BE_CORE_ASSERT(false, "File " + fp + " can not be opened.");
     }
     std::ostringstream vertexStream, uvStream, normalStream, faceStream;
     for (size_t index = 0; index<vertexCount; ++index) {
       size_t realIndex = index * vertexElementCount;
-      if (vertexCategories & VertexCategory::VertexCategoryVertex) {
+      if (static_cast<bool>(vertexCategories & VertexCategory::Vertex)) {
         vertexStream << "v "
                      << vertices[realIndex]
                      << ' '
@@ -54,14 +53,14 @@ namespace Engine {
                      << vertices[realIndex + 2]
                      << '\n';
       }
-      if (vertexCategories & VertexCategory::VertexCategoryUV) {
+      if (static_cast<bool>(vertexCategories & VertexCategory::UV)) {
         uvStream << "vt "
                  << vertices[realIndex + 3]
                  << ' '
                  << vertices[realIndex + 4]
                  << '\n';
       }
-      if (vertexCategories & VertexCategory::VertexCategoryNormal) {
+      if (static_cast<bool>(vertexCategories & VertexCategory::Normal)) {
         normalStream << "vn "
                      << vertices[realIndex + 5]
                      << ' '
@@ -81,20 +80,22 @@ namespace Engine {
         faceStream << " ";
       }
     }
-    file.Write("# auto generated file\n");
-    file.Write("# " + fp + "\n");
-    file.Write(vertexStream.str());
-    file.Write(normalStream.str());
-    file.Write(faceStream.str());
-    file.Close();
+    if(resultFile == nullptr) { resultFile = fopen(resultFilePath.c_str(), "w"); };
+    for(auto elem : "# auto generated file\n") putc(elem, resultFile);
+    for(auto elem : "# " + fp + "\n") putc(elem, resultFile);
+    for(auto elem : vertexStream.str()) putc(elem, resultFile);
+    for(auto elem : normalStream.str()) putc(elem, resultFile);
+    for(auto elem : faceStream.str()) putc(elem, resultFile);
+    fclose(resultFile);
+    resultFile = nullptr;
   }
 
   bool ObjFile::LoadObjFile(std::string const& fileName)
   {
     std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
-    std::vector<glm::vec3> temp_vertices;
-    std::vector<glm::vec2> temp_uvs;
-    std::vector<glm::vec3> temp_normals;
+    std::vector<Engine::Math::vec3> temp_vertices;
+    std::vector<Engine::Math::vec2> temp_texture_uvs;
+    std::vector<Engine::Math::vec3> temp_normals;
     { //fin scope
       std::ifstream fin(fileName);
 
@@ -111,9 +112,15 @@ namespace Engine {
         const size_t bufSize = 1024;
         char buf[bufSize];
 
+        BE_CORE_INFO(buf);
+
         fin.get(buf, bufSize, '\n');
         fin.ignore(); // remove the '\n' from the file
-        if(buf[0] == '\0') continue;
+        if(buf[0] == '\0')
+        {
+          fin.ignore('\0');
+          continue;
+        }
         switch (buf[0])
         {
         case '#':
@@ -166,7 +173,7 @@ namespace Engine {
               z = atof(currentLine.c_str() + start2);
             }catch (...) { }
 
-            glm::vec3 v(x, y, z);
+            Engine::Math::vec3 v{{x},{y},{z}};
             if(vertexKind == 'n') { //jnl switch(vertexKind) case 'n':, warum also dieses if?
               temp_normals.push_back(v);
             } else {
@@ -189,8 +196,8 @@ namespace Engine {
               y = atof(currentLine.c_str() + start1);
             }catch (...) { }
 
-            glm::vec2 v(x, y);
-            temp_uvs.push_back(v);
+            Engine::Math::vec2 v{{x}, {y}};
+            temp_texture_uvs.push_back(v);
             break;
           }
           default: // dont handle anything else
@@ -204,8 +211,8 @@ namespace Engine {
           size_t nSlashes = std::count(currentLine.begin(), currentLine.end(), '/');
           size_t nDoubleSlashes = std::count(currentLine.begin(), currentLine.end(), '//');
 
-          hasUVs = nDoubleSlashes == 0 && nSlashes > 0;
-          hasNormals = nSlashes > 0;
+          _hasUVs = nDoubleSlashes == 0 && nSlashes > 0;
+          _hasNormals = nSlashes > 0;
 
           size_t start0 = currentLine.find_first_of(' ');
           size_t end0   = currentLine.find_first_of(' ', start0+1);
@@ -221,7 +228,7 @@ namespace Engine {
           if(start0 != std::string::npos && start0 < currentLine.size())
             try {
               std::string sub = currentLine.substr(start0, end0 - start0);
-            if (!hasNormals) {
+            if (!_hasNormals) {
               v1 = stoi(sub);
             }
             else
@@ -230,7 +237,7 @@ namespace Engine {
               std::string val = sub.substr(0, endVal);
               v1 = stoi(val);
               int endVal2 = sub.find_first_of('/', endVal + 1);
-              if(hasUVs) {
+              if(_hasUVs) {
                 val = sub.substr(endVal + 1, endVal2);
                 vt1 = stoi(val);
               }
@@ -243,7 +250,7 @@ namespace Engine {
           if (start1 != std::string::npos && start1 < currentLine.size())
             try {
             std::string sub = currentLine.substr(start1, end1 - start1);
-            if (!hasNormals) {
+            if (!_hasNormals) {
               v2 = stoi(sub);
             }
             else
@@ -252,7 +259,7 @@ namespace Engine {
               std::string val = sub.substr(0, endVal);
               v2 = stoi(val);
               int endVal2 = sub.find_first_of('/', endVal + 1);
-              if(hasUVs) {
+              if(_hasUVs) {
                 val = sub.substr(endVal + 1, endVal2);
                 vt2 = stoi(val);
               }
@@ -265,7 +272,7 @@ namespace Engine {
           if (start2 != std::string::npos && start2 < currentLine.size())
           try {
             std::string sub = currentLine.substr(start2, end2 - start2);
-            if (!hasNormals) {
+            if (!_hasNormals) {
               v3 = stoi(sub);
             }
             else {
@@ -273,7 +280,7 @@ namespace Engine {
               std::string val = sub.substr(0, endVal);
               v3 = stoi(val);
               int endVal2 = sub.find_first_of('/', endVal + 1);
-              if(hasUVs) {
+              if(_hasUVs) {
                 val = sub.substr(endVal + 1, endVal2);
                 vt3 = stoi(val);
               }
@@ -286,12 +293,12 @@ namespace Engine {
           vertexIndices.push_back(v1);
           vertexIndices.push_back(v2);
           vertexIndices.push_back(v3);
-          if (hasUVs) {
+          if (_hasUVs) {
             uvIndices.push_back(vt1);
             uvIndices.push_back(vt2);
             uvIndices.push_back(vt3);
           }
-          if (hasNormals) {
+          if (_hasNormals) {
             normalIndices.push_back(vn1);
             normalIndices.push_back(vn2);
             normalIndices.push_back(vn3);
@@ -315,15 +322,41 @@ namespace Engine {
 
     for (unsigned int i = 0; i < vertexIndices.size(); i++) {
       if (!temp_vertices.empty() && !vertexIndices.empty()) {
-        this->vertices.push_back(temp_vertices[vertexIndices[i] - correction]);
+        this->_vertices.push_back(temp_vertices[vertexIndices[i] - correction]);
       }
-      if (!temp_uvs.empty() && !uvIndices.empty()) {
-        this->uvs.push_back(temp_uvs[uvIndices[i] - correction]);
+      if (!temp_texture_uvs.empty() && !uvIndices.empty()) {
+        this->_texture_uvs.push_back(temp_texture_uvs[uvIndices[i] - correction]);
       }
       if (!temp_normals.empty() && !normalIndices.empty()) {
-        this->normals.push_back(temp_normals[normalIndices[i] - correction]);
+        this->_normals.push_back(temp_normals[normalIndices[i] - correction]);
       }
     }
     return true;
   }
+  bool ObjFile::saveObjFile(std::string const& fileName)
+  {
+    std::ofstream fout(fileName);
+    if(!fout)
+    {
+      fout.close();
+      return false;
+    }
+    fout << "# auto generated file\n";
+    fout << "# " + fileName + "\n";
+
+    for (auto& v : this->_vertices) { fout << "v  " << v.x() << ' ' << v.y() << ' ' << v.z() << '\n'; }
+    fout << '\n';
+
+    for (auto& vt : this->_texture_uvs) { fout << "vt " << vt.x() << ' ' << vt.y() << ' ' << vt.z() << '\n'; }
+    fout << '\n';
+
+    for (auto& vn : this->_normals) { fout << "vn " << vn.x() << ' ' << vn.y() << ' ' << vn.z() << '\n'; }
+    fout << '\n';
+
+    fout.close();
+    return true;
+  }
 }
+
+
+

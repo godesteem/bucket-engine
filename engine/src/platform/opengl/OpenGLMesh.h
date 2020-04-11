@@ -21,7 +21,7 @@ namespace Engine {
 
   private:
     bool ExtractShaderFileContent(const std::string& shaderFilePath);
-    static bool ReadObjFile(const std::string& filePath, std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &uvs);
+    static bool ReadObjFile(const std::string& filePath, std::vector<Engine::Math::vec3> &vertices, std::vector<Engine::Math::vec3> &normals, std::vector<Engine::Math::vec2> &uvs);
   private:
     std::string m_Name;
     Ref<VertexBuffer> m_VertexBuffer;

@@ -2,7 +2,7 @@
 #include <imgui/imgui.h>
 #include <math/matrix.h>
 
-inline void GameWorld::OnUpdate(Engine::Timestep ts) { m_Mesh->OnUpdate(ts); }
+inline void GameWorld::OnUpdate(Engine::Timestep ts) { mesh_ground->OnUpdate(ts); }
 
 inline void GameWorld::OnImGuiRender()
 {
@@ -10,7 +10,7 @@ inline void GameWorld::OnImGuiRender()
   ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_FittingPolicyDefault_ | ImGuiTabBarFlags_Reorderable;
   if(ImGui::BeginTabBar("##tabs", tab_bar_flags))
   {
-    m_Mesh->OnImGuiRender();
+    mesh_ground->OnImGuiRender();
     ImGui::EndTabBar();
   }
   ImGui::End();
@@ -65,21 +65,22 @@ void GameWorld::GenerateVertices(const std::string& fileName)
   for(int i = 0; i < vertexCount; ++i) { indices[i] = i; }
 
   Engine::ObjFile::CreateObjFile(
-  vertices, vertexCount, Engine::ObjFile::VertexCategory::VertexCategoryVertex | Engine::ObjFile::VertexCategory::VertexCategoryNormal, indexCount, indices, vertexCount, fileName);
+  vertices, vertexCount, Engine::ObjFile::VertexCategory::Vertex | Engine::ObjFile::VertexCategory::Normal, indexCount, indices, vertexCount, fileName);
 }
+
 GameWorld::GameWorld()
   : Layer("World")
 {
   std::string shaderFile = "sandbox/assets/shaders/World.glsl";
   std::string objFile    = "sandbox/assets/models/World.obj";
   GenerateVertices(objFile);
-  m_Mesh = Engine::Mesh::Create(objFile, shaderFile);
-  m_Mesh->SetName("World");
+  mesh_ground = Engine::Mesh::Create(objFile, shaderFile);
+  mesh_ground->SetName("World");
 }
 
 GameWorld::GameWorld(Engine::Ref<Engine::VertexBuffer> vb, Engine::Ref<Engine::IndexBuffer> ib, const std::string& name)
   : Layer(name)
 {
-  m_Mesh = Engine::Mesh::Create(vb, ib, "sandbox/assets/shaders/World.glsl");
+  mesh_ground = Engine::Mesh::Create(vb, ib, "sandbox/assets/shaders/World.glsl");
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "bepch.h"
-#include <glm/glm.hpp>
+#include "math/matrix.h"
 
 namespace Engine {
   enum class ShaderDataType: uint8_t {
@@ -110,9 +110,9 @@ namespace Engine {
     virtual const BufferLayout& GetLayout() const = 0;
 
     static VertexBuffer* Create(float* vertices, uint32_t size);
-    static VertexBuffer* Create(const std::vector<glm::vec2> &vertices, uint32_t size);
-    static VertexBuffer* Create(const std::vector<glm::vec3> &vertices, uint32_t size);
-    static VertexBuffer* Create(const std::vector<glm::vec4> &vertices, uint32_t size);
+    static VertexBuffer* Create(const std::vector<Engine::Math::vec2> &vertices, uint32_t size);
+    static VertexBuffer* Create(const std::vector<Engine::Math::vec3> &vertices, uint32_t size);
+    static VertexBuffer* Create(const std::vector<Engine::Math::vec4> &vertices, uint32_t size);
   };
 
   class IndexBuffer {

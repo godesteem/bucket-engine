@@ -65,10 +65,11 @@ namespace Engine {
         static_cast<underlying>(rhs)
     );
   }
+
+  #define ENABLE_BITMASK_OPERATORS(x)  \
+  template<>                           \
+  struct EnableBitMaskOperators<x>     \
+  {                                    \
+    static const bool enable = true; \
+  };
 }
-#define ENABLE_BITMASK_OPERATORS(x)  \
-template<>                           \
-struct EnableBitMaskOperators<x>     \
-{                                    \
-  static const bool enable = true; \
-};
