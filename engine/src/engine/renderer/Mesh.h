@@ -62,6 +62,33 @@ namespace Engine
       Normal = BIT(2),
     };
 
+    struct facePart
+    {
+      // 0 is a n illegal value, hence when 0 appears it means nothing was in the file
+      size_t vertex = 0;
+      size_t texture = 0;
+      size_t normal = 0;
+      friend std::ostream& operator<<(std::ostream& ostr, facePart const& fp)
+      {
+        ostr << fp.vertex;
+        ostr << '/';
+        if(fp.texture != 0)
+          ostr << fp.texture;
+        ostr << '/';
+        if(fp.normal != 0)
+          ostr << fp.normal;
+        ostr << '/';
+        return ostr;
+      }
+    };
+
+    struct face
+    {
+      facePart p1;
+      facePart p2;
+      facePart p3;
+    };
+
     explicit ObjFile() { }
 
     explicit ObjFile(const std::string& fp);
@@ -86,7 +113,8 @@ namespace Engine
     std::vector<Engine::Math::vec3> _vertices;
     std::vector<Engine::Math::vec3> _normals;
     std::vector<Engine::Math::vec2> _texture_uvs;
-    bool _hasUVs     = false;
+    std::vector<face> _faces;
+    bool _hasTexturess     = false;
     bool _hasNormals = false;
   };
   ENABLE_BITMASK_OPERATORS(ObjFile::VertexCategory);
