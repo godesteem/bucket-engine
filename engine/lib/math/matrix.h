@@ -129,7 +129,6 @@ namespace Engine::Math
       return res;
     }
 
-    //TODO create outer class methods for the other commutative order of operands for these four operators
     Matrix operator+(T const& m) const
     {
       Matrix res(*this);
@@ -290,7 +289,7 @@ namespace Engine::Math
     template<size_t C=Columns, typename onlyForVectors = std::enable_if<C == 1>>
     T Magnitude() const
     {
-      return std::sqrt((this->Transposed() * (*this)).operator float());
+      return std::sqrt((this->Transposed() * (*this)).operator T());
     }
 
     Matrix operator-() const
