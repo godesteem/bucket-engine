@@ -1,4 +1,4 @@
- #pragma once
+#pragma once
 #include "engine/Application.h"
 #include "engine/Log.h"
 #include "engine/Layer.h"
@@ -42,4 +42,6 @@
 // -------------------
 // -------------------
 
+#ifdef ENGINE_ENTRY_POINT
 #include "engine/EntryPoint.h"
+#endif ENGINE_ENTRY_POINT
