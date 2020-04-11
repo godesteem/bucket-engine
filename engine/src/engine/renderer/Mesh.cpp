@@ -112,8 +112,6 @@ namespace Engine
         const size_t bufSize = 1024;
         char buf[bufSize];
 
-        BE_CORE_INFO(buf);
-
         fin.get(buf, bufSize, '\n');
         fin.ignore(); // remove the '\n' from the file
         if(buf[0] == '\0')
