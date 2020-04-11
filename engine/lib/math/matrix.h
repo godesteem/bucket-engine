@@ -2,13 +2,6 @@
 
 #include <glm/glm.hpp>
 //TODO: cast constructor from glm stuff
-//TODO mat3x3
-//TODO mat4x4
-//TODO vec4
-
-//until implementation is finished
-//#include "tests.h"
-
 
 #include <array>
 #include <iostream>
@@ -17,9 +10,6 @@
 #include <initializer_list>
 #include <utility>
 
-#define DBGout(x) ;
-//std::cout << x << std::endl;
-
 namespace Engine::Math
 {
   typedef float dA_float; // default argument
@@ -27,16 +17,12 @@ namespace Engine::Math
   template<size_t Rows, size_t Columns, typename T = dA_float>
   class Matrix;
 
-  //template<typename U = dA_float>
-  //class mat2_generic;
-
-  //template<size_t Rows, typename V = dA_float>
-  //class vec_generic;
-
-  //typedef mat2_generic<dA_float> mat2;
   typedef Matrix<2, 2, dA_float> mat2;
-  //typedef vec_generic<2, dA_float> vec2;
   typedef Matrix<2, 1, dA_float> vec2;
+  typedef Matrix<3, 3, dA_float> mat3;
+  typedef Matrix<3, 1, dA_float> vec3;
+  typedef Matrix<4, 4, dA_float> mat4;
+  typedef Matrix<4, 1, dA_float> vec4;
 
   template<size_t Rows, size_t Columns, typename T>
   class Matrix
@@ -50,61 +36,23 @@ namespace Engine::Math
     template<typename u>
     friend class mat2_generic;
 
-
   public:
-
     // empty constructor fills with 0
     Matrix()
       : _data{std::array<T, Columns>{}}
     { }
-
-    //template <typename ...e>
-    //matrix(e&&... e)
-    //  : _data{{std::forward<e>(e)...}}
-    //{ }
-
-    //#pragma warning( push )
-    //#pragma warning( disable : 26495 )
-    //Matrix(std::initializer_list<T> l)
-    //  //jnl i am not able to initialize the std::Array in the initializer list
-    //{
-    //  for(auto e : l)
-    //    DBGout(e << ",")
-    //    DBGout(";");
-
-    //  auto element = l.begin();
-
-    //  for (size_t row = 0; row < Rows; row++)
-    //  {
-    //    for (size_t col = 0; col < Columns; col++, element++)
-    //    {
-    //      DBGout("next_to_insert:" << *element);
-    //      _data[row][col] = *element;
-    //      std::cout << *this << std::endl;
-    //    }
-    //  }
-    //}
-    //#pragma warning( pop )
 
     #pragma warning( push )
     #pragma warning( disable : 26495 )
     Matrix(std::initializer_list<std::initializer_list<T>> ll)
     //jnl i am not able to initialize the std::Array in the initializer list
     {
-      for (auto l : ll)
-      {
-        for(auto e : l)
-          DBGout(e << ",")
-        DBGout(";");
-      }
-
       const std::initializer_list<T>* l = ll.begin();
       for (size_t row = 0; row < Rows; ++row, ++l)
       {
         auto element = l->begin();
         for (size_t col = 0; col < Columns; ++col, ++element)
         {
-          DBGout("next_to_insert:" << *element);
           _data[row][col] = *element;
         }
       }
@@ -120,15 +68,6 @@ namespace Engine::Math
       auto proxy = std::array<T,Columns>{t};
       proxy.fill(t);
       _data.fill(proxy);
-      DBGout(__FUNCTION__ " " << t);
-      DBGout("and then: " << *this);
-      //for (size_t col = 0; col < Columns; col++)
-      //{
-      //  for (size_t row = 0; row < Rows; row++)
-      //  {
-      //    _data[row][col] = t;
-      //  }
-      //}
     }
 
     ~Matrix() = default;
@@ -145,8 +84,6 @@ namespace Engine::Math
 
     bool operator==(Matrix const& m) const
     {
-      DBGout("*this:\n" << *this);
-      DBGout("    m:\n" << m);
       if(this == &m)
         return true;
 
@@ -181,21 +118,41 @@ namespace Engine::Math
 
     Matrix operator-(Matrix const& m) const
     {
-      BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
-      //TODO
+      Matrix res(*this);
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          res._data[row][col] -= m._data[row][col];
+        }
+      }
+      return res;
     }
 
-    //TODO create outer class methods for the other commutative order of operands for these four operators
     Matrix operator+(T const& m) const
     {
-      BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
-      //TODO
+      Matrix res(*this);
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          res._data[row][col] += m;
+        }
+      }
+      return res;
     }
 
     Matrix operator-(T const& m) const
     {
-      BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
-      //TODO
+      Matrix res(*this);
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          res._data[row][col] -= m;
+        }
+      }
+      return res;
     }
 
     Matrix operator*(T const& t) const
@@ -213,14 +170,21 @@ namespace Engine::Math
 
     Matrix operator/(T const& m) const
     {
-      BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
-      //TODO
+      Matrix res(*this);
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          res._data[row][col] /= m;
+        }
+      }
+      return res;
     }
 
     template<size_t C>
-    Matrix<Rows,C> operator*(Matrix<Columns, C> const& m) const
+    Matrix<Rows,C, T> operator*(Matrix<Columns, C, T> const& m) const
     {
-      Matrix<Rows,C> res;
+      Matrix<Rows,C,T> res;
       for (size_t spalte = 0; spalte < C; spalte++)
       {
         for (size_t zeile = 0; zeile < Rows; zeile++)
@@ -236,9 +200,9 @@ namespace Engine::Math
     }
 
     //return a copy which is transposed
-    Matrix<Columns, Rows> Transposed() const
+    Matrix<Columns, Rows, T> Transposed() const
     {
-      Matrix<Columns,Rows> res;
+      Matrix<Columns,Rows,T> res;
       for (size_t col = 0; col < Columns; col++)
       {
         for (size_t row = 0; row < Rows; row++)
@@ -253,17 +217,15 @@ namespace Engine::Math
     Identity()
     {
       Matrix m(0.f);
-      DBGout("m(0)" << m);
       for (size_t d = 0; d < std::min(Rows, Columns); d++)
       {
         m._data[d][d] = 1.f;
       }
-      DBGout("m(I)" << m);
       return m;
     }
 
     // this function will only exist (and compile) for a 4x4 Matrix
-    template <typename youDidntUseA4x4Matrix = std::enable_if<Rows == 4 && Columns == 4, void*>>
+    template<size_t R=Rows, size_t C=Columns, typename youDidntUseA4x4Matrix = std::enable_if<R==4 && C==4>>
     static Matrix<4,4>
     Ortho(T const& left,
           T const& right,
@@ -305,120 +267,149 @@ namespace Engine::Math
       return ostr;
     }
 
-    //typename = std::is_same<T,double>,
-    template<typename = std::enable_if<Rows==1 && Columns==1>>
-    explicit operator double() const
+    // explicit cast to underlying template type T
+    template<size_t R=Rows, size_t C=Columns, typename size_is_1_1 = std::enable_if<R==1 && C==1>>
+    explicit operator T() const
     {
-      BE_CORE_ASSERT(false, "not implemented");
-      //TODO
-      return 0.0;
+      return _data[0][0];
     }
 
-    template<typename onlyForVectors = std::enable_if<Columns == 1>>
+    template<size_t C = Columns, typename onlyForVectors = std::enable_if<C == 1>>
     Matrix<1,1> operator*(Matrix<Rows, 1> const& v) const
     {
       return v.Transposed() * *this;
     }
 
-    template<typename onlyForVectors = std::enable_if<Columns == 1>>
-    Matrix<1,1> Dot(Matrix<Rows, 1> const& v) const
+    template<size_t C = Columns, typename onlyForVectors = std::enable_if<C == 1>>
+    Matrix<1,1,T> Dot(Matrix<Rows, 1> const& v) const
     {
       return v.Transposed() * *this;
     }
 
-    template<typename onlyForVectors = std::enable_if<Columns == 1>>
+    template<size_t C=Columns, typename onlyForVectors = std::enable_if<C == 1>>
     T Magnitude() const
     {
-      //return std::sqrt((*this).Transposed() * *this);
-      return 0;
+      return std::sqrt((this->Transposed() * (*this)).operator T());
     }
 
+    Matrix operator-() const
+    {
+      return *this * -1;
+    }
 
-  protected:
+    Matrix operator+() const
+    {
+      return *this;
+    }
+
+    Matrix& operator+=(T const& t)
+    {
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          this->_data[row][col] += t;
+        }
+      }
+      return *this;
+    }
+
+    Matrix& operator+=(Matrix const& m)
+    {
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          this->_data[row][col] += m._data[row][col];
+        }
+      }
+      return *this;
+    }
+
+    Matrix& operator-=(T const& t)
+    {
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          this->_data[row][col] -= t;
+        }
+      }
+      return *this;
+    }
+
+    Matrix& operator-=(Matrix const& m)
+    {
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          this->_data[row][col] -= m._data[row][col];
+        }
+      }
+      return *this;
+    }
+
+    Matrix& operator*=(T const& t)
+    {
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          this->_data[row][col] *= t;
+        }
+      }
+      return *this;
+    }
+
+    template<size_t R=Rows, size_t C=Columns, typename onlyForSquareMatrices = std::enable_if<R==C>>
+    Matrix& operator*=(Matrix const& m)
+    {
+      Matrix temp = this->operator*(m);
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          this->_data[row][col] = temp[row][col];
+        }
+      }
+      return *this;
+    }
+
+    Matrix& operator/=(T const& t)
+    {
+      for (size_t col = 0; col < Columns; col++)
+      {
+        for (size_t row = 0; row < Rows; row++)
+        {
+          this->_data[row][col] /= t;
+        }
+      }
+      return *this;
+    }
+
+  private:
     std::array<std::array<T, Columns>, Rows> _data;
   }; // class Matrix
 
-
-  template<typename U>
-  class mat2_generic
-    : public Matrix<2,2,U>
+  // commutative operator order
+  template<size_t Rows, size_t Columns, typename T>
+  Matrix<Rows, Columns, T> operator+(T const& t, Matrix<Rows, Columns, T> const& m)
   {
-  public:
-    using Matrix<2,2,U>::Matrix;
+    return m + t;
+  }
 
-    mat2_generic(vec2 const& u, vec2 const& v)
-    {
-      this->_data[0][0] = u[0][0]; this->_data[0][1] = v[0][0];
-      this->_data[1][0] = u[1][0]; this->_data[1][1] = v[1][0];
-    }
-
-    mat2_generic(Matrix<2,2,U> const& m)
-    {
-      this->_data = m._data;
-    }
-
-    mat2_generic(U const& a, U const& b, U const& c, U const& d)
-    {
-      this->_data[0][0] = a; this->_data[0][1] = b;
-      this->_data[1][0] = c; this->_data[1][1] = d;
-    }
-  };
-
-  template<size_t Rows, typename U>
-  class vec_generic
-    : public Matrix<Rows,1,U>
+  // commutative operator order
+  template<size_t Rows, size_t Columns, typename T>
+  Matrix<Rows, Columns, T> operator-(T const& t, Matrix<Rows, Columns, T> const& m)
   {
-  public:
-    using Matrix<Rows,1,U>::Matrix;
+    return -(m - t);
+  }
 
-    vec_generic(Matrix<Rows,1,U> const& m)
-    {
-      for (size_t row = 0; row < Rows; row++)
-      {
-        this->_data[row][0] = m[row][0];
-      }
-    }
-
-    //template<typename = std::enable_if<Rows==2>>
-    //vec_generic(U a, U b)
-    //{
-    //  _data[0][0] = a;
-    //  _data[1][0] = b;
-    //}
-
-    //template<typename V>
-    //vec_generic<1> operator*(vec_generic<Rows, V> const& v) const
-    //{
-    //  return v.Transposed() * *this;
-    //}
-
-    //static constexpr vec_generic
-    //Orthogonal()
-    //{
-    //  BE_CORE_BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
-    //  //TODO
-    //  return vec_generic();
-    //}
-
-    size_t magnitude() const
-    {
-      BE_CORE_ASSERT(false, "this has not yet been implemented and can thus not be used");
-      //TODO
-    }
-
-    vec_generic Dot(vec_generic const& v) const
-    {
-      return this->operator*(v);
-    }
-  };
-
-
-  template<size_t Rows, typename U = dA_float>
-  vec_generic<Rows, U> Length(vec_generic<Rows, U> const& u)
+  // commutative operator order
+  template<size_t Rows, size_t Columns, typename T>
+  Matrix<Rows, Columns, T> operator*(T const& t, Matrix<Rows, Columns, T> const& m)
   {
-    Matrix<1, Rows> v = u.Transposed();
-    Matrix<Rows, 1> um = *(Matrix<Rows, 1>*)(&u);
-    Matrix<1, 1> val = v * um;
-    return std::sqrt((double)val);
+    return m * t;
   }
 } // namespace Engine::Math

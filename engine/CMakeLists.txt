@@ -131,7 +131,6 @@ set(ENGINE_HEADER_FILES
 
   ${MATH_DIR}/math.h
   ${MATH_DIR}/matrix.h
-  ${MATH_DIR}/vector.h
   ${NOISE_DIR}/noise.h
 )
 
