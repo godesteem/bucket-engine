@@ -15,6 +15,7 @@
 #include "LayerStack.h"
 
 #include "engine/renderer/OrthographicCamera.h"
+#include "engine/core/Timestep.h"
 
 namespace Engine {
   /**
@@ -29,15 +30,15 @@ namespace Engine {
        */
       Application();
       virtual ~Application();
-      
+
       void Run();
 
       void OnEvent(Event& e);
 
       void PushLayer(Layer* layer);
       void PushOverlay(Layer* overlay);
-     
-      bool IsRunning() const { return m_Running; } 
+
+      bool IsRunning() const { return m_Running; }
       inline static Application& Get() { return *s_Instance; };
       inline Window& GetWindow() { return *m_Window; };
     private:
@@ -46,10 +47,10 @@ namespace Engine {
       ImGUILayer* m_ImGuiLayer;
       bool m_Running = true;
       LayerStack m_LayerStack;
-      float m_FrameLastTime = 0.0f;
+      Timestep m_FrameLastTime{0.f};
       static Application* s_Instance;
   };
-  
+
   // TODO: by client
   Application* CreateApplication();
 }

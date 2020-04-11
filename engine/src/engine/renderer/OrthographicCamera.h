@@ -13,7 +13,7 @@ namespace Engine {
   const float SPEED = 2.5f;
   const float SENSITIFITY = 0.05f;
   const float ZOOM = 45.0f;
-  
+
 
   class Camera
   {
@@ -45,7 +45,7 @@ namespace Engine {
     virtual void OnUpdate(Timestep &ts) = 0;
     glm::vec3& GetPosition() {return m_Position; };
     glm::vec2 GetRotation() const { return m_Rotation; };
-    
+
     const glm::mat4& GetProjectionMatrix() { return m_ProjectionMatrix; };
     const glm::mat4& GetViewMatrix() { return m_ViewMatrix; };
     const glm::mat4& GetViewProjectionMatrix() { return m_ViewProjectionMatrix; };
@@ -66,7 +66,7 @@ namespace Engine {
     float m_Speed = 10.0f;
     bool m_IsActive = true;
   };
-  
+
   class OrthographicCamera: public Camera
   {
   public:
@@ -75,7 +75,7 @@ namespace Engine {
   private:
     virtual void RecalculateViewMatrix() override;
   };
-  
+
   class ThirdPersonCamera: public Camera
   {
   public:
@@ -87,7 +87,7 @@ namespace Engine {
 
   private:
     virtual void RecalculateViewMatrix() override;
-    
+
     glm::vec3 m_Target;
     glm::vec3 m_Front;
     glm::vec3 m_Direction;

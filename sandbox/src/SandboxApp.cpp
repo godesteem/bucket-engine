@@ -146,17 +146,18 @@ class ExampleLayer: public Engine::Layer
     }
 
     void OnUpdate(Engine::Timestep ts) override {
+    const float ts_float = ts.count();
       Engine::Renderer::BeginScene(m_PlayerCameraLayer.GetCamera());
       {
         if (Engine::Input::IsKeyPressed(BE_KEY_J)) {
-          m_SquarePosition.x += m_SquareMoveSpeed * ts;
+          m_SquarePosition.x += m_SquareMoveSpeed * ts_float;
         } else if (Engine::Input::IsKeyPressed(BE_KEY_L)) {
-          m_SquarePosition.x -= m_SquareMoveSpeed * ts;
+          m_SquarePosition.x -= m_SquareMoveSpeed * ts_float;
         }
         if (Engine::Input::IsKeyPressed(BE_KEY_I)) {
-          m_SquarePosition.y -= m_SquareMoveSpeed * ts;
+          m_SquarePosition.y -= m_SquareMoveSpeed * ts_float;
         } else if (Engine::Input::IsKeyPressed(BE_KEY_K)) {
-          m_SquarePosition.y += m_SquareMoveSpeed * ts;
+          m_SquarePosition.y += m_SquareMoveSpeed * ts_float;
         }
       }
       Engine::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1});
@@ -211,7 +212,7 @@ class ExampleLayer: public Engine::Layer
       if(objects[Objects::Cube3D]) m_Cube->OnUpdate(ts);
       if(objects[Objects::Suzanne]) m_Suzanne->OnUpdate(ts);
 //      for(const auto& obj : m_Models){
-//        obj->OnUpdate(ts);
+//        obj->OnUpdate(ts_float);
 //      }
       m_PlayerCameraLayer.OnUpdate(ts);
 

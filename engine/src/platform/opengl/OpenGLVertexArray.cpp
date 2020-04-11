@@ -58,8 +58,7 @@ namespace Engine {
           ShaderDataTypeToOpenGLBaseType(element.Type),
           element.Normalized ? GL_TRUE : GL_FALSE,
           layout.GetStride(),
-          (const void*) element.Offset
-          //warning	c4312	'type cast': conversion from 'const uint32_t' to 'const void *' of greater size
+          (const void *)(uint64_t) element.Offset
         );
         index++;
       }

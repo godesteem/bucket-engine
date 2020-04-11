@@ -4,13 +4,13 @@
 
 #include "Log.h"
 #include "Input.h"
-
+#include <chrono>
 namespace Engine {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-  
+
   Application* Application::s_Instance = nullptr;
-   
+
   Application::Application()
   {
     BE_INFO("Creating application");
@@ -60,7 +60,7 @@ namespace Engine {
 
   void Application::Run(){
     while(m_Running){
-      float time = glfwGetTime(); // TODO: Platform!
+      Timestep time{glfwGetTime()}; // TODO: Platform!
       Timestep timestep = time - m_FrameLastTime;
       m_FrameLastTime = time;
 

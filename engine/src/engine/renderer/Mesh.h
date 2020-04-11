@@ -77,7 +77,7 @@ namespace Engine {
     bool LoadObjFile(std::string const& fileName);
 
   private:
-    FILE* file;
+    FILE* file = nullptr;
     std::string filePath;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> normals;
