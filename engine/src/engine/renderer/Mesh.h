@@ -64,7 +64,7 @@ namespace Engine
 
     struct facePart
     {
-      // 0 is a n illegal value, hence when 0 appears it means nothing was in the file
+      // <0 is an illegal value, hence when 0 appears it means nothing was in the file
       size_t vertex = 0;
       size_t texture = 0;
       size_t normal = 0;
@@ -98,14 +98,25 @@ namespace Engine
     inline const std::string& GetFilePath() { return _filePath; }
     static void CreateObjFile(float* vertices, size_t vertexCount, VertexCategory vertexCategories, size_t vertexElementCount, uint32_t* indices, size_t indexCount, const std::string& fp);
 
-    // will load other content into this objfiles memory
+    /**
+     * loads other content into this objfile's memory
+     * @param fileName: target file name
+     * @return success
+     */
     bool LoadObjFile(std::string const& fileName);
 
-    // saves file to other filepath
+    /**
+     * saves file to other filepath
+     * @param fileName: target file name
+     * @return success
+     */
     bool saveObjFile(std::string const& fileName);
 
-    // saves file to filepath
-    inline bool saveObjFile() { return saveObjFile(this->_filePath); }
+    /**
+     * saves current content into filepath
+     * @return success
+     */
+    bool saveObjFile() { return saveObjFile(this->_filePath); }
 
   private:
     std::string _filePath;
