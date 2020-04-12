@@ -231,7 +231,7 @@ namespace Engine
           nDoubleSlashes += currentLine[i] == currentLine[i+1] && currentLine[i] == '/';
         }
 
-        _hasTexturess = nDoubleSlashes == 0 && nSlashes > 0;
+        _hasTextures = nDoubleSlashes == 0 && nSlashes > 0;
         _hasNormals = nSlashes > 0;
 
         size_t start0 = currentLine.find_first_of(' ');
@@ -255,7 +255,7 @@ namespace Engine
             std::string val = sub.substr(0, endVal);
             newFace.p1.vertex = stoi(val);
             size_t endVal2 = sub.find_first_of('/', endVal + 1);
-            if(_hasTexturess) {
+            if(_hasTextures) {
               val = sub.substr(endVal + 1, endVal2);
               newFace.p1.texture = stoi(val);
             }
@@ -277,7 +277,7 @@ namespace Engine
             std::string val = sub.substr(0, endVal);
             newFace.p2.vertex = stoi(val);
             size_t endVal2 = sub.find_first_of('/', endVal + 1);
-            if(_hasTexturess) {
+            if(_hasTextures) {
               val = sub.substr(endVal + 1, endVal2);
               newFace.p2.texture = stoi(val);
             }
@@ -298,7 +298,7 @@ namespace Engine
             std::string val = sub.substr(0, endVal);
             newFace.p3.vertex = stoi(val);
             size_t endVal2 = sub.find_first_of('/', endVal + 1);
-            if(_hasTexturess) {
+            if(_hasTextures) {
               val = sub.substr(endVal + 1, endVal2);
               newFace.p3.texture = stoi(val);
             }

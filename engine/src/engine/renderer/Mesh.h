@@ -124,7 +124,7 @@ namespace Engine
     std::vector<Engine::Math::vec3> _normals;
     std::vector<Engine::Math::vec2> _texture_uvs;
     std::vector<face> _faces;
-    bool _hasTexturess     = false;
+    bool _hasTextures     = false;
     bool _hasNormals = false;
   };
   ENABLE_BITMASK_OPERATORS(ObjFile::VertexCategory);
