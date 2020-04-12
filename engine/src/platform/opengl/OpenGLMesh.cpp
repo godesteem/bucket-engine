@@ -5,6 +5,7 @@
 #include <fstream>
 #include <imgui/imgui.h>
 #include "engine/renderer/Renderer.h"
+#include "engine/renderer/ObjFile.h"
 
 
 namespace Engine {

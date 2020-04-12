@@ -1,4 +1,5 @@
 #include "GameWorld.h"
+#include "engine/renderer/ObjFile.h"
 #include <imgui/imgui.h>
 #include <math/matrix.h>
 
