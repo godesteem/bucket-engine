@@ -139,7 +139,6 @@ namespace Engine {
           size_t start1 = currentLine.find_first_of(' ', end0);
           size_t end1   = currentLine.find_first_of(' ', start1+1);
           size_t start2 = currentLine.find_first_of(' ', end1);
-          size_t end2   = currentLine.find_first_of(' ', start2+1);
 
           switch (vertexKind)
           {
