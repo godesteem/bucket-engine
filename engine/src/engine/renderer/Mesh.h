@@ -5,7 +5,7 @@
 #include "VertexArray.h"
 #include "engine/Core.h"
 #include "engine/core/Timestep.h"
-#include "Math/matrix.h"
+#include "math/matrix.h"
 #include <regex>
 #include <utility>
 #include <vector>

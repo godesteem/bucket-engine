@@ -44,4 +44,4 @@
 
 #ifdef ENGINE_ENTRY_POINT
 #include "engine/EntryPoint.h"
-#endif ENGINE_ENTRY_POINT
+#endif //ENGINE_ENTRY_POINT
