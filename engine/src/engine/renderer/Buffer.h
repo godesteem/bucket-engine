@@ -98,6 +98,19 @@ namespace Engine {
       uint32_t m_Stride = 0;
   };
 
+  class IndexBuffer {
+  public:
+      virtual ~IndexBuffer() {};
+
+      virtual void Bind() const = 0;
+      virtual void Unbind() const = 0;
+
+      virtual uint32_t GetCount() const = 0;
+
+      static IndexBuffer* Create(uint32_t* indices, uint32_t count);
+      static IndexBuffer* Create(std::vector<unsigned short> indices, uint32_t count);
+  };
+
   class VertexBuffer
   {
   public:
@@ -115,16 +128,4 @@ namespace Engine {
     static VertexBuffer* Create(const std::vector<Engine::Math::vec4> &vertices, uint32_t size);
   };
 
-  class IndexBuffer {
-  public:
-    virtual ~IndexBuffer() {};
-
-    virtual void Bind() const = 0;
-    virtual void Unbind() const = 0;
-
-    virtual uint32_t GetCount() const = 0;
-
-    static IndexBuffer* Create(uint32_t* indices, uint32_t count);
-    static IndexBuffer* Create(std::vector<unsigned short> indices, uint32_t count);
-  };
 }
