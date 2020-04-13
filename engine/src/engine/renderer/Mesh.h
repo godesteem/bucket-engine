@@ -19,16 +19,6 @@ typedef ushort GLushort;
 
 namespace Engine
 {
-  struct ModelAttribute
-  {
-    std::string name;
-    const VertexBuffer& buffer;
-
-    ModelAttribute(std::string n, const VertexBuffer& b)
-      : name(std::move(n))
-      , buffer(b)
-    { }
-  };
   class Mesh
   {
   public:
@@ -38,15 +28,10 @@ namespace Engine
     virtual void OnUpdate(Timestep ts) = 0;
     virtual void OnImGuiRender()       = 0;
 
-    std::vector<ModelAttribute> GetAttributes() { return m_Attributes; };
-    inline void SetAttribute(const std::string& key, const VertexBuffer& buffer) { m_Attributes.emplace_back(key, buffer); };
-
     static Ref<Mesh> Create(const std::string& objectFilePath, const std::string& shaderFilePath);
     static Ref<Mesh> Create(Ref<VertexBuffer>& vertexBuffer, Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile);
     virtual void SetVertexArraySize(uint32_t size) = 0;
     virtual void SetName(const std::string& name)  = 0;
     //static Ref<Mesh> Create(const std::string& filePath);
-  protected:
-    std::vector<ModelAttribute> m_Attributes;
   };
 } // namespace Engine
