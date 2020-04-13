@@ -51,7 +51,7 @@ void GameWorld::GenerateVertices(const std::string& fileName)
 
         Engine::Math::vec2 texture{ { textCoordX[index] }, { textCoordY[index] } };
         vertices[currentIndex]     = pos.x();
-        vertices[currentIndex + 1] = 10.0f * sinf(10 * (pos.x() * pos.x() + pos.z() * pos.z())) / 10;
+        vertices[currentIndex + 1] = 0.0f; //10.0f * sinf(10 * (pos.x() * pos.x() + pos.z() * pos.z())) / 10;
         vertices[currentIndex + 2] = pos.z();
         vertices[currentIndex + 3] = texture.x();
         vertices[currentIndex + 4] = texture.y();

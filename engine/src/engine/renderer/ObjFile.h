@@ -29,7 +29,7 @@ namespace Engine {
 
     struct facePart
     {
-      // <0 is a n illegal value, hence when 0 appears it means nothing was in the file
+      // <0 is an illegal value, hence when 0 appears it means nothing was in the file
       size_t vertex = 0;
       size_t texture = 0;
       size_t normal = 0;

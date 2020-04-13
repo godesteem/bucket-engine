@@ -24,6 +24,10 @@ namespace Engine {
     std::vector<Engine::Math::vec2> textures;
     std::vector<ObjFile::face> faces;
 
+    size_t VertexIndex  = 0;
+    size_t NormalIndex  = 1;
+    size_t TextureIndex = 2;
+
     /*
      * TODO:
      *  - also receive faces back
@@ -32,44 +36,72 @@ namespace Engine {
      *  - attach all generated VertexArrays to the Mesh
      */
     ReadObjFile(objectFilePath, vertices, normals, textures, faces);
-
+    bool hasNormals = normals.size() > 1;
+    bool hasTextures = textures.size() > 1;
     Ref<VertexBuffer> vertexBuffer;
     m_VertexArray.reset(VertexArray::Create());
+    m_VertexArray->Bind();
 
-    vertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(Engine::Math::vec3),
-                                                    normals, normals.size() * sizeof(Engine::Math::vec3),
-                                                    textures, textures.size() * sizeof(Engine::Math::vec2)));
+    Engine::BufferLayout vertexLayout;
+    if(!hasTextures || !hasNormals){
+      vertexLayout = {
+          {Engine::ShaderDataType::Float3, "position"},
+      };
+      vertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(Engine::Math::vec3)));
+    }
+    else if(hasTextures && hasNormals) {
+      vertexBuffer.reset(Engine::VertexBuffer::Create(
+          vertices, vertices.size() * sizeof(Engine::Math::vec3),
+          normals, normals.size() * sizeof(Engine::Math::vec3),
+          textures, textures.size() * sizeof(Engine::Math::vec2)));
+      vertexLayout = {
+          {Engine::ShaderDataType::Float3, "position", false, VertexIndex},
+          {Engine::ShaderDataType::Float3, "normals", false, NormalIndex},
+          {Engine::ShaderDataType::Float2, "vertexUV", false, TextureIndex}
+      };
+    }
 
-    Engine::BufferLayout vertexLayout = {
-        {Engine::ShaderDataType::Float3, "position", false, 0},
-        {Engine::ShaderDataType::Float3, "normals", false, 1},
-        {Engine::ShaderDataType::Float2, "vertexUV", false, 2}
-    };
     vertexBuffer->SetLayout(vertexLayout);
     m_VertexArray->AddVertexBuffer(vertexBuffer);
 
     std::vector<unsigned short> vertexFaces;
     std::vector<unsigned short> normalFaces;
     std::vector<unsigned short> textureFaces;
+    size_t i = 0;
     for(auto face : faces){
-      vertexFaces.push_back(face.p1.vertex);
-      vertexFaces.push_back(face.p2.vertex);
-      vertexFaces.push_back(face.p3.vertex);
-      normalFaces.push_back(face.p1.normal);
-      normalFaces.push_back(face.p2.normal);
-      normalFaces.push_back(face.p3.normal);
-      textureFaces.push_back(face.p1.texture);
-      textureFaces.push_back(face.p2.texture);
-      textureFaces.push_back(face.p3.texture);
+      vertexFaces.insert(vertexFaces.begin() + i, face.p1.vertex);
+      vertexFaces.insert(vertexFaces.begin() + i + 1, face.p2.vertex);
+      vertexFaces.insert(vertexFaces.begin() + i + 2, face.p3.vertex);
+
+      if(hasTextures){
+        textureFaces.insert(textureFaces.begin() + i, face.p1.texture);
+        textureFaces.insert(textureFaces.begin() + i + 1, face.p2.texture);
+        textureFaces.insert(textureFaces.begin() + i + 2, face.p3.texture);
+      }
+      if(hasNormals){
+        normalFaces.insert(normalFaces.begin() + i, face.p1.normal);
+        normalFaces.insert(normalFaces.begin() + i + 1, face.p2.normal);
+        normalFaces.insert(normalFaces.begin() + i + 2, face.p3.normal);
+      }
+      i += 3;
     }
 
     Ref<IndexBuffer> indexBuffer;
     indexBuffer.reset(IndexBuffer::Create(vertexFaces, vertexFaces.size()));
     m_VertexArray->SetIndexBuffer(indexBuffer);
-    indexBuffer.reset(IndexBuffer::Create(normalFaces, normalFaces.size()));
-    m_VertexArray->SetIndexBuffer(indexBuffer);
-    indexBuffer.reset(IndexBuffer::Create(textureFaces, textureFaces.size()));
-    m_VertexArray->SetIndexBuffer(indexBuffer);
+
+    if(!normalFaces.empty()){
+      indexBuffer.reset(IndexBuffer::Create(normalFaces, normalFaces.size()));
+      m_VertexArray->SetIndexBuffer(indexBuffer);
+    }
+    if(!textureFaces.empty()){
+      indexBuffer.reset(IndexBuffer::Create(textureFaces, textureFaces.size()));
+      m_VertexArray->SetIndexBuffer(indexBuffer);
+    }
+
+
+
+    m_VertexArray->Unbind();
 
     // extract object name
     auto last = objectFilePath.find_last_of("/\\");

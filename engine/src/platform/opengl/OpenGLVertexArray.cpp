@@ -73,6 +73,7 @@ namespace Engine {
       BE_CORE_ASSERT(m_RendererID, "VertexArray not bound.");
       indexBuffer->Bind();
 
+      m_Size = indexBuffer->GetCount();
       m_IndexBuffer = indexBuffer;
     }
 
