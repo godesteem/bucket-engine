@@ -28,8 +28,6 @@ namespace Engine {
     glBufferData(GL_ARRAY_BUFFER, normalsSize, normals, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, m_RendererIDs[2]);
     glBufferData(GL_ARRAY_BUFFER, texturesSize, textures, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
   }
 
   OpenGLVertexBuffer::~OpenGLVertexBuffer() {
