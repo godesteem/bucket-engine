@@ -167,6 +167,15 @@ namespace Engine {
     virtual void Bind() const = 0;
 
     /**
+     * Enable part of a buffer
+     * This is for splitted buffers only
+     * see way1 of https://stackoverflow.com/a/39684775/6904543
+     * and yet part of the OpenGL platform only implementation.
+     * @param index
+     */
+    virtual void EnableBufferPart(size_t index) const = 0;
+
+    /**
      * Disables VertexBuffer
      */
     virtual void Unbind() const = 0;

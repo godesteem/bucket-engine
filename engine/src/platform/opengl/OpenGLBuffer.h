@@ -44,6 +44,13 @@ namespace Engine {
     virtual void Bind() const override;
 
     /**
+     * Binds specific vertex buffer to current OpenGL context
+     * This may only be used by way1 objects
+     * @param index index of vertex buffer in m_RendererIDs
+     */
+    virtual void EnableBufferPart(size_t index) const override;
+
+    /**
      * Binds Buffer 0 to OpenGL context (deactivates current active buffer)
      */
     virtual void Unbind() const override;
