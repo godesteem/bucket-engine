@@ -6,7 +6,6 @@
 namespace Engine {
   class OpenGLMesh: public Mesh
   {
-  friend Mesh;
   public:
     OpenGLMesh(const std::string &objectFilePath, const std::string &shaderFilePath="", const std::string &textureFilePath="");
     OpenGLMesh(Ref<VertexBuffer>& vertexBuffer, const Ref<IndexBuffer>& indexBuffer, const std::string& shaderFile);
