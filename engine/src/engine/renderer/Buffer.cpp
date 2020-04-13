@@ -14,9 +14,9 @@ namespace Engine {
 
   VertexBuffer* VertexBuffer::Create(const std::vector<Engine::Math::vec2> &vertices, uint32_t size) {
 //    BE_CORE_ASSERT(size % 3 == 0, "Wrong vector size for vertices");
-    float* _vertices = new float[size];
+    auto* _vertices = new float[size];
     int ind = 0;
-    for (auto i : vertices) {
+    for (const auto& i : vertices) {
       _vertices[ind] = i.x();
       _vertices[ind + 1] = i.y();
       ind += 2;
@@ -28,43 +28,43 @@ namespace Engine {
 
   VertexBuffer* VertexBuffer::Create(const std::vector<Engine::Math::vec3> &vertices, uint32_t size){
 //    BE_CORE_ASSERT(size % 3 == 0, "Wrong vector size for vertices");
-	  float* _vertices = new float[size];
-	  int ind = 0;
-    for(auto i : vertices){
+    auto* _vertices = new float[size];
+    int ind = 0;
+    for(const auto& i : vertices){
       _vertices[ind] = i.x();
       _vertices[ind+1] = i.y();
       _vertices[ind+2] = i.z();
       ind += 3;
     }
-	auto a = Create(_vertices, size);
-	delete[] _vertices;
-	return a;
+    auto a = Create(_vertices, size);
+    delete[] _vertices;
+    return a;
   }
 
   VertexBuffer* VertexBuffer::Create(const std::vector<Engine::Math::vec4> &vertices, uint32_t size){
     //BE_CORE_ASSERT(size % 4 == 0, "Wrong vector size for vertices");
-	  float* _vertices = new float[size];
-	  int ind = 0;
-    for(auto i : vertices){
+    auto* _vertices = new float[size];
+    int ind = 0;
+    for(const auto& i : vertices){
       _vertices[ind] = i.x();
       _vertices[ind+1] = i.y();
       _vertices[ind+2] = i.z();
       _vertices[ind+3] = i.w();
       ind += 4;
     }
-	auto a = Create(_vertices, size);
-	delete[] _vertices;
-	return a;
+    auto a = Create(_vertices, size);
+    delete[] _vertices;
+    return a;
   }
 
   IndexBuffer* IndexBuffer::Create(std::vector<unsigned short> indices, uint32_t size){
-	  uint32_t* _indices = new uint32_t[size];
+    auto* _indices = new uint32_t[size];
     for(int i = 0; i<size; ++i){
       _indices[i] = indices[i];
     }
-	auto a = Create(_indices, size);
-	delete[] _indices;
-	return a;
+    auto a = Create(_indices, size);
+    delete[] _indices;
+    return a;
   }
 
   IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t size){
