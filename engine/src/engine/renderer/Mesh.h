@@ -105,7 +105,7 @@ namespace Engine
     bool saveObjFile(std::string const& fileName);
 
     // saves file to filepath
-    bool saveObjFile() { return saveObjFile(this->_filePath); }
+    inline bool saveObjFile() { return saveObjFile(this->_filePath); }
 
   private:
     std::string _filePath;

@@ -349,7 +349,4 @@ namespace Engine
     fout.close();
     return true;
   }
-}
-
-
-
+} // namespace Engine

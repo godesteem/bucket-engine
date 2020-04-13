@@ -38,13 +38,13 @@ namespace Engine::Math
 
   public:
     // empty constructor fills with 0
-    Matrix()
+    inline Matrix()
       : _data{ std::array<T, Columns>{} }
     { }
 
 #pragma warning(push)
 #pragma warning(disable : 26495)
-    Matrix(std::initializer_list<std::initializer_list<T>> ll)
+    inline Matrix(std::initializer_list<std::initializer_list<T>> ll)
     //jnl i am not able to initialize the std::Array in the initializer list
     {
       const std::initializer_list<T>* l = ll.begin();
@@ -56,11 +56,11 @@ namespace Engine::Math
     }
 #pragma warning(pop)
 
-    Matrix(Matrix const& m)
+    inline Matrix(Matrix const& m)
       : _data{ m._data }
     { }
 
-    Matrix(T const& t)
+    inline Matrix(T const& t)
     {
       auto proxy = std::array<T, Columns>{ t };
       proxy.fill(t);
@@ -69,11 +69,11 @@ namespace Engine::Math
 
     ~Matrix() = default;
 
-    constexpr size_t cols() const { return Columns; }
+    inline constexpr size_t cols() const { return Columns; }
 
-    constexpr size_t rows() const { return Rows; }
+    inline constexpr size_t rows() const { return Rows; }
 
-    bool operator==(Matrix const& m) const
+    inline bool operator==(Matrix const& m) const
     {
       if(this == &m) return true;
 
@@ -87,9 +87,9 @@ namespace Engine::Math
       return true;
     }
 
-    bool operator!=(Matrix const& m) const { return !this->operator==(m); }
+    inline bool operator!=(Matrix const& m) const { return !this->operator==(m); }
 
-    Matrix operator+(Matrix const& m) const
+    inline Matrix operator+(Matrix const& m) const
     {
       Matrix res(*this);
       for(size_t col = 0; col < Columns; col++)
@@ -99,7 +99,7 @@ namespace Engine::Math
       return res;
     }
 
-    Matrix operator-(Matrix const& m) const
+    inline Matrix operator-(Matrix const& m) const
     {
       Matrix res(*this);
       for(size_t col = 0; col < Columns; col++)
@@ -109,7 +109,7 @@ namespace Engine::Math
       return res;
     }
 
-    Matrix operator+(T const& m) const
+    inline Matrix operator+(T const& m) const
     {
       Matrix res(*this);
       for(size_t col = 0; col < Columns; col++)
@@ -119,7 +119,7 @@ namespace Engine::Math
       return res;
     }
 
-    Matrix operator-(T const& m) const
+    inline Matrix operator-(T const& m) const
     {
       Matrix res(*this);
       for(size_t col = 0; col < Columns; col++)
@@ -129,7 +129,7 @@ namespace Engine::Math
       return res;
     }
 
-    Matrix operator*(T const& t) const
+    inline Matrix operator*(T const& t) const
     {
       Matrix res(*this);
       for(size_t col = 0; col < Columns; col++)
@@ -139,7 +139,7 @@ namespace Engine::Math
       return res;
     }
 
-    Matrix operator/(T const& m) const
+    inline Matrix operator/(T const& m) const
     {
       Matrix res(*this);
       for(size_t col = 0; col < Columns; col++)
@@ -150,7 +150,7 @@ namespace Engine::Math
     }
 
     template<size_t C>
-    Matrix<Rows, C, T> operator*(Matrix<Columns, C, T> const& m) const
+    inline Matrix<Rows, C, T> operator*(Matrix<Columns, C, T> const& m) const
     {
       Matrix<Rows, C, T> res;
       for(size_t spalte = 0; spalte < C; spalte++)
@@ -165,7 +165,7 @@ namespace Engine::Math
     }
 
     //return a copy which is transposed
-    Matrix<Columns, Rows, T> Transposed() const
+    inline Matrix<Columns, Rows, T> Transposed() const
     {
       Matrix<Columns, Rows, T> res;
       for(size_t col = 0; col < Columns; col++)
@@ -184,7 +184,7 @@ namespace Engine::Math
 
     // this function will only exist (and compile) for a 4x4 Matrix
     template<size_t R = Rows, size_t C = Columns, typename youDidntUseA4x4Matrix = std::enable_if_t<R == 4 && C == 4>>
-    static Matrix<4, 4> // clang-format off
+    inline constexpr static Matrix<4, 4> // clang-format off
     Ortho(T const& left,
           T const& right,
           T const& bottom,
@@ -204,7 +204,7 @@ namespace Engine::Math
     }
 
 
-    const std::array<T, Columns>& operator[](size_t index) const { return this->_data[index]; }
+    inline const std::array<T, Columns>& operator[](size_t index) const { return this->_data[index]; }
 
     friend std::ostream& operator<<(std::ostream& ostr, Matrix const& m)
     {
@@ -223,34 +223,34 @@ namespace Engine::Math
 
     // explicit cast to underlying template type T
     template<size_t R = Rows, size_t C = Columns, typename size_is_1_1 = std::enable_if_t<R == 1 && C == 1>>
-    explicit operator T() const
+    inline explicit operator T() const
     {
       return _data[0][0];
     }
 
     template<size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1>>
-    Matrix<1, 1> operator*(Matrix<Rows, 1> const& v) const
+    inline Matrix<1, 1> operator*(Matrix<Rows, 1> const& v) const
     {
       return v.Transposed() * *this;
     }
 
     template<size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1>>
-    Matrix<1, 1, T> Dot(Matrix<Rows, 1> const& v) const
+    inline Matrix<1, 1, T> Dot(Matrix<Rows, 1> const& v) const
     {
       return v.Transposed() * *this;
     }
 
     template<size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1>>
-    T Magnitude() const
+    inline T Magnitude() const
     {
       return std::sqrt((this->Transposed() * (*this)).operator T());
     }
 
-    Matrix operator-() const { return *this * -1; }
+    inline Matrix operator-() const { return *this * -1; }
 
-    Matrix operator+() const { return *this; }
+    inline Matrix operator+() const { return *this; }
 
-    Matrix& operator+=(T const& t)
+    inline Matrix& operator+=(T const& t)
     {
       for(size_t col = 0; col < Columns; col++)
       {
@@ -259,7 +259,7 @@ namespace Engine::Math
       return *this;
     }
 
-    Matrix& operator+=(Matrix const& m)
+    inline Matrix& operator+=(Matrix const& m)
     {
       for(size_t col = 0; col < Columns; col++)
       {
@@ -268,7 +268,7 @@ namespace Engine::Math
       return *this;
     }
 
-    Matrix& operator-=(T const& t)
+    inline Matrix& operator-=(T const& t)
     {
       for(size_t col = 0; col < Columns; col++)
       {
@@ -277,7 +277,7 @@ namespace Engine::Math
       return *this;
     }
 
-    Matrix& operator-=(Matrix const& m)
+    inline Matrix& operator-=(Matrix const& m)
     {
       for(size_t col = 0; col < Columns; col++)
       {
@@ -286,7 +286,7 @@ namespace Engine::Math
       return *this;
     }
 
-    Matrix& operator*=(T const& t)
+    inline Matrix& operator*=(T const& t)
     {
       for(size_t col = 0; col < Columns; col++)
       {
@@ -296,7 +296,7 @@ namespace Engine::Math
     }
 
     template<size_t R = Rows, size_t C = Columns, typename onlyForSquareMatrices = std::enable_if_t<R == C>>
-    Matrix& operator*=(Matrix const& m)
+    inline Matrix& operator*=(Matrix const& m)
     {
       Matrix temp = this->operator*(m);
       for(size_t col = 0; col < Columns; col++)
@@ -306,7 +306,7 @@ namespace Engine::Math
       return *this;
     }
 
-    Matrix& operator/=(T const& t)
+    inline Matrix& operator/=(T const& t)
     {
       for(size_t col = 0; col < Columns; col++)
       {
@@ -316,25 +316,25 @@ namespace Engine::Math
     }
 
     template<size_t R = Rows, size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1 && (R > 0) && R <= 4>>
-    T const& x() const
+    inline T const& x() const
     {
       return _data[0][0];
     }
 
     template<size_t R = Rows, size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1 && (R > 1) && R <= 4>>
-    T const& y() const
+    inline T const& y() const
     {
       return _data[1][0];
     }
 
     template<size_t R = Rows, size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1 && (R > 2) && R <= 4>>
-    T const& z() const
+    inline T const& z() const
     {
       return _data[2][0];
     }
 
     template<size_t R = Rows, size_t C = Columns, typename onlyForVectors = std::enable_if_t<C == 1 && (R > 3) && R <= 4>>
-    T const& w() const
+    inline T const& w() const
     {
       return _data[3][0];
     }
