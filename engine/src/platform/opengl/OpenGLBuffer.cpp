@@ -10,19 +10,23 @@ namespace Engine {
 
   OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
   {
-    glGenBuffers(1, &m_RendererID);
-    glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+    glGenBuffers(1, &m_RendererIDs[0]);
+    glBindBuffer(GL_ARRAY_BUFFER, m_RendererIDs[0]);
     glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
   }
 
   OpenGLVertexBuffer::~OpenGLVertexBuffer()
   {
-    glDeleteBuffers(1, &m_RendererID);
+    if (m_RendererIDs[1] != 0) {
+      glDeleteBuffers(3, m_RendererIDs);
+    } else {
+      glDeleteBuffers(1, &m_RendererIDs[0]);
+    }
   }
 
   void OpenGLVertexBuffer::Bind() const
   {
-    glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+    glBindBuffer(GL_ARRAY_BUFFER, m_RendererIDs[0]);
   }
 
   void OpenGLVertexBuffer::Unbind() const
