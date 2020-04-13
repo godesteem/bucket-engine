@@ -3,6 +3,9 @@
 #include "math/matrix.h"
 
 namespace Engine {
+  /**
+   * uint8_t enum with different data types for Engine::Shader
+   */
   enum class ShaderDataType: uint8_t {
     None = 0,
     Float, Float2, Float3, Float4,
@@ -10,6 +13,11 @@ namespace Engine {
     Mat3, Mat4, Bool,
   };
 
+  /**
+   * Method to determine size of data type `type`
+   * @param type shader data type
+   * @return size of shader data type
+   */
   static uint32_t ShaderDataTypeSize(ShaderDataType type){
     switch(type){
       case ShaderDataType::None: return 0;
@@ -29,6 +37,9 @@ namespace Engine {
     return 0;
   };
 
+  /**
+   * Stores information about a buffer element
+   */
   struct BufferElement {
     std::string Name = "";
     uint32_t Offset = 0;
@@ -65,6 +76,10 @@ namespace Engine {
       return 0;
     }
   };
+
+  /**
+   * Layout of a buffer
+   */
   class BufferLayout
   {
     public:
@@ -98,30 +113,82 @@ namespace Engine {
       uint32_t m_Stride = 0;
   };
 
+  /**
+   * Stores data of a index buffer
+   */
   class IndexBuffer {
   public:
       virtual ~IndexBuffer() {};
 
+      /**
+       * Enable IndexBuffer
+       */
       virtual void Bind() const = 0;
+
+      /**
+       * Disable IndexBuffer
+       */
       virtual void Unbind() const = 0;
 
+      /**
+       * Size getter
+       * @return buffer size
+       */
       virtual uint32_t GetCount() const = 0;
 
+      /**
+       * Creates static IndexBuffer
+       * @param indices array of indices
+       * @param count size of array `indices`
+       * @return static IndexBuffer object
+       */
       static IndexBuffer* Create(uint32_t* indices, uint32_t count);
+
+      /**
+       * Creates static IndexBuffer
+       * @param indices vector of indices
+       * @param count size of array `indices`
+       * @return static IndexBuffer object
+       */
       static IndexBuffer* Create(std::vector<unsigned short> indices, uint32_t count);
   };
 
+  /**
+   * Stores data about a buffer of vertices
+   */
   class VertexBuffer
   {
   public:
     virtual ~VertexBuffer() {};
 
+    /**
+     * Enables VertexBuffer
+     */
     virtual void Bind() const = 0;
+
+    /**
+     * Disables VertexBuffer
+     */
     virtual void Unbind() const = 0;
 
+    /**
+     * Attach layout to VertexBuffer
+     * @param layout the layout of the stored data
+     */
     virtual void SetLayout(const BufferLayout& layout) = 0;
+
+    /**
+     * Getter for attached `Engine::BufferLayout`
+     * @return layout
+     */
     virtual const BufferLayout& GetLayout() const = 0;
 
+    /**
+     * Create static VertexBuffer
+     * @param vertices array of vertices
+     * @param size size of array `vertices`
+     * @return static VertexBuffer object
+     */
     static VertexBuffer* Create(float* vertices, uint32_t size);
     static VertexBuffer* Create(const std::vector<Engine::Math::vec2> &vertices, uint32_t size);
     static VertexBuffer* Create(const std::vector<Engine::Math::vec3> &vertices, uint32_t size);
