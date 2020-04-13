@@ -20,6 +20,19 @@ namespace Engine {
     OpenGLVertexBuffer(float* vertices, uint32_t size);
 
     /**
+     * Constructor way1
+     * @param vertices array with vertex data
+     * @param verticeSize size of array `vertices`
+     * @param normals array with vertex normal data
+     * @param normalsSize size of array `normals`
+     * @param textures array with vertex texture data
+     * @param texturesSize size of array `textures`
+     */
+    OpenGLVertexBuffer(float* vertices, uint32_t verticeSize,
+                       float* normals, uint32_t normalsSize,
+                       float* textures, uint32_t texturesSize);
+
+    /**
      * Destructor
      */
     virtual ~OpenGLVertexBuffer();

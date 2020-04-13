@@ -15,8 +15,24 @@ namespace Engine {
     glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
   }
 
-  OpenGLVertexBuffer::~OpenGLVertexBuffer()
+  OpenGLVertexBuffer::OpenGLVertexBuffer(
+      float *vertices, uint32_t verticeSize,
+      float *normals, uint32_t normalsSize,
+      float *textures, uint32_t texturesSize)
   {
+    // Create buffers and attach data
+    glGenBuffers(3, m_RendererIDs);
+    glBindBuffer(GL_ARRAY_BUFFER, m_RendererIDs[0]);
+    glBufferData(GL_ARRAY_BUFFER, verticeSize, vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, m_RendererIDs[1]);
+    glBufferData(GL_ARRAY_BUFFER, normalsSize, normals, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, m_RendererIDs[2]);
+    glBufferData(GL_ARRAY_BUFFER, texturesSize, textures, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+  }
+
+  OpenGLVertexBuffer::~OpenGLVertexBuffer() {
     if (m_RendererIDs[1] != 0) {
       glDeleteBuffers(3, m_RendererIDs);
     } else {
