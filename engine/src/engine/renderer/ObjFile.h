@@ -59,6 +59,7 @@ namespace Engine {
     inline const std::vector<Engine::Math::vec3>& GetVertices() const { return _vertices; };
     inline const std::vector<Engine::Math::vec3>& GetNormals() const { return _normals; };
     inline const std::vector<Engine::Math::vec2>& GetTextureUVs() const { return _texture_uvs; };
+    inline const std::vector<face>& GetFaces() const { return _faces; };
     inline const std::string& SetFilePath(const std::string& fp) { return _filePath = fp; }
     inline const std::string& GetFilePath() { return _filePath; }
     static void CreateObjFile(float* vertices, size_t vertexCount, VertexCategory vertexCategories, size_t vertexElementCount, uint32_t* indices, size_t indexCount, const std::string& fp);
