@@ -2,6 +2,7 @@
 
 #include "engine/renderer/Mesh.h"
 #include "engine/renderer/Texture.h"
+#include "engine/renderer/ObjFile.h"
 
 namespace Engine {
   /**
@@ -96,7 +97,7 @@ namespace Engine {
      * @param uvs container for vertex texture UVs
      * @return success
      */
-    static bool ReadObjFile(const std::string& filePath, std::vector<Engine::Math::vec3> &vertices, std::vector<Engine::Math::vec3> &normals, std::vector<Engine::Math::vec2> &uvs);
+    static bool ReadObjFile(const std::string& filePath, std::vector<Engine::Math::vec3> &vertices, std::vector<Engine::Math::vec3> &normals, std::vector<Engine::Math::vec2> &uvs, std::vector<ObjFile::face> &faces);
 
   private:
 

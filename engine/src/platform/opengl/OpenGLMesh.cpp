@@ -5,7 +5,6 @@
 #include <fstream>
 #include <imgui/imgui.h>
 #include "engine/renderer/Renderer.h"
-#include "engine/renderer/ObjFile.h"
 
 /*
  * TODO: clean up unnecessary/dead code
@@ -23,6 +22,7 @@ namespace Engine {
     std::vector<Engine::Math::vec3> vertices;
     std::vector<Engine::Math::vec3> normals;
     std::vector<Engine::Math::vec2> textures;
+    std::vector<ObjFile::face> faces;
 
     /*
      * TODO:
@@ -31,7 +31,7 @@ namespace Engine {
      *  - combine VertexBuffer + IndexBuffer combinations in VertexArrays including their layout
      *  - attach all generated VertexArrays to the Mesh
      */
-    ReadObjFile(objectFilePath, vertices, normals, textures);
+    ReadObjFile(objectFilePath, vertices, normals, textures, faces);
 
     Ref<VertexBuffer> vertexBuffer;
     m_VertexArray.reset(VertexArray::Create());
@@ -135,7 +135,7 @@ namespace Engine {
     m_VertexArray->SetSize(size);
   }
 
-  bool OpenGLMesh::ReadObjFile(const std::string& filePath, std::vector<Engine::Math::vec3> &vertices, std::vector<Engine::Math::vec3> &normals, std::vector<Engine::Math::vec2> &uvs) {
+  bool OpenGLMesh::ReadObjFile(const std::string& filePath, std::vector<Engine::Math::vec3> &vertices, std::vector<Engine::Math::vec3> &normals, std::vector<Engine::Math::vec2> &uvs, std::vector<ObjFile::face> &faces) {
     /**
      * Loads a .obj file with following layout
      * vertices    : v %f %f %f
@@ -152,6 +152,7 @@ namespace Engine {
     vertices = file.GetVertices();
     uvs = file.GetTextureUVs();
     normals = file.GetNormals();
+    faces = file.GetFaces();
     return true;
   }
 
