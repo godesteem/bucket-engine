@@ -41,9 +41,9 @@ namespace Engine {
                                                     textures, textures.size() * sizeof(Engine::Math::vec2)));
 
     Engine::BufferLayout vertexLayout = {
-        {Engine::ShaderDataType::Float3, "position"},
-        {Engine::ShaderDataType::Float3, "normals"},
-        {Engine::ShaderDataType::Float2, "vertexUV"}
+        {Engine::ShaderDataType::Float3, "position", false, 0},
+        {Engine::ShaderDataType::Float3, "normals", false, 1},
+        {Engine::ShaderDataType::Float2, "vertexUV", false, 2}
     };
     vertexBuffer->SetLayout(vertexLayout);
     m_VertexArray->AddVertexBuffer(vertexBuffer);

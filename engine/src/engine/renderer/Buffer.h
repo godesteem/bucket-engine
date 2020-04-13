@@ -46,11 +46,12 @@ namespace Engine {
     uint32_t Size = 0;
     ShaderDataType Type = ShaderDataType::None;
     bool Normalized = false;
+    size_t BufferIndex = 0;
 
     BufferElement() {};
 
-    BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
-      : Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
+    BufferElement(ShaderDataType type, const std::string& name, bool normalized = false, size_t index = 0)
+      : Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized), BufferIndex(index)
     {
     };
 

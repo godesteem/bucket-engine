@@ -43,7 +43,6 @@ namespace Engine {
     void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer){
       glBindVertexArray(m_RendererID);
       BE_CORE_ASSERT(m_RendererID, "VertexArray not bound.");
-      vertexBuffer->Bind();
 
       BE_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "VertexBuffer has no layout!");
 
@@ -51,6 +50,7 @@ namespace Engine {
       const auto& layout = vertexBuffer->GetLayout();
 
       for(const auto& element: layout){
+        vertexBuffer->EnableBufferPart(element.BufferIndex);
         glEnableVertexAttribArray(index);
         glVertexAttribPointer(
           index,
