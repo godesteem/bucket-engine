@@ -48,6 +48,28 @@ namespace Engine {
     vertexBuffer->SetLayout(vertexLayout);
     m_VertexArray->AddVertexBuffer(vertexBuffer);
 
+    std::vector<unsigned short> vertexFaces;
+    std::vector<unsigned short> normalFaces;
+    std::vector<unsigned short> textureFaces;
+    for(auto face : faces){
+      vertexFaces.push_back(face.p1.vertex);
+      vertexFaces.push_back(face.p2.vertex);
+      vertexFaces.push_back(face.p3.vertex);
+      normalFaces.push_back(face.p1.normal);
+      normalFaces.push_back(face.p2.normal);
+      normalFaces.push_back(face.p3.normal);
+      textureFaces.push_back(face.p1.texture);
+      textureFaces.push_back(face.p2.texture);
+      textureFaces.push_back(face.p3.texture);
+    }
+
+    Ref<IndexBuffer> indexBuffer;
+    indexBuffer.reset(IndexBuffer::Create(vertexFaces, vertexFaces.size()));
+    m_VertexArray->SetIndexBuffer(indexBuffer);
+    indexBuffer.reset(IndexBuffer::Create(normalFaces, normalFaces.size()));
+    m_VertexArray->SetIndexBuffer(indexBuffer);
+    indexBuffer.reset(IndexBuffer::Create(textureFaces, textureFaces.size()));
+    m_VertexArray->SetIndexBuffer(indexBuffer);
 
     // extract object name
     auto last = objectFilePath.find_last_of("/\\");
@@ -57,7 +79,7 @@ namespace Engine {
     m_Name = objectFilePath.substr(last, count);
 
     // TODO: drop this.
-    SetVertexArraySize(vertices.size());
+    SetVertexArraySize(vertexFaces.size());
 
     m_ShaderLibrary.Load("Main", shaderFilePath.empty() ? DEFAULT_SHADER : shaderFilePath);
 
