@@ -193,6 +193,14 @@ namespace Engine {
     static VertexBuffer* Create(const std::vector<Engine::Math::vec2> &vertices, uint32_t size);
     static VertexBuffer* Create(const std::vector<Engine::Math::vec3> &vertices, uint32_t size);
     static VertexBuffer* Create(const std::vector<Engine::Math::vec4> &vertices, uint32_t size);
+
+    static VertexBuffer* Create(float* vertices, uint32_t verticeSize,
+                                float* normals, uint32_t normalsSize,
+                                float* textures, uint32_t texturesSize);
+
+    static VertexBuffer* Create(const std::vector<Engine::Math::vec3> &vertices, uint32_t verticeSize,
+                                const std::vector<Engine::Math::vec3> &normals, uint32_t normalsSize,
+                                const std::vector<Engine::Math::vec2> &textures, uint32_t texturesSize);
   };
 
 }
