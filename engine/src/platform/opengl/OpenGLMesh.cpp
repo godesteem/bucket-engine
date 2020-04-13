@@ -18,11 +18,12 @@ namespace Engine {
     }
     std::vector<Engine::Math::vec3> vertices;
     std::vector<Engine::Math::vec3> normals;
-    std::vector<Engine::Math::vec2> uvs;
+    std::vector<Engine::Math::vec2> textures;
 
-    ReadObjFile(objectFilePath, vertices, normals, uvs);
+    ReadObjFile(objectFilePath, vertices, normals, textures);
 
     m_VertexArray.reset(VertexArray::Create());
+
     if(!vertices.empty()) {
       m_VertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(Engine::Math::vec3)));
       Engine::BufferLayout vertexLayout = {
@@ -31,21 +32,25 @@ namespace Engine {
       m_VertexBuffer->SetLayout(vertexLayout);
       m_VertexArray->AddVertexBuffer(m_VertexBuffer);
     }
-    if(!uvs.empty()) {
-      m_VertexBuffer.reset(Engine::VertexBuffer::Create(uvs, vertices.size() * sizeof(Engine::Math::vec2)));
+
+    if(!textures.empty()) {
+      m_VertexBuffer.reset(Engine::VertexBuffer::Create(textures, vertices.size() * sizeof(Engine::Math::vec2)));
       Engine::BufferLayout vertexLayout = {
           {Engine::ShaderDataType::Float2, "vertexUV"}
       };
       m_VertexBuffer->SetLayout(vertexLayout);
       m_VertexArray->AddVertexBuffer(m_VertexBuffer);
     }
+
+    // extract object name
     auto last = objectFilePath.find_last_of("/\\");
     last = last == std::string::npos ? 0 : last + 1;
     auto lastDot = objectFilePath.rfind('.');
-
     auto count = lastDot == std::string::npos ? objectFilePath.size() - last : lastDot - last;
     m_Name = objectFilePath.substr(last, count);
+
     SetVertexArraySize(vertices.size());
+
     m_ShaderLibrary.Load("Main", shaderFilePath.empty() ? DEFAULT_SHADER : shaderFilePath);
 
     ExtractShaderFileContent(shaderFilePath);
