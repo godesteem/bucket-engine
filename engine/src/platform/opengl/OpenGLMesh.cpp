@@ -36,21 +36,23 @@ namespace Engine {
     m_VertexArray.reset(VertexArray::Create());
 
     if(!vertices.empty()) {
-      m_VertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(Engine::Math::vec3)));
+      Ref<VertexBuffer> vertexBuffer;
+      vertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(Engine::Math::vec3)));
       Engine::BufferLayout vertexLayout = {
           {Engine::ShaderDataType::Float3, "position"}
       };
-      m_VertexBuffer->SetLayout(vertexLayout);
-      m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+      vertexBuffer->SetLayout(vertexLayout);
+      m_VertexArray->AddVertexBuffer(vertexBuffer);
     }
 
     if(!textures.empty()) {
-      m_VertexBuffer.reset(Engine::VertexBuffer::Create(textures, vertices.size() * sizeof(Engine::Math::vec2)));
+      Ref<VertexBuffer> vertexBuffer;
+      vertexBuffer.reset(Engine::VertexBuffer::Create(textures, vertices.size() * sizeof(Engine::Math::vec2)));
       Engine::BufferLayout vertexLayout = {
           {Engine::ShaderDataType::Float2, "vertexUV"}
       };
-      m_VertexBuffer->SetLayout(vertexLayout);
-      m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+      vertexBuffer->SetLayout(vertexLayout);
+      m_VertexArray->AddVertexBuffer(vertexBuffer);
     }
 
     // extract object name
@@ -60,6 +62,7 @@ namespace Engine {
     auto count = lastDot == std::string::npos ? objectFilePath.size() - last : lastDot - last;
     m_Name = objectFilePath.substr(last, count);
 
+    // TODO: drop this.
     SetVertexArraySize(vertices.size());
 
     m_ShaderLibrary.Load("Main", shaderFilePath.empty() ? DEFAULT_SHADER : shaderFilePath);
@@ -91,7 +94,6 @@ namespace Engine {
 
   OpenGLMesh& OpenGLMesh::operator=(const OpenGLMesh& ms){
     m_Name = ms.m_Name;
-    m_VertexBuffer = ms.m_VertexBuffer;
     m_VertexArray = ms.m_VertexArray;
     m_ShaderLibrary = ms.m_ShaderLibrary;
     m_Texture = ms.m_Texture;
@@ -161,7 +163,6 @@ namespace Engine {
 
   OpenGLMesh::OpenGLMesh(const Ref<OpenGLMesh> &ms){
     m_Name = ms->m_Name;
-    m_VertexBuffer = ms->m_VertexBuffer;
     m_VertexArray = ms->m_VertexArray;
     m_ShaderLibrary = ms->m_ShaderLibrary;
     m_Texture = ms->m_Texture;

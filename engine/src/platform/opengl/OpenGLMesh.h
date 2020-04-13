@@ -59,6 +59,7 @@ namespace Engine {
      */
     virtual void OnImGuiRender() override;
 
+    // TODO: drop me.
     /**
      * setter for m_VertexArray.m_Size
      * @param size
@@ -104,7 +105,7 @@ namespace Engine {
     std::string m_ShaderFileContent; //! < content of .glsl shader file
 
     // TODO: Replace vertexBuffer with container for VertexArrays, to attach multiple VertexArrays
-    Ref<VertexBuffer> m_VertexBuffer;
+    std::vector<Ref<VertexArray>> m_VertexArrays;
     Ref<VertexArray> m_VertexArray;
 
     ShaderLibrary m_ShaderLibrary; //! <container for shaders
