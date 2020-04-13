@@ -33,21 +33,25 @@ namespace Engine {
      */
     ReadObjFile(objectFilePath, vertices, normals, textures);
 
-    Ref<VertexBuffer> vertexBuffer;
     m_VertexArray.reset(VertexArray::Create());
 
-    vertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(Engine::Math::vec3),
-                                                    normals, normals.size() * sizeof(Engine::Math::vec3),
-                                                    textures, textures.size() * sizeof(Engine::Math::vec2)));
+    if(!vertices.empty()) {
+      m_VertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(Engine::Math::vec3)));
+      Engine::BufferLayout vertexLayout = {
+          {Engine::ShaderDataType::Float3, "position"}
+      };
+      m_VertexBuffer->SetLayout(vertexLayout);
+      m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+    }
 
-    Engine::BufferLayout vertexLayout = {
-        {Engine::ShaderDataType::Float3, "position", false, 0},
-        {Engine::ShaderDataType::Float3, "normals", false, 1},
-        {Engine::ShaderDataType::Float2, "vertexUV", false, 2}
-    };
-    vertexBuffer->SetLayout(vertexLayout);
-    m_VertexArray->AddVertexBuffer(vertexBuffer);
-
+    if(!textures.empty()) {
+      m_VertexBuffer.reset(Engine::VertexBuffer::Create(textures, vertices.size() * sizeof(Engine::Math::vec2)));
+      Engine::BufferLayout vertexLayout = {
+          {Engine::ShaderDataType::Float2, "vertexUV"}
+      };
+      m_VertexBuffer->SetLayout(vertexLayout);
+      m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+    }
 
     // extract object name
     auto last = objectFilePath.find_last_of("/\\");
@@ -87,6 +91,7 @@ namespace Engine {
 
   OpenGLMesh& OpenGLMesh::operator=(const OpenGLMesh& ms){
     m_Name = ms.m_Name;
+    m_VertexBuffer = ms.m_VertexBuffer;
     m_VertexArray = ms.m_VertexArray;
     m_ShaderLibrary = ms.m_ShaderLibrary;
     m_Texture = ms.m_Texture;
@@ -120,16 +125,12 @@ namespace Engine {
   }
 
   void OpenGLMesh::OnUpdate(Timestep ts) {
-    Bind(); //! < bind mesh data
-
-    // TODO: Move this into shader Library and add ShaderLibrary.Bind();
-    glm::mat4 model(1.0f); // scale
+    Bind();
+    glm::mat4 model(1.0f);
     auto shader = m_ShaderLibrary.Get("Main");
-    shader->Bind(); //! <bind shader data
+    shader->Bind();
     shader->UploadUniformMat4("model", model);
-
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position);
-
     Renderer::Submit(m_VertexArray, shader, transform);
     Unbind();
   }
@@ -160,6 +161,7 @@ namespace Engine {
 
   OpenGLMesh::OpenGLMesh(const Ref<OpenGLMesh> &ms){
     m_Name = ms->m_Name;
+    m_VertexBuffer = ms->m_VertexBuffer;
     m_VertexArray = ms->m_VertexArray;
     m_ShaderLibrary = ms->m_ShaderLibrary;
     m_Texture = ms->m_Texture;
