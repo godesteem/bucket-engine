@@ -104,8 +104,6 @@ namespace Engine {
     std::string m_Name; //! < debugging name
     std::string m_ShaderFileContent; //! < content of .glsl shader file
 
-    // TODO: Replace vertexBuffer with container for VertexArrays, to attach multiple VertexArrays
-    std::vector<Ref<VertexArray>> m_VertexArrays;
     Ref<VertexArray> m_VertexArray;
 
     ShaderLibrary m_ShaderLibrary; //! <container for shaders

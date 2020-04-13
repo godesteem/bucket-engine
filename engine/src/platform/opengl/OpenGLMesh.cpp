@@ -33,27 +33,21 @@ namespace Engine {
      */
     ReadObjFile(objectFilePath, vertices, normals, textures);
 
+    Ref<VertexBuffer> vertexBuffer;
     m_VertexArray.reset(VertexArray::Create());
 
-    if(!vertices.empty()) {
-      Ref<VertexBuffer> vertexBuffer;
-      vertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(Engine::Math::vec3)));
-      Engine::BufferLayout vertexLayout = {
-          {Engine::ShaderDataType::Float3, "position"}
-      };
-      vertexBuffer->SetLayout(vertexLayout);
-      m_VertexArray->AddVertexBuffer(vertexBuffer);
-    }
+    vertexBuffer.reset(Engine::VertexBuffer::Create(vertices, vertices.size() * sizeof(Engine::Math::vec3),
+                                                    normals, normals.size() * sizeof(Engine::Math::vec3),
+                                                    textures, textures.size() * sizeof(Engine::Math::vec2)));
 
-    if(!textures.empty()) {
-      Ref<VertexBuffer> vertexBuffer;
-      vertexBuffer.reset(Engine::VertexBuffer::Create(textures, vertices.size() * sizeof(Engine::Math::vec2)));
-      Engine::BufferLayout vertexLayout = {
-          {Engine::ShaderDataType::Float2, "vertexUV"}
-      };
-      vertexBuffer->SetLayout(vertexLayout);
-      m_VertexArray->AddVertexBuffer(vertexBuffer);
-    }
+    Engine::BufferLayout vertexLayout = {
+        {Engine::ShaderDataType::Float3, "position"},
+        {Engine::ShaderDataType::Float3, "normals"},
+        {Engine::ShaderDataType::Float2, "vertexUV"}
+    };
+    vertexBuffer->SetLayout(vertexLayout);
+    m_VertexArray->AddVertexBuffer(vertexBuffer);
+
 
     // extract object name
     auto last = objectFilePath.find_last_of("/\\");
