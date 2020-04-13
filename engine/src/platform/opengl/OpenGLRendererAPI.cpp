@@ -19,10 +19,6 @@ namespace Engine {
   }
 
   void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray){
-    if(vertexArray->GetIndexBuffer() != nullptr)
-      glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
-    else{
-      glDrawArrays(GL_TRIANGLES, 0, vertexArray->GetSize());
-    }
+    glDrawArrays(GL_TRIANGLES, 0, vertexArray->GetSize());
   }
 }
