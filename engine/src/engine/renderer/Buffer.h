@@ -38,15 +38,18 @@ namespace Engine {
   };
 
   /**
-   * Stores information about a buffer element
+   * Describes a part of a buffer and keeps track of
+   * it's position within the buffer data. It also
+   * contains necessary information which will be later
+   * used for rendering.
    */
   struct BufferElement {
-    std::string Name = "";
-    uint32_t Offset = 0;
-    uint32_t Size = 0;
+    std::string Name = "";                      //! <Debugging name
+    uint32_t Offset = 0;                        //! <Offset within the buffer data
+    uint32_t Size = 0;                          //! <size per
     ShaderDataType Type = ShaderDataType::None;
-    bool Normalized = false;
-    size_t BufferIndex = 0;
+    bool Normalized = false;                    //! < flag to determine weather the data is normalized or not
+    size_t BufferIndex = 0;                     //! <index in VertexBuffer's list of buffers
 
     BufferElement() {};
 
@@ -55,6 +58,10 @@ namespace Engine {
     {
     };
 
+    /**
+     * Getter for component count of buffer element.
+     * @return number of components for the element
+     */
     uint32_t GetComponentCount() const
     {
       switch(Type){
@@ -79,7 +86,8 @@ namespace Engine {
   };
 
   /**
-   * Layout of a buffer
+   * Layout of a buffer contains information about the elements
+   * within a buffer
    */
   class BufferLayout
   {
@@ -90,14 +98,32 @@ namespace Engine {
       {
         CalculateOffsetAndStride();
       }
+
+      /**
+       * Getter for elements within the layout.
+       * @return layout elements
+       */
       inline const std::vector<BufferElement>& GetElements() const { return m_Elements; }
+
+      /**
+       * Getter for stride
+       * @return current stride
+       */
       inline uint32_t GetStride() const { return m_Stride; };
 
+      /**
+       * iterator implementation, to allow iteration of layout elements
+       */
       std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); };
       std::vector<BufferElement>::iterator end() { return m_Elements.end(); };
       std::vector<BufferElement>::const_iterator begin() const { return m_Elements.begin(); };
       std::vector<BufferElement>::const_iterator end() const { return m_Elements.end(); };
+
     private:
+      /**
+       * Calculates and sets offset values for each element,
+       * also recalculates the total stride
+       */
       void CalculateOffsetAndStride()
       {
         uint32_t offset = 0;
@@ -110,12 +136,13 @@ namespace Engine {
       }
     private:
       std::vector<BufferElement> m_Elements;
-
-      uint32_t m_Stride = 0;
+      uint32_t m_Stride = 0;                  //! < distance between elements within the buffer
   };
 
   /**
-   * Stores data of a index buffer
+   * An index buffer is a buffer which holds index pointers
+   * to data in a VertexBuffer. Having a IndexBuffer allows you
+   * to reuse, reorder and redefine objects using the same VertexBuffer
    */
   class IndexBuffer {
   public:
@@ -155,7 +182,8 @@ namespace Engine {
   };
 
   /**
-   * Stores data about a buffer of vertices
+   * A buffer filled with vertex data
+   *
    */
   class VertexBuffer
   {
